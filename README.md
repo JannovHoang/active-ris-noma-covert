@@ -27,18 +27,25 @@ Passed percentages are physical feasibility-assessment rates, not accuracy again
 | `results/step7h_test40/inputs/` | Corpus, training, geometry and physical configuration snapshots |
 | `results/step7h_test40/models/` | Six selected deployment checkpoints |
 
-Keep `inputs`, `models`, `search`, `audit`, `source_snapshot`, the development `cv` directory, receipt files and completion manifests. The checker uses these records together. Copying only the summary CSV files does not produce a complete reproducible output.
+To verify or rerun the saved benchmark, keep both result directories complete: `results/step7h_development32/` and `results/step7h_test40/`. Their contents serve different purposes:
+
+- `inputs/` and `models/` contain the saved input data, settings and trained model weights.
+- `search/` records the allocations returned by the methods; `audit/` records their evaluation on independent fading samples.
+- `source_snapshot/` records the source used for the run. The development directory also contains `cv/`, with the diagnostic cross-validation records.
+- Receipt files and `completion.json` let the checker detect missing or changed files and confirm that the recorded run is complete.
+
+The CSV summaries are convenient for reading the results. The other records are also needed by the supplied verification and rerun commands, so retain the full directories when sharing this benchmark.
 
 ## Clone the repository
 
-Copy the repository's HTTPS URL from the GitHub **Code** button, then replace the placeholder below:
+This repository is public. Anyone can download it using Git over HTTPS; no GitHub account or access invitation is required for cloning.
 
 ```bash
-git clone "PASTE_THE_REPOSITORY_HTTPS_URL_HERE" active-ris-noma-covert
+git clone https://github.com/JannovHoang/active-ris-noma-covert.git
 cd active-ris-noma-covert
 ```
 
-If the repository is private, use a GitHub account that has been granted access. All following commands assume the repository root unless a different working directory is stated. The code does not require the author's `G:` drive or Python environment.
+Run these commands from the folder where you want the downloaded project to be created. The remaining instructions start from the repository root, `active-ris-noma-covert`, unless a different working directory is stated. Create your own Python environment as described below; the code does not depend on the author's local drive paths.
 
 ## Environment
 
@@ -122,7 +129,7 @@ The paths below are relative to `experiments/ris_noma_step1/`.
 | Role-specific channel streams and allocation correction | `step7h/physics.py` |
 | Verification of the saved study | `step7h/checks.py` |
 | Summaries, paired comparisons and layout-cluster bootstrap | `step7h/analysis.py` |
-| Standard optimizer and feasible-first comparator | `step7h/frozen_runtime/ris_noma/pso.py` |
+| PSO implementation and feasibility-first comparator used by the 7h runner | `step7h/frozen_runtime/ris_noma/pso.py` |
 | Allocation decoder and cached physical objective | `step7h/frozen_runtime/ris_noma/multik_core.py` |
 | Search margins | `step7h/frozen_runtime/ris_noma/continuous_data.py` |
 | Channel generation and geometric LoS | `step7h/frozen_runtime/ris_noma/channels.py`, `geometry_los.py` |
@@ -130,6 +137,28 @@ The paths below are relative to `experiments/ris_noma_step1/`.
 | Gamma/empirical detection error | `step7h/frozen_runtime/ris_noma/dep.py` |
 | Finite-sample assessment bounds | `step7h/frozen_runtime/ris_noma/validation.py` |
 | Models and supervised training | `step7h/frozen_runtime/ris_noma/curve_models.py`, `curve_fit.py`, `multik_models.py`, `multik_learning_models.py` |
+
+## PSO source, label generation and predictions
+
+The repository includes the PSO implementation, the code that uses it to generate training labels, and the code that runs PSO during the benchmark. The paths below are relative to `experiments/ris_noma_step1/`; click a file to open its source.
+
+| File | Role |
+|---|---|
+| [ris_noma/pso.py](experiments/ris_noma_step1/ris_noma/pso.py) | Core PSO implementation. `optimize(...)` initializes the swarm, updates particle velocities and positions, and tracks personal and global best solutions. |
+| [ris_noma/multik_benchmark_core.py](experiments/ris_noma_step1/ris_noma/multik_benchmark_core.py) | `search_pool(...)` calls PSO and retains a bounded pool of candidate allocations for label selection. |
+| [ris_noma/continuous_workers.py](experiments/ris_noma_step1/ris_noma/continuous_workers.py) | Runs the label-generation search, selects labels on a separate channel bank, and audits the chosen labels on another independent bank. |
+| [ris_noma/curve_data.py](experiments/ris_noma_step1/ris_noma/curve_data.py) | Builds the nested training-layout corpus used in 7g, reusing the label-generation workers. |
+| [run_step7e.py](experiments/ris_noma_step1/run_step7e.py), [run_step7g.py](experiments/ris_noma_step1/run_step7g.py) | Command-line entry points for the earlier label-generation and learning-curve stages. Their original data dependencies are described below. |
+| [step7h/benchmark.py](experiments/ris_noma_step1/step7h/benchmark.py) | Runs direct GNN/MLP predictions, standalone PSO and PSO initialized by a network prediction; records evaluation counts and timing. |
+| [step7h/frozen_runtime/ris_noma/pso.py](experiments/ris_noma_step1/step7h/frozen_runtime/ris_noma/pso.py) | The preserved PSO implementation actually imported by the 7h runner. |
+
+The roles are different at each stage:
+
+1. **Generate labels offline.** PSO searches for reference power allocations. Candidate selection and an independent audit record feasibility; a label is a numerical reference, not a guaranteed global optimum.
+2. **Train and predict with GNN/MLP.** The networks learn from the training inputs and PSO-generated labels. A trained network predicts an allocation for a new input without running PSO.
+3. **Optionally refine the prediction.** In GNN/MLP + short PSO, the corrected network prediction supplies one initial particle and the other 29 particles are random. Short PSO then searches for an improved allocation. Full PSO and random short PSO use random initialization.
+
+`step7h/__init__.py` places the bundled `frozen_runtime` first on the import path. Editing the top-level `ris_noma/pso.py` therefore does not change the PSO used by `run_step7h.py`. Keep the bundled runtime as the reference for the published results; develop an alternative optimizer in a separate module/runner or separately named runtime and protocol, as described below.
 
 ## Further development and alternative optimizers
 
