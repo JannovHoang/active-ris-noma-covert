@@ -15,6 +15,14 @@ The main experiment is the six-method benchmark in `experiments/ris_noma_step1/s
 
 Passed percentages are physical feasibility-assessment rates, not accuracy against PSO labels. Failed allocations contribute zero to the gated-rate average and remain in its denominator. Full PSO is a large-budget numerical reference, not a global-optimality proof.
 
+## Reading the commented source
+
+The main PSO, physical evaluation, label-generation, graph, model and training modules in `ris_noma/` contain inline explanations in Vietnamese. The 7h runner, search, assessment and analysis code is also annotated. The original bundled runtime and every `results/.../source_snapshot/` remain unchanged.
+
+The readable modules correspond to the preserved runtime used for the published results. For example, read [ris_noma/pso.py](experiments/ris_noma_step1/ris_noma/pso.py) for the annotated PSO, and [step7h/benchmark.py](experiments/ris_noma_step1/step7h/benchmark.py) for the six-method comparison. `step7h/frozen_runtime/ris_noma/pso.py` remains the exact original implementation imported by 7h.
+
+Saved experiments record hashes of the entire source files, including comments. Use the verification commands below after a comment-only update. They first compare the current code's Python AST and significant tokens with the authenticated original snapshot, then run the unchanged strict checker from that snapshot. A changed expression, constant, operator or docstring is rejected. The original plans, hashes, labels and model weights are preserved.
+
 ## Contents
 
 | Path | Purpose |
@@ -70,38 +78,38 @@ The recorded Windows environment uses Python 3.12.7, NumPy 2.5.4, SciPy 1.18.1, 
 
 ## Verify the complete saved experiment
 
-These commands check the committed evidence without performing the PSO searches again. From the repository root in PowerShell:
+These commands check both the commented source and the committed experiment without performing PSO searches or training again. From the repository root in PowerShell:
 
 ```powershell
 Push-Location experiments/ris_noma_step1
-& $pyRepo -X utf8 run_step7h.py check --output "..\..\results\step7h_development32"
-& $pyRepo -X utf8 run_step7h.py check --output "..\..\results\step7h_test40"
+& $pyRepo -X utf8 verify_source_comments.py --reference "..\..\results\step7h_development32" --check
+& $pyRepo -X utf8 verify_source_comments.py --reference "..\..\results\step7h_test40" --check
 Pop-Location
 ```
 
-Both commands must report `"complete": true`. The final check covers all six methods, 40 layouts, 200 layout/K groups and 28,800 physical rows. It verifies source/checkpoint hashes, train/validation separation, normalization lineage, evaluation counts, search/audit commitments, saved statistical decisions and aggregate consistency. It is a consistency audit of the recorded study, not a proof that overfitting is impossible.
+Both commands must report `"source_comparison_passed": true` under `source_verification` and `"complete": true` under `saved_experiment`. The development and final checks verify 497 and 927 saved files respectively. The final check covers all six methods, 40 layouts, 200 layout/K groups and 28,800 physical rows. It verifies source/checkpoint hashes, train/validation separation, normalization lineage, evaluation counts, search/audit commitments, saved statistical decisions and aggregate consistency. It is a consistency audit of the recorded study, not a proof that overfitting is impossible.
 
 On Linux, from the repository root:
 
 ```bash
 cd experiments/ris_noma_step1
-../../.venv/bin/python run_step7h.py check --output ../../results/step7h_development32
-../../.venv/bin/python run_step7h.py check --output ../../results/step7h_test40
+../../.venv/bin/python verify_source_comments.py --reference ../../results/step7h_development32 --check
+../../.venv/bin/python verify_source_comments.py --reference ../../results/step7h_test40 --check
 cd ../..
 ```
 
 ## Rerun the final K=2–5 / K=6 comparison
 
-The saved development protocol and its full supporting records are sufficient to launch the original final-test runner. A new label-generation or main-model training run is not required.
+The saved development protocol and its full supporting records are sufficient to launch the original final-test runner. A new label-generation or main-model training run is not required. Run the verification above first, then launch the preserved entry point below so the original source hashes still match the sealed protocol.
 
 ```powershell
 Push-Location experiments/ris_noma_step1
-& $pyRepo -X utf8 run_step7h.py test --protocol "..\..\results\step7h_development32\protocol.json" --output "..\..\results\step7h_reproduced" --workers 2
-& $pyRepo -X utf8 run_step7h.py check --output "..\..\results\step7h_reproduced"
+& $pyRepo -X utf8 "..\..\results\step7h_development32\source_snapshot\run_step7h.py" test --protocol "..\..\results\step7h_development32\protocol.json" --output "..\..\results\step7h_reproduced" --workers 2
+& $pyRepo -X utf8 verify_source_comments.py --reference "..\..\results\step7h_reproduced" --check
 Pop-Location
 ```
 
-This reruns the 40-layout comparison with six methods for K=2–6, using the original selected checkpoints and parameter schedule. It performs 10.8 million objective evaluations and the corresponding independent fading assessments, so it is a substantial CPU experiment. It is a rerun of the already observed test, not a newly untouched holdout.
+The preserved entry point executes the original source, with every original hash and statistical check retained. This reruns the 40-layout comparison with six methods for K=2–6, using the original selected checkpoints and parameter schedule. It performs 10.8 million objective evaluations and the corresponding independent fading assessments, so it is a substantial CPU experiment. It is a rerun of the already observed test, not a newly untouched holdout.
 
 Use a fresh output directory. If the same run was interrupted, repeat the `test` command with `--resume`, keeping the same protocol, worker count and environment. Do not use the original result directory as the output of a new run. New output directories are ignored by Git until explicitly selected for publication.
 
@@ -112,10 +120,13 @@ From PowerShell at the repository root:
 ```powershell
 Push-Location experiments/ris_noma_step1
 & $pyRepo -X utf8 -m unittest discover -s tests_step7h -v
+& $pyRepo -X utf8 -m unittest discover -s tests_source_comments -v
 & $pyRepo -X utf8 -m unittest discover -s tests -p test_pso.py -v
 & $pyRepo -X utf8 -m unittest discover -s tests -p test_dep.py -v
 Pop-Location
 ```
+
+The top-level `run_step7h.py check` and `test` commands retain their original byte-strict behavior. They can reject a sealed old experiment after comments are added. Use the commands above for the recorded study. Use a new plan and output for a changed algorithm; do not edit old checksums to make a mismatch pass.
 
 ## Source map
 
@@ -127,7 +138,8 @@ The paths below are relative to `experiments/ris_noma_step1/`.
 | Development, protocol sealing and final rerun | `step7h/driver.py` |
 | Six-method search, initialization and independent audit | `step7h/benchmark.py` |
 | Role-specific channel streams and allocation correction | `step7h/physics.py` |
-| Verification of the saved study | `step7h/checks.py` |
+| Original strict verification of the saved study | `step7h/checks.py` |
+| Comment-only source comparison and preserved strict check | `verify_source_comments.py` |
 | Summaries, paired comparisons and layout-cluster bootstrap | `step7h/analysis.py` |
 | PSO implementation and feasibility-first comparator used by the 7h runner | `step7h/frozen_runtime/ris_noma/pso.py` |
 | Allocation decoder and cached physical objective | `step7h/frozen_runtime/ris_noma/multik_core.py` |
@@ -183,11 +195,11 @@ Open a pull request when the change is ready for review. The reviewed `main` bra
 
 QPSO is not implemented in the reference. An alternative optimizer can reuse the allocation decoder, physical objective and independent assessment. A candidate has K+1 normalized coordinates in [0,1]; the objective returns `Outcome(score, violation, feasible, metrics)`. The standard implementation uses `better` to prefer feasibility, then maximize rate, and otherwise minimize normalized violations. Count every objective call, including initialization and auxiliary trials.
 
-The archived runtime and sealed protocol identify the exact code associated with the original results. Keep that reference intact. Add an experimental module/runner or create a separately named runtime and protocol for a changed algorithm. A hash mismatch indicates that the code no longer matches the original sealed protocol; use a new experimental plan and output for a changed method.
+The archived runtime and sealed protocol identify the exact code associated with the original results. Keep that reference intact. `verify_source_comments.py` permits only comment/formatting differences in the current source; it does not accept a changed algorithm or modify evidence. Add an experimental module/runner or create a separately named runtime and protocol for a changed algorithm, then use a new experimental plan and output.
 
 For fair comparisons, declare scenario/layout lists, evaluation budgets, random streams, margins, checkpoint policy and assessment rules before examining new test results. Reuse the same search inputs for paired methods and keep the assessment bank separate from optimization.
 
-The included training and validation snapshots contain graph inputs and labels used by the selected models. The repository does not include the entire historical label-generation corpus, every previous learning-curve stage or all 7g diagnostic artifacts. Repeating all earlier development stages through their original command-line interfaces requires those additional data packages. They are not needed for the saved checks and final benchmark rerun above.
+The included training and validation snapshots contain graph inputs and labels used by the selected models. The repository does not include the entire historical label-generation corpus, every previous learning-curve stage or all 7g diagnostic artifacts. Repeating all earlier development stages through their original command-line interfaces requires those additional data packages. Their strict source checks also require their own original snapshots after comments are added. They are not needed for the saved 7h checks and final benchmark rerun above.
 
 ## Read the results
 

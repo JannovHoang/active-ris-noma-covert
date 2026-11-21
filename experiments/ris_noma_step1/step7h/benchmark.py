@@ -20,11 +20,15 @@ from ris_noma.stable_assessment import raw_assessment
 from ris_noma.multik_data_core import at_target
 
 
+# Xác định đúng tập phương pháp/ngân sách đã khai báo. Nhánh trực tiếp có
+# ngân sách PSO bằng 0; ngân sách ngắn được chọn bằng validation.
 def variants(plan):
     result = [("full_pso", plan["settings"]["full_budget"]), *( (m, 0) for m in DIRECT)]
     return result + [(method, budget) for budget in plan["short_budgets"] for method in SHORT]
 
 
+# Tích case x seed x phương pháp x ngân sách là mẫu số đã định trước.
+# Ca trượt hoặc không trả nghiệm vẫn cần bản ghi, không được âm thầm loại.
 def expected_keys(plan, job):
     return {(case["case_index"], r["training_seed"], method, budget)
             for case in job["cases"] for r in plan["settings"]["replicates"] for method, budget in variants(plan)}
@@ -43,18 +47,23 @@ def row_base(plan, job, case, replicate, method, budget):
             "method": method, "budget": budget, "phase": plan["stage"]}
 
 
+# Đếm trực tiếp mọi lời gọi hàm mục tiêu, gồm bầy khởi tạo. K+1 tọa độ PSO
+# được giải mã thành mb, K hệ số public và s trong multik_core.py.
 def run_search(objective, xi, k, settings, rng, initial=None):
     counter = 0
     def evaluate(z):
         nonlocal counter
         counter += 1
         return objective.evaluate(z, xi)
+    # Cùng bộ tối ưu cho Full/Random short/hybrid; khác ngân sách và hạt khởi tạo.
     result = optimize(evaluate, k+1, settings, rng, initial_positions=initial)
     if counter != settings.swarm_size * settings.sweeps or result.evaluations != counter:
         raise ArithmeticError("Actual objective-call count differs from the fixed PSO budget")
     return result
 
 
+# Giữ đầy đủ mẫu số khi bố trí vi phạm giả định. Các ca này được ghi nhận
+# thất bại cho mọi phương pháp, thay vì bỏ khỏi bảng chính.
 def empty_search(plan, job, error):
     rows = []
     for case in job["cases"]:
@@ -70,12 +79,15 @@ def empty_search(plan, job, error):
     return rows
 
 
+# Một job là một layout/K, gồm nhiều case công suất/DEP. Toàn bộ phương án
+# được chốt trên bank đầu vào trước khi bank audit được sinh.
 def search_task(args):
     output, job = args
     output = Path(output)
     configure_runtime(0, 1, "cpu")
     plan = read(output / "plan.json")
     path = output / f"search/{job['id']}.json"
+    # Resume chỉ tái dùng nhóm đã ghi xong và có receipt khớp SHA-256.
     old = committed(path)
     if old is not None:
         if old["plan_sha256"] != digest(output / "plan.json"): raise ValueError("Search belongs to another plan")
@@ -91,6 +103,8 @@ def search_task(args):
     refs = read(output / "models.json")
     models = {}
     cold = {}
+    # Nạp đúng checkpoint theo seed train cho cả GNN/MLP; thời gian nạp lạnh
+    # được lưu riêng với thời gian trả nghiệm sau warm-up.
     for rep in plan["settings"]["replicates"]:
         for kind in ("gnn", "mlp"):
             name = f"{kind}_s{rep['training_seed']}"
@@ -104,6 +118,8 @@ def search_task(args):
             cold[name] = time.perf_counter()-started
     order = public_order(bank)
     warm_graph = statistical_graph(dict(c, total_dbm=job["cases"][0]["power_dbm"]), layout, bank, order, job["cases"][0]["xi"])
+    # Warm-up một lần trước khi đo để giảm chi phí khởi tạo của lần forward đầu.
+    # Bản ghi vẫn lưu chi phí nạp model lạnh để tránh nhầm với chi phí triển khai.
     for name, model in models.items(): predict(model, [warm_graph], refs[name]["normalization"])
     rows, graphs, evaluations = [], [], 0
     for case in job["cases"]:
@@ -112,6 +128,8 @@ def search_task(args):
         graph = statistical_graph(radio, layout, bank, order, case["xi"])
         graph_seconds = time.perf_counter()-started
         graphs.append({"case_index": case["case_index"], "graph": graph})
+        # CV là độ lệch chuẩn / trung bình độ lợi tín hiệu Willie từ bank đầu vào;
+        # dùng phân nhóm chẩn đoán, không lấy từ bank audit và không phải cross-validation.
         cv = float(graph["global_raw"][18])
         started = time.perf_counter()
         objective = MarginObjective(radio, layout, bank, order, plan["settings"]["search_qos_margin"])
@@ -121,14 +139,18 @@ def search_task(args):
             for kind in ("gnn", "mlp"):
                 name = f"{kind}_s{rep['training_seed']}"
                 started = time.perf_counter()
+                # GNN/MLP trực tiếp: một forward pass dùng normalizer train đã lưu.
                 raw = predict(models[name], [graph], refs[name]["normalization"])[0]
                 forward = time.perf_counter()-started
                 started = time.perf_counter()
+                # Hiệu chỉnh delta cố định đã chọn bằng validation; không chọn delta lại
+                # sau khi xem test hoặc audit.
                 y = corrected(raw, refs[name]["delta"], radio["bounds"])
                 forecasts[kind] = {"allocation": y, "raw_allocation": raw.tolist(), "forward": forward,
                     "correction": time.perf_counter()-started, "delta": refs[name]["delta"],
                     "checkpoint_sha256": refs[name]["sha256"], "epoch": refs[name]["epoch"]}
             choices = variants(plan)
+            # Luân phiên thứ tự đo để giảm ảnh hưởng phương pháp nào luôn chạy trước.
             rotation = (job["layout_id"]+case["case_index"]+rep["pso_seed"]) % len(choices)
             for method, budget in choices[rotation:]+choices[:rotation]:
                 kind = "gnn" if method.startswith("gnn") else "mlp" if method.startswith("mlp") else None
@@ -149,7 +171,11 @@ def search_task(args):
                     if method != "full_pso" and method != "random_short_pso":
                         y = forecast["allocation"]
                         _, center = original_allocation(y[0], y[1:-1][order], y[-1], order, radio["bounds"])
+                        # Hybrid chèn đúng một hạt từ dự đoán đã hiệu chỉnh. Optimize vẫn sinh
+                        # 29 hạt ngẫu nhiên còn lại giống nhánh random với cùng seed.
                         initial = center[None, :]
+                    # Mỗi ngân sách là một lượt PSO riêng có đủ lịch quán tính, không lấy
+                    # 150/300/450 evaluations như các đoạn đầu của một lượt dài.
                     cfg = PSOSettings(**dict(plan["pso_settings"], swarm_size=30, sweeps=budget//30))
                     started = time.perf_counter()
                     result = run_search(objective, case["xi"]+plan["settings"]["search_dep_margin"],
@@ -163,8 +189,11 @@ def search_task(args):
                         search_violation=result.outcome.violation, history=result.history)
                     evaluations += result.evaluations
                 else:
+                    # Nhánh direct trả dự đoán đã hiệu chỉnh; không có bước PSO ẩn phía sau.
                     row.update(allocation=forecast["allocation"].tolist(), pso_seconds=0., objective_evaluations=0,
                                search_feasible=None, search_rate=None, search_dep_gamma=None, search_violation=None, history=[])
+                # Thời gian online gồm sinh bank đầu vào phân bổ theo case, tạo feature,
+                # forward, delta, chuẩn bị objective và PSO. Audit độc lập được tính riêng.
                 row["online_seconds"] = sum(row[n] for n in ("input_bank_amortized_seconds", "graph_seconds", "forward_seconds",
                     "correction_seconds", "objective_setup_seconds", "pso_seconds"))
                 rows.append(row)
@@ -177,6 +206,8 @@ def search_task(args):
     return job["id"]
 
 
+# Chấm các phân bổ đã commit trên fading mới. Audit không tìm lại nghiệm,
+# không chỉnh đầu ra và không fallback sang Full PSO.
 def audit_task(args):
     output, job = args
     output = Path(output)
@@ -184,6 +215,7 @@ def audit_task(args):
     plan = read(output / "plan.json")
     path = output / f"audit/{job['id']}.json"
     old = committed(path)
+    # Dấu neo xác nhận toàn bộ phương án đã được đóng băng trước audit.
     anchor_sha = digest(output / "allocations_frozen.json")
     if old is not None:
         if old["allocations_sha256"] != anchor_sha: raise ValueError("Audit belongs to different frozen proposals")
@@ -203,10 +235,14 @@ def audit_task(args):
         started = time.perf_counter()
         for row in proposal["rows"]:
             k = (row["power_dbm"], tuple(row["allocation"]))
+            # Chỉ tái dùng thống kê của đúng cùng công suất và phân bổ trên cùng bank;
+            # không dùng cache để chọn lại phương án sau khi thấy kết quả.
             if k not in cache:
                 cache[k] = raw_assessment(dict(c, total_dbm=row["power_dbm"]), layout, bank,
                     np.asarray(row["order"], int), row["allocation"], plan["certificate_pool_size"], plan["certificate_alpha_per_group"])
             raw = cache[k]
+            # Áp đúng xi của case vào các thống kê/cận đã tính. Ca không đạt có
+            # gated_bob_rate=0 nhưng vẫn nằm trong mẫu số trung bình.
             decision = at_target(raw, row["xi"])
             rows.append({**{k:v for k,v in row.items() if k != "history"}, **raw, **decision,
                 "point_passed": bool(raw["dep_gamma"] >= row["xi"] and all(raw["point_checks_without_dep"].values())),
@@ -219,6 +255,8 @@ def audit_task(args):
     return job["id"]
 
 
+# workers là số tiến trình CPU chạy song song các job, không phải số epoch
+# hay số seed. Spawn phù hợp với Windows và trạng thái RNG riêng của mỗi job.
 def execute_jobs(function, args, workers, label):
     if not args: return
     if workers == 1:
@@ -245,6 +283,7 @@ def execute_jobs(function, args, workers, label):
         else: pool.shutdown(wait=True)
 
 
+# Rào chắn toàn cục: đủ mọi case/seed/phương pháp mới được tạo dấu neo audit.
 def freeze_search(output, plan):
     output = Path(output)
     paths = []
@@ -260,6 +299,8 @@ def freeze_search(output, plan):
                   policy="All final allocations frozen globally before any audit fading; no audit fallback")
 
 
+# Thứ tự bắt buộc: tất cả search -> đóng băng allocations -> tất cả audit.
+# Tách theo giai đoạn để audit không tham gia tối ưu hoặc chọn nghiệm.
 def run_stage(output, plan):
     output = Path(output)
     pending = [j for j in plan["jobs"] if committed(output / f"search/{j['id']}.json") is None]

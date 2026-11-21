@@ -14,16 +14,22 @@ from .multik_core import physical_allocation, sic_order
 from .validation import statistical_screen
 
 
+# Kiểm tra đẳng thức V1-V0=delta với sai số làm tròn phụ thuộc độ lớn
+# các số bị trừ; không nới các ngưỡng vật lý DEP, QoS hay outage.
 def assert_power_identity(v0, v1, delta):
     v0, v1, delta = (np.asarray(value, float) for value in (v0, v1, delta))
     if not all(np.all(np.isfinite(value)) for value in (v0, v1, delta)) or np.any(v0 < 0) or np.any(delta < 0):
         raise ArithmeticError("Invalid Willie power identity inputs")
     error = np.abs((v1 - v0) - delta)
+    # Khi delta rất nhỏ so với V0,V1, chỉ dùng sai số tương đối của delta
+    # có thể báo lỗi giả do triệt tiêu số học.
     bound = 32 * np.finfo(float).eps * (np.abs(v0) + np.abs(v1) + np.abs(delta))
     if np.any(v1 < v0 - bound) or np.any(error > bound):
         raise ArithmeticError("Willie powers violate the identity beyond floating-point roundoff")
 
 
+# Chấm một phân bổ trên toàn bank fading cố định. Public đi theo hạng SIC;
+# rate tính bằng bit/s/Hz, công suất/nhiễu tính bằng watt.
 def evaluate_candidate(c, layout, bank, order, mb, mp, s):
     K, M = c["n_public"], c["n_fading"]
     mp = np.asarray(mp, float)  # mp[j] ứng với SIC rank j+1.
@@ -43,29 +49,39 @@ def evaluate_candidate(c, layout, bank, order, mb, mp, s):
     noise_dbm = c["noise_dbm"]
     receiver_noise = dbm_to_w(np.r_[noise_dbm["bob"], np.asarray(noise_dbm["public"])[order], noise_dbm["willie"]])
     sigma_r2 = float(dbm_to_w(noise_dbm["ris"]))
+    # U tách phần kênh/nhiễu khỏi hệ số phân bổ; g và q ở đây đã chứa rho2.
     U = pa * g / (sigma_r2 * q + receiver_noise[None, :])
     k2 = c["kappa"] ** 2
+    # Phần giao thoa còn lại khi giải public j gồm Bob, public giải sau và méo.
     A = mb + (np.cumsum(mp[::-1])[::-1] - mp) + k2
     # gamma[:,receiver,j]; chỉ các decoder cần thiết được dùng trong rate/outage.
     gamma = mp[None, None, :] * U[:, :, None] / (A[None, None, :] * U[:, :, None] + 1)
+    # SINR Bob sau SIC lý tưởng; không khử méo phần cứng hoặc nhiễu.
     gamma_b = mb * U[:, 0] / (k2 * U[:, 0] + 1)
     rb = np.log2(1 + gamma_b)
     public_rates = np.empty((M, K))
     for j in range(K):
+        # Bob và các public decoder từ hạng j trở đi đều phải giải được stream j.
         decoders = np.r_[0, np.arange(j + 1, K + 1)]
+        # Lấy rate nhỏ nhất trên các decoder bắt buộc, rồi mới trung bình theo fading.
         public_rates[:, j] = np.log2(1 + gamma[:, decoders, j]).min(axis=1)
 
     req = c["requirements"]
     targets = np.asarray(req["target_public"])[order]
+    # Đổi mục tiêu rate cố định thành ngưỡng SINR 2**R - 1.
     thresholds = np.expm1(np.log(2) * targets)
     threshold_b = float(np.expm1(np.log(2) * req["target_bob"]))
+    # Độ dư SIC d_j; nếu một độ dư không dương thì điều kiện ngưỡng không khả thi.
     d_public = mp - thresholds * A
     d_bob = mb - threshold_b * k2
+    # Một mẫu outage của Bob là hợp của mọi lần giải mã thất bại trong chuỗi.
     failure_b = np.any(gamma[:, 0, :] < thresholds[None, :], axis=1) | (gamma_b < threshold_b)
     if np.any(d_public <= 0) or d_bob <= 0:
         bound_b = np.inf
     else:
         bound_b = float(max(np.max(thresholds / d_public), threshold_b / d_bob))
+    # Cùng sự kiện outage viết dưới dạng một ngưỡng trên U_b; phải khớp
+    # cách kiểm tra từng SINR phía trên cho từng mẫu fading.
     failure_b_threshold = U[:, 0] < bound_b
     if not np.array_equal(failure_b, failure_b_threshold):
         raise ArithmeticError("Outage theo chuỗi SIC và ngưỡng tương đương không khớp")
@@ -75,12 +91,15 @@ def evaluate_candidate(c, layout, bank, order, mb, mp, s):
     p_out = float(failure_b.mean())
 
     # (9.6)-(9.10): public powers và rho giữ nguyên dưới H0,H1.
+    # Hai công suất quan sát Willie dùng cùng fading; H0 không có stream Bob,
+    # H1 có Bob. Nhiễu thu là độ dịch chung của cả hai giả thuyết.
     v0 = (1 + k2) * (1 - mb) * pa * g[:, -1] + sigma_r2 * q[:, -1] + receiver_noise[-1]
     v1 = (1 + k2) * pa * g[:, -1] + sigma_r2 * q[:, -1] + receiver_noise[-1]
     expected_delta = (1 + k2) * mb * pa * g[:, -1]
     assert_power_identity(v0, v1, expected_delta)
     xw = rho2 * np.abs(bank.h_tilde[:, -1]) ** 2
     yw = rho2 * np.abs(bank.g_scalar_tilde[:, -1]) ** 2
+    # Ghi covariance để chẩn đoán xấp xỉ Gamma; không giả sử X,Y độc lập.
     sample_covariance = float(np.cov(xw, yw, ddof=c.get("moment_ddof", 1))[0, 1])
     # Đúng quy ước trung bình của (4.5), không thêm kappa vào budget.
     ris_power_samples = rho2 * (pa / layout.loss_ar * np.sum(np.abs(bank.h_ar) ** 2, axis=1) + sigma_r2 * c["n_ris"])
@@ -117,6 +136,8 @@ def evaluate_candidate(c, layout, bank, order, mb, mp, s):
     return summary, samples
 
 
+# Bổ sung DEP Gamma cho các KPI vật lý; giữ cả mẫu H0/H1 để kiểm định
+# CDF thực nghiệm ở bước statistical_screen.
 def evaluate_with_dep(c, layout, bank, order, mb, mp, s, xi, layout_eligible=None):
     summary, samples = evaluate_candidate(c, layout, bank, order, mb, mp, s)
     h0, h1, z0, z1, moments = fit_willie(
@@ -125,6 +146,7 @@ def evaluate_with_dep(c, layout, bank, order, mb, mp, s, xi, layout_eligible=Non
         ddof=c.get("moment_ddof", 1))
     optimum = minimize_gamma_dep(h0, h1)
     sigma_w2 = float(dbm_to_w(c["noise_dbm"]["willie"]))
+    # Khôi phục ngưỡng Willie sau khi đã bỏ độ dịch nhiễu thu khi tối ưu DEP.
     optimum["lambda_star_w"] = sigma_w2 + optimum["shift_star_w"]
     summary["dep_min"] = optimum["dep_min"]
     summary["lambda_star_w"] = optimum["lambda_star_w"]
@@ -135,6 +157,8 @@ def evaluate_with_dep(c, layout, bank, order, mb, mp, s, xi, layout_eligible=Non
     return summary, samples, {"h0": h0, "h1": h1, "moments": moments, "gamma_optimum": optimum}
 
 
+# Kết hợp ước lượng điểm với cận hữu hạn mẫu. Các ứng viên phải được
+# ấn định trước khi sinh/đọc bank dùng để đánh giá độc lập.
 def assess_allocation(c, layout, bank, order, values, xi, family_size, alpha):
     k = c["n_public"]
     order = sic_order(order, k)
@@ -149,6 +173,8 @@ def raw_assessment(c, layout, bank, order, allocation, family, alpha):
     No DEP selection is hidden here: non-DEP point/bound checks are retained,
     while both Gamma DEP and the uniform empirical DEP lower bound are exposed.
     """
+    # Xi=.5 chỉ là giá trị gọi bộ chấm chung để lấy thống kê. Hai dòng sau
+    # loại các quyết định phụ thuộc xi; at_target mới áp đúng xi của từng case.
     info, screen = assess_allocation(c, layout, bank, order, allocation, .5, family, alpha)
     point = {name: ok for name, ok in info["constraints"]["checks"].items() if name != "covertness_gamma"}
     bounds = {name: ok for name, ok in screen["checks"].items()

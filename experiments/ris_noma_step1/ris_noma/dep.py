@@ -13,6 +13,7 @@ from scipy.stats import gamma as scipy_gamma
 
 
 @dataclass(frozen=True)
+# Phân phối Gamma xấp xỉ công suất Z: shape không có đơn vị, scale_w là watt.
 class GammaLaw:
     shape: float
     scale_w: float
@@ -26,6 +27,8 @@ class GammaLaw:
         return self.shape * self.scale_w
 
 
+# Moment matching: shape=mu**2/variance và scale=variance/mu.
+# Không thay phân phối fading gốc; chỉ xấp xỉ biến công suất Willie để tìm nhanh.
 def fit_gamma(mean_w, variance_w2):
     """Gamma(shape=mu²/v, scale=v/mu). Không sửa variance=0 bằng số epsilon."""
     if not all(np.isfinite(v) and v > 0 for v in [mean_w, variance_w2]):
@@ -57,15 +60,20 @@ def fit_willie(xw, yw, pa_w, mb, kappa, loss_ar, loss_rw, sigma_r2_w, ddof=1):
     if not all(np.isfinite(v) and v > 0 for v in [pa_w, loss_ar, loss_rw, sigma_r2_w]):
         raise ValueError("Công suất và mẫu số suy hao phải dương, hữu hạn")
     a1 = (1 + kappa ** 2) * pa_w / (loss_ar * loss_rw)
+    # H0 thiếu phần stream Bob; công suất public và hệ số khuếch đại được giữ
+    # như trong H1, theo mô hình hai giả thuyết đã khai báo.
     a0 = (1 - mb) * a1
     b = sigma_r2_w / loss_rw
     means = np.array([xw.mean(), yw.mean()])
     variances = np.array([xw.var(ddof=ddof), yw.var(ddof=ddof)])
+    # X,Y dùng chung fading/pha nên có thể tương quan. Covariance được lưu
+    # để chẩn đoán, dù phương sai Gamma tìm kiếm phía dưới bỏ số hạng này.
     covariance = float(np.cov(xw, yw, ddof=ddof)[0, 1])
     laws, info, z = [], [], []
     for a in [a0, a1]:
         zi = a * xw + b * yw
         mu = float(a * means[0] + b * means[1])
+        # Đây là phương sai xấp xỉ đã chọn; phương sai đầy đủ còn có 2*a*b*Cov(X,Y).
         var_base = float(a ** 2 * variances[0] + b ** 2 * variances[1])
         law = fit_gamma(mu, var_base)
         laws.append(law)
@@ -85,13 +93,17 @@ def fit_willie(xw, yw, pa_w, mb, kappa, loss_ar, loss_rw, sigma_r2_w, ddof=1):
     return laws[0], laws[1], z[0], z[1], diagnostics
 
 
+# DEP dùng trong dự án là P_FA + P_MD, nằm trong [0,1] sau tối ưu ngưỡng.
+# Xác suất lỗi với hai tiên nghiệm bằng nhau mới là DEP/2.
 def gamma_dep(shift_w, h0, h1):
     """x=lambda-sigma_w². Trả PFA+PMD; không chia 2 ở đây."""
     x = np.asarray(shift_w, float)
     if np.any(np.isnan(x)):
         raise ValueError("Ngưỡng không được là NaN")
     positive = np.maximum(x, 0)
+    # Báo động giả: dưới H0 nhưng công suất vượt ngưỡng, nên dùng đuôi trên CDF.
     pfa = gammaincc(h0.shape, positive / h0.scale_w)
+    # Bỏ sót: dưới H1 nhưng công suất không vượt ngưỡng, nên dùng CDF H1.
     pmd = gammainc(h1.shape, positive / h1.scale_w)
     return np.where(x <= 0, 1.0, pfa + pmd)
 
@@ -108,6 +120,8 @@ def _log_equation(h0, h1):
     return pref, delta, c, log_c
 
 
+# Đạo hàm DEP theo ngưỡng bằng f1-f0. Mọi giao điểm PDF dương đều
+# là ứng viên cực trị; giao điểm đầu tiên chưa chắc cho DEP nhỏ nhất.
 def stationary_thresholds(h0, h1):
     """Tìm mọi nghiệm dương f0=f1 bằng chia miền đơn điệu của log-PDF.
 
@@ -149,6 +163,7 @@ def stationary_thresholds(h0, h1):
             if f_right == 0:
                 y_roots.append(right)
             if np.signbit(f_left) != np.signbit(f_right):
+                # Giải nghiệm trong miền log để xử lý công suất rất nhỏ và tránh tràn số.
                 y_roots.append(brentq(phi, left, right, xtol=1e-12, rtol=1e-14))
     roots = []
     for y in sorted(y_roots):
@@ -163,6 +178,8 @@ def stationary_thresholds(h0, h1):
     return roots
 
 
+# So DEP tại toàn bộ điểm dừng và giá trị biên 1; không dùng một ngưỡng
+# chọn sẵn hoặc chỉ lấy giao điểm PDF đầu tiên.
 def minimize_gamma_dep(h0, h1):
     roots = stationary_thresholds(h0, h1)
     candidates = np.asarray([0.0, *roots])
@@ -215,6 +232,8 @@ def gamma_grid(h0, h1, points=300, tail_tolerance=1e-10):
                             "upper_shift_w": float(shifts[-1])}
 
 
+# CDF thực nghiệm dùng đúng quy ước detector: H1 khi công suất > ngưỡng.
+# Các mẫu H0/H1 có thể ghép cặp, không cần giả sử hai biến độc lập.
 def empirical_dep(shift_w, z0, z1):
     """Detector: chọn H1 nếu Z>x; H0 nếu Z<=x. Xử lý ties nhất quán.
 
@@ -240,9 +259,13 @@ def empirical_at_threshold(shift_w, z0, z1):
             "equal_prior_error_probability": float(total.mean() / 2), "n_fading": len(total)}
 
 
+# Tìm DEP nhỏ nhất của detector ngưỡng trên bank hiện tại. Cận DKW ở
+# validation.py mới xử lý sai số lấy mẫu khi so với DEP quần thể.
 def minimize_empirical_dep(z0, z1):
     """Quét toàn bộ điểm nhảy CDF; là minimum thực nghiệm trên chính bank."""
     z0, z1 = _paired_samples(z0, z1)
+    # CDF thực nghiệm chỉ nhảy tại các mẫu; duyệt hết điểm nhảy tránh
+    # bỏ sót ngưỡng tốt nhất do lưới ngưỡng quá thưa.
     knots = np.unique(np.r_[0.0, z0, z1])
     values = empirical_dep(knots, z0, z1)
     best = int(np.argmin(values))

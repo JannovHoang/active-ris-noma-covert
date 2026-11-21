@@ -26,6 +26,8 @@ def fresh_rng(root_seed, layout_id, role, seed):
     return np.random.default_rng(np.random.SeedSequence(fields))
 
 
+# n là số fading, pool_size là số ứng viên trong họ kiểm định,
+# n_public là K. Alpha là ngân sách sai số chung của họ này, không phải accuracy.
 def family_constants(n, pool_size, n_public, alpha):
     """Split alpha equally among DEP, public QoS, and Bob outage families.
 
@@ -38,6 +40,8 @@ def family_constants(n, pool_size, n_public, alpha):
             raise ValueError("n, pool_size and n_public must be positive integers")
     if not np.isfinite(alpha) or not 0 < alpha < 1:
         raise ValueError("alpha must lie in (0,1)")
+    # DKW áp cho hai CDF H0/H1. Sai số DEP là tổng hai sai số CDF,
+    # vì vậy dep_subtraction = 2*epsilon, đồng thời đã chia alpha theo union bound.
     epsilon = math.sqrt(math.log(12 * pool_size / alpha) / (2 * n))
     return {"n": n, "pool_size": pool_size, "alpha_family": float(alpha),
             "alpha_each_metric_family": float(alpha / 3),
@@ -46,6 +50,8 @@ def family_constants(n, pool_size, n_public, alpha):
             "outage_alpha_per_candidate": float(alpha / (3 * pool_size))}
 
 
+# Cận trên một phía cho xác suất outage; failures là số mẫu thất bại.
+# Không thấy outage trong hữu hạn mẫu vẫn không suy ra xác suất outage bằng 0.
 def binomial_upper(failures, n, alpha):
     """One-sided exact Clopper-Pearson upper confidence limit."""
     if type(n) is not int or n < 1 or type(failures) is not int or not 0 <= failures <= n:
@@ -55,6 +61,7 @@ def binomial_upper(failures, n, alpha):
     if failures == n:
         return 1.0
     if failures == 0:
+        # Công thức chính xác cho 0 lần thất bại; expm1 tránh mất chính xác số học.
         return float(-np.expm1(math.log(alpha) / n))
     return float(beta.isf(alpha, failures + 1, n - failures))
 
@@ -72,14 +79,20 @@ def statistical_screen(c, summary, samples, order, xi, pool_size, alpha):
     mb, mp = allocation["mb"], np.asarray(allocation["public"], float)
     A = mb + np.cumsum(mp[::-1])[::-1] - mp + c["kappa"] ** 2
     # gamma_j = mp_j*U/(A_j*U+1) <= mp_j/A_j, for every required decoder.
+    # Trần rate SIC cung cấp miền bị chặn cần cho bất đẳng thức Hoeffding.
     rate_caps = np.log1p(mp / A) / np.log(2)
     if np.any(rates < -1e-12) or np.any(rates > rate_caps[None, :] + 1e-10):
         raise ArithmeticError("Public rate samples exceed the theoretical SIC ceilings")
+    # Lấy cận dưới bảo thủ cho mean rate, thay vì so trực tiếp trung bình mẫu.
     lower_rates = np.maximum(0., rates.mean(axis=0) - rate_caps * constants["rate_fraction_subtraction"])
     qos = np.asarray(c["requirements"]["qos_public"])[np.asarray(order, int)]
     empirical = minimize_empirical_dep(samples["z0_willie"], samples["z1_willie"])
+    # Cận dưới DEP phải vượt yêu cầu xi; độ dư này khác DEP ước lượng điểm.
     dep_lower = float(max(0., empirical["dep"] - constants["dep_subtraction"]))
+    # Outage bị chặn phía trên, ngược chiều với DEP và QoS cần cận phía dưới.
     outage_upper = binomial_upper(int(failures.sum()), n, constants["outage_alpha_per_candidate"])
+    # Chỉ chấp nhận khi tất cả kiểm tra cùng đạt; cận có ý nghĩa dưới mô hình
+    # fading/layout và họ ứng viên đã khai báo, không bảo đảm mọi bố trí tương lai.
     checks = {
         "dep_uniform_lower_ge_xi": bool(dep_lower >= xi),
         "public_mean_rate_lower_ge_qos": bool(np.all(lower_rates >= qos)),

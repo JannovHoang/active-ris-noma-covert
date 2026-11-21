@@ -22,6 +22,8 @@ def same(a, b):
     return a == b
 
 
+# Tính lại quyết định từ thống kê và cùng các cận đã khai báo cho mọi
+# phương pháp; không chấp nhận một cờ passed chỉ vì nó đã có trong file.
 def verify_decision(row, plan, k):
     if not row["returned"]:
         if row["passed"] or row["gated_bob_rate"] != 0: raise ValueError("Missing return was counted as a pass")
@@ -37,6 +39,7 @@ def verify_decision(row, plan, k):
         raise ValueError("DEP margin changed")
 
 
+# Kiểm tra bố trí giữ riêng không lọt vào train hoặc normalizer của fold.
 def verify_cv(output, parent):
     output = Path(output)
     plan = read(output / "plan.json")
@@ -75,9 +78,14 @@ def verify_cv(output, parent):
     return rows_count
 
 
+# Kiểm tra chỉ đọc: mã nguồn, checkpoint, split, ngân sách và các bản ghi.
+# Hàm không tự sửa kết quả, không sinh nhãn hoặc huấn luyện lại.
 def check(output):
     output = Path(output).resolve()
     plan = read(output / "plan.json")
+    # So SHA-256 từng byte với bản đã chạy, bao gồm comment.
+    # verify_source_comments.py kiểm tra tương đương phần mã rồi gọi bản checker
+    # nguyên gốc trong source_snapshot; không thay hash hoặc bỏ kiểm tra dữ liệu.
     if plan.get("format") != FORMAT or plan["code_sha256"] != code_hashes(): raise ValueError("7h code/format changed")
     settings(plan["settings"])
     if not (output / "completion.json").exists():
@@ -89,10 +97,14 @@ def check(output):
     complete = read(output / "completion.json")
     if complete["plan_sha256"] != digest(output / "plan.json"): raise ValueError("Completion plan changed")
     files = verify(output, complete)
+    # Bản mã nguyên gốc phải khớp chính xác với plan; comment mới không được
+    # chép vào đây vì đây là bằng chứng của lần chạy cũ.
     verify(output / "source_snapshot", {"sha256": plan["code_sha256"]})
     train = lines(output / "inputs/train.jsonl")
     validation = lines(output / "inputs/validation.jsonl")
     source = read(output / "inputs/corpus_plan.json")
+    # Fit lại từ đúng train có nhãn để xác minh normalizer checkpoint;
+    # không dùng phép fit này để cập nhật trọng số hoặc tinh chỉnh test.
     norm = fit_normalizer([r["graph"] for r in train if r["has_label"]])
     train_ids = sorted({r["layout_id"] for r in train})
     val_ids = sorted({r["layout_id"] for r in validation})
@@ -129,6 +141,8 @@ def check(output):
                 or audited["plan_sha256"] != digest(output / "plan.json")
                 or audited["allocations_sha256"] != digest(output / "allocations_frozen.json")):
             raise ValueError("Search/audit barriers changed")
+        # Tính lại đủ tích case/seed/phương pháp/ngân sách; không chỉ kiểm tra
+        # các hàng đạt để tránh thay đổi mẫu số đánh giá.
         wanted = expected_keys(plan,job)
         if (len(proposal["rows"]) != len(wanted) or {key(r) for r in proposal["rows"]} != wanted
                 or len(audited["rows"]) != len(wanted) or {key(r) for r in audited["rows"]} != wanted):
@@ -157,6 +171,7 @@ def check(output):
                 if not math.isclose(expected_time,row["online_seconds"],abs_tol=1e-12): raise ValueError("Online timing omitted a stage")
             else: expected_calls = 0
             if row["objective_evaluations"] != expected_calls: raise ValueError("Reported objective count differs from actual budget")
+            # Kiểm lại cờ đạt, rate tính trượt và các cận từ chính thống kê đã lưu.
             verify_decision(row,plan,job["n_public"])
             calls += row["objective_evaluations"]
         if calls != proposal["objective_evaluations"]: raise ValueError("Job objective total differs")

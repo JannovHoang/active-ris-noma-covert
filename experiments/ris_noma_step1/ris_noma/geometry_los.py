@@ -25,6 +25,8 @@ def fingerprint(value):
     return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()).hexdigest()
 
 
+# Tạo tọa độ ULA trong mặt phẳng 2D; carrier_hz tính bằng Hz, center bằng m.
+# spacing_wavelengths là khoảng cách phần tử theo đơn vị bước sóng.
 def array_elements(center, count, carrier_hz, spacing_wavelengths, axis):
     center, axis = np.asarray(center, float), np.asarray(axis, float)
     if center.shape != (2,) or axis.shape != (2,) or not np.all(np.isfinite(np.r_[center, axis])):
@@ -37,14 +39,18 @@ def array_elements(center, count, carrier_hz, spacing_wavelengths, axis):
     if norm == 0:
         raise ValueError("Array axis cannot be zero")
     wavelength = SPEED_OF_LIGHT / carrier_hz
+    # Đặt tâm hình học của hàng phần tử đúng tại tọa độ RIS đã khai báo.
     offsets = (np.arange(count) - (count - 1) / 2) * spacing_wavelengths * wavelength
     return center + offsets[:, None] * (axis / norm)[None, :]
 
 
+# Chỉ tính chênh lệch pha lan truyền từng phần tử so với tâm RIS.
+# Suy hao biên độ vẫn dùng khoảng cách tới tâm, không phải mô hình EM đầy đủ.
 def relative_los_phases(points, center, elements, wavelength):
     points, center, elements = np.asarray(points, float), np.asarray(center, float), np.asarray(elements, float)
     if points.ndim != 2 or points.shape[1] != 2 or not np.all(np.isfinite(points)):
         raise ValueError("LoS endpoints require finite 2D coordinates")
+    # Khoảng cách endpoint-phần tử cho từng liên kết; shape (số endpoint, N).
     distances = np.linalg.norm(points[:, None, :] - elements[None, :, :], axis=-1)
     reference = np.linalg.norm(points - center, axis=-1)
     if np.any(distances <= 0) or np.any(reference <= 0) or wavelength <= 0:
@@ -54,6 +60,8 @@ def relative_los_phases(points, center, elements, wavelength):
     return np.angle(np.exp(-2j * np.pi * (distances - reference[:, None]) / wavelength))
 
 
+# legacy giữ LoS tường minh cũ; geometry đổi pha theo hình học;
+# geometry_friis còn thay hệ số suy hao tham chiếu theo Friis.
 def apply_profile(c, layout, profile, deployment, settings):
     if profile not in PROFILES:
         raise ValueError("Unknown 7d channel profile")
@@ -67,6 +75,7 @@ def apply_profile(c, layout, profile, deployment, settings):
         c["los"] = {"mode": "explicit_phases", "ar_phase_rad": phases[0].tolist(), "ru_phase_rad": phases[1:].tolist()}
     if profile == "geometry_friis":
         d0 = c["pathloss"]["reference_distance_m"]
+        # Hệ số độ lợi công suất tham chiếu tại d0; chỉ áp cho profile Friis.
         beta0 = float((wavelength / (4 * np.pi * d0)) ** 2)
         c["pathloss"].update(beta0_ar=beta0, beta0_ru=beta0)
         pl = c["pathloss"]
@@ -95,6 +104,8 @@ def channel_context(plan, source, dataset_plan, job, role):
     adapted["base_config"]["positions"].update(alice=job["deployment"]["alice"], ris=job["deployment"]["ris"])
     c, layout = geometry(dataset_plan, adapted, job, samples)
     c, layout, metadata = apply_profile(c, layout, job["profile"], job["deployment"], settings)
+    # Role tách search/selection/audit thành các luồng fading độc lập.
+    # Giữ cùng layout/K giúp ghép cặp các phương pháp trên cùng đầu vào.
     entropy = [c["root_seed"], job["layout_id"], job["n_public"], STREAMS[role]]
     # Profile/deployment are intentionally absent: comparisons use common
     # normalized NLoS draws, while each bank ROLE is independent.

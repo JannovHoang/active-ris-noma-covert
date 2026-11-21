@@ -6,12 +6,18 @@ import numpy as np
 from .config import dbm_to_w
 
 
+# Ngân sách công suất trung bình: trừ công suất mạch rồi chia phần còn lại
+# cho Alice và khuếch đại RIS. Các công suất trả về đều có đơn vị watt.
 def power_budget(c, loss_ar, s):
     if not c["bounds"]["s"][0] <= s <= c["bounds"]["s"][1]:
         raise ValueError("s nằm ngoài bounds")
     n = c["n_ris"]
+    # P0 là phần công suất sử dụng được sau chi phí mạch của N phần tử.
     p0 = float(dbm_to_w(c["total_dbm"]) - n * sum(c["circuit_w"].values()))
+    # s dành cho khuếch đại RIS; 1-s dành cho công suất phát Alice.
     pa, pris = (1 - s) * p0, s * p0
+    # rho2 là bình phương hệ số khuếch đại chung, suy từ ngân sách đầu ra RIS
+    # trung bình; không phải biến pha và không phải công suất watt.
     rho2 = pris / (n * (pa / loss_ar + dbm_to_w(c["noise_dbm"]["ris"])))
     return {"p0_w": p0, "pa_w": pa, "pris_w": pris, "rho2": float(rho2), "rho": float(np.sqrt(rho2))}
 
@@ -35,29 +41,38 @@ def evaluate_candidate(c, layout, bank, order, mb, mp, s):
     noise_dbm = c["noise_dbm"]
     receiver_noise = dbm_to_w(np.r_[noise_dbm["bob"], np.asarray(noise_dbm["public"])[order], noise_dbm["willie"]])
     sigma_r2 = float(dbm_to_w(noise_dbm["ris"]))
+    # Chất lượng tín hiệu so với tổng nhiễu khuếch đại RIS và nhiễu thu.
+    # Phân bổ NOMA và méo phần cứng được đưa vào các SINR phía dưới.
     U = pa * g / (sigma_r2 * q + receiver_noise[None, :])
     k2 = c["kappa"] ** 2
+    # Nhiễu giao thoa chưa khử khi giải stream j: Bob + public giải sau + méo.
     A = mb + (np.cumsum(mp[::-1])[::-1] - mp) + k2
     # gamma[:,receiver,j]; chỉ các decoder cần thiết được dùng trong rate/outage.
     gamma = mp[None, None, :] * U[:, :, None] / (A[None, None, :] * U[:, :, None] + 1)
+    # Sau khi khử public lý tưởng, Bob vẫn chịu méo phần cứng và nhiễu.
     gamma_b = mb * U[:, 0] / (k2 * U[:, 0] + 1)
     rb = np.log2(1 + gamma_b)
     public_rates = np.empty((M, K))
     for j in range(K):
         decoders = np.r_[0, np.arange(j + 1, K + 1)]
+        # Rate stream j bị giới hạn bởi decoder yếu nhất phải giải được stream đó.
         public_rates[:, j] = np.log2(1 + gamma[:, decoders, j]).min(axis=1)
 
     req = c["requirements"]
     targets = np.asarray(req["target_public"])[order]
     thresholds = np.expm1(np.log(2) * targets)
     threshold_b = float(np.expm1(np.log(2) * req["target_bob"]))
+    # Độ dư giải mã d_j = m_j - Gamma_j*A_j. D_j không dương làm
+    # mục tiêu SIC bất khả thi, kể cả khi kênh mạnh vô hạn.
     d_public = mp - thresholds * A
     d_bob = mb - threshold_b * k2
+    # Bob outage nếu trượt bất kỳ public stream cần khử hoặc chính stream Bob.
     failure_b = np.any(gamma[:, 0, :] < thresholds[None, :], axis=1) | (gamma_b < threshold_b)
     if np.any(d_public <= 0) or d_bob <= 0:
         bound_b = np.inf
     else:
         bound_b = float(max(np.max(thresholds / d_public), threshold_b / d_bob))
+    # Đối chiếu cách đếm outage trực tiếp với điều kiện ngưỡng tương đương.
     failure_b_threshold = U[:, 0] < bound_b
     if not np.array_equal(failure_b, failure_b_threshold):
         raise ArithmeticError("Outage theo chuỗi SIC và ngưỡng tương đương không khớp")
@@ -67,6 +82,8 @@ def evaluate_candidate(c, layout, bank, order, mb, mp, s):
     p_out = float(failure_b.mean())
 
     # (9.6)-(9.10): public powers và rho giữ nguyên dưới H0,H1.
+    # Công suất Willie dưới H0: không có stream Bob; phần public vẫn phát.
+    # H1 thêm stream Bob và thay đổi phương sai méo theo mô hình đã chọn.
     v0 = (1 + k2) * (1 - mb) * pa * g[:, -1] + sigma_r2 * q[:, -1] + receiver_noise[-1]
     v1 = (1 + k2) * pa * g[:, -1] + sigma_r2 * q[:, -1] + receiver_noise[-1]
     expected_delta = (1 + k2) * mb * pa * g[:, -1]

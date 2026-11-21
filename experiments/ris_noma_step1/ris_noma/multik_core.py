@@ -29,6 +29,8 @@ def sic_order(order, k):
     return order.astype(int)
 
 
+# Giải mã K+1 biến PSO thành mb, K phần công suất public và s.
+# mb và s là tỷ lệ không có đơn vị; K là số public user, khác hệ số Rician.
 def decode_allocation(z, k, bounds):
     """K+1 PSO coordinates: mb, K-1 sorted simplex cuts, s.
 
@@ -40,12 +42,17 @@ def decode_allocation(z, k, bounds):
     z = np.asarray(z, float)
     if z.shape != (k + 1,) or not np.all(np.isfinite(z)) or np.any((z < 0) | (z > 1)):
         raise ValueError("Need K+1 finite PSO coordinates in [0,1]")
+    # Ánh xạ tuyến tính tọa độ [0,1] về khoảng mb đã khai báo.
     mb = bounds["mb"][0] + np.ptp(bounds["mb"]) * z[0]
     s = bounds["s"][0] + np.ptp(bounds["s"]) * z[-1]
+    # K-1 điểm cắt chia ngân sách public thành K đoạn không âm.
+    # Tổng các đoạn bằng 1-mb, nên mb + sum(public) = 1.
     public = (1 - mb) * np.diff(np.r_[0., np.sort(z[1:-1]), 1.])
     return float(mb), public, float(s)
 
 
+# Kiểm tra vector [mb, public theo ID gốc, s]; chỉ sửa sai số làm tròn nhỏ.
+# Hàm này không chứng nhận DEP, QoS hoặc outage.
 def physical_allocation(values, k, bounds):
     """Correct float32 simplex rounding only; never repair physical failures."""
     public_count(k)
@@ -65,6 +72,8 @@ def physical_allocation(values, k, bounds):
     return y
 
 
+# Chuyển public đang theo hạng SIC về ID người dùng gốc và tìm tọa độ PSO
+# tương ứng. Nhờ đó nhãn, đầu ra mạng và nghiệm PSO dùng cùng quy ước lưu trữ.
 def original_allocation(mb, public, s, order, bounds):
     k = len(public)
     order = sic_order(order, k)
@@ -72,6 +81,7 @@ def original_allocation(mb, public, s, order, bounds):
     y = np.r_[mb, np.zeros(k), s]
     y[1:-1][order] = p
     y = physical_allocation(y, k, bounds)
+    # Cộng dồn tỷ trọng public để khôi phục các điểm cắt của phép giải mã.
     cuts = np.cumsum(y[1:-1][order] / (1 - y[0]))[:-1]
     z = np.r_[(y[0] - bounds["mb"][0]) / np.ptp(bounds["mb"]), cuts,
               (y[-1] - bounds["s"][0]) / np.ptp(bounds["s"])]
@@ -85,6 +95,8 @@ def original_allocation(mb, public, s, order, bounds):
     return y, z
 
 
+# Tiện ích tương thích cấu hình nhiều K. Quy tắc LoS tường minh ở đây
+# là quy tắc cũ; profile hình học được áp dụng riêng trong geometry_los.py.
 def extend_config(base, k, overrides=None):
     """Preserve supplied explicit LoS vectors; add deterministic public vectors.
 
@@ -138,20 +150,26 @@ class MultiKObjective:
         self.k = public_count(c["n_public"])
         self.order = sic_order(order, self.k)
         self.c, self.layout = c, layout
+        # Chỉ lấy Bob và public, sắp public theo SIC; Willie được xử lý riêng cho DEP.
         columns = np.r_[0, self.order + 1]
         self.g, self.q = bank.signal_gain_tilde[:, columns], bank.noise_gain_tilde[:, columns]
+        # Đổi nhiễu thu từ dBm sang watt trước khi cộng và chia trong SINR.
         self.receiver_noise = dbm_to_w(np.r_[c["noise_dbm"]["bob"], np.asarray(c["noise_dbm"]["public"])[self.order]])
         self.sigma_r2, self.sigma_w2 = float(dbm_to_w(c["noise_dbm"]["ris"])), float(dbm_to_w(c["noise_dbm"]["willie"]))
         self.k2 = c["kappa"] ** 2
         req = c["requirements"]
         self.qos = np.asarray(req["qos_public"])[self.order]
+        # Đổi mục tiêu rate R (bit/s/Hz) thành ngưỡng SINR Gamma = 2**R - 1.
         self.target = np.expm1(np.log(2) * np.asarray(req["target_public"])[self.order])
         self.target_b = float(np.expm1(np.log(2) * req["target_bob"]))
         self.outage_limit = req["outage_bob_max"]
         x, y = np.abs(bank.h_tilde[:, -1]) ** 2, np.abs(bank.g_scalar_tilde[:, -1]) ** 2
+        # Cache moment tín hiệu/nhiễu tại Willie để mỗi lần chấm PSO không phải
+        # sinh lại kênh. Bank tìm kiếm được giữ cố định trong cả lượt tối ưu.
         self.xy_mean = np.array([x.mean(), y.mean()])
         self.xy_var = np.array([x.var(ddof=c.get("moment_ddof", 1)), y.var(ddof=c.get("moment_ddof", 1))])
         means = bank.signal_gain_tilde.mean(axis=0)
+        # Kiểm tra giả định Bob có độ lợi trung bình lớn hơn mọi public user.
         self.layout_eligible = bool(means[0] > np.max(means[1:-1]))
 
     def evaluate(self, z, xi):
@@ -160,22 +178,34 @@ class MultiKObjective:
         mb, mp, s = decode_allocation(z, self.k, self.c["bounds"])
         budget = power_budget(self.c, self.layout.loss_ar, s)
         pa, rho2 = budget["pa_w"], budget["rho2"]
+        # U là chất lượng kênh chuẩn hóa chưa chứa phân bổ NOMA và méo phần cứng.
+        # Viết nhiễu thu/rho2 tương đương chia cả tử và mẫu SINR cho rho2.
         U = pa * self.g / (self.sigma_r2 * self.q + self.receiver_noise[None, :] / rho2)
+        # A_j gồm mb, các public stream giải mã sau j và kappa**2.
         A = mb + np.cumsum(mp[::-1])[::-1] - mp + self.k2
+        # Rate trung bình Bob sau SIC lý tưởng; méo phần cứng và nhiễu vẫn còn.
         rb = float(np.log2(1 + mb * U[:, 0] / (self.k2 * U[:, 0] + 1)).mean())
+        # Mỗi public stream phải được giải mã tại user đích và mọi decoder SIC
+        # cần thiết. Dùng decoder yếu nhất, đồng thời tính cả Bob ở dòng kế tiếp.
         weakest_public = np.minimum.accumulate(U[:, 1:][:, ::-1], axis=1)[:, ::-1]
         weakest = np.minimum(U[:, :1], weakest_public)
         rates = np.log2(1 + mp[None, :] * weakest / (A[None, :] * weakest + 1)).mean(axis=0)
+        # Độ dư d_j và d_b phải dương thì mục tiêu giải mã mới có thể đạt.
+        # Khi dương, toàn chuỗi SIC tại Bob quy về một ngưỡng duy nhất trên U_b.
         margins, margin_b = mp - self.target * A, mb - self.target_b * self.k2
         margin_ok = bool(np.all(margins > 0) and margin_b > 0)
         outage = (float(np.mean(U[:, 0] < max(float(np.max(self.target / margins)), self.target_b / margin_b)))
                   if margin_ok else 1.)
         a1 = (1 + self.k2) * pa / (self.layout.loss_ar * self.layout.loss_ru[-1])
         b = self.sigma_r2 / self.layout.loss_ru[-1]
+        # Moment matching Gamma dùng phương sai xấp xỉ bỏ covariance X,Y,
+        # đúng quy ước bộ chấm tìm kiếm; audit thực nghiệm được thực hiện riêng.
         laws = [fit_gamma(float(rho2 * (ai * self.xy_mean[0] + b * self.xy_mean[1])),
                           float(rho2 ** 2 * (ai ** 2 * self.xy_var[0] + b ** 2 * self.xy_var[1])))
                 for ai in ((1 - mb) * a1, a1)]
         dep = minimize_gamma_dep(*laws)
+        # Chuẩn hóa mức thiếu hụt để PSO so sánh các nghiệm chưa khả thi.
+        # Một rate cao không đủ để phương án được coi là đạt.
         violations = {"covertness": float(max(0., xi - dep["dep_min"]) / xi),
                       "qos": float(np.maximum(0., self.qos - rates).dot(1 / self.qos)),
                       "outage": float(max(0., outage - self.outage_limit) / self.outage_limit),

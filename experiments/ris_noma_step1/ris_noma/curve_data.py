@@ -52,6 +52,8 @@ def ordered_ints(value, minimum=0):
             and value == sorted(set(value)))
 
 
+# Kiểm tra thiết kế đường cong học: prefix train lồng nhau, validation cố định
+# và các ID/K test dành riêng không được dùng để tạo nhãn hoặc chọn mô hình.
 def validate_settings(settings):
     c = deepcopy(settings)
     if set(c) != FIELDS or c["scope"] not in ("smoke", "development_pilot"):
@@ -164,6 +166,8 @@ def source_hashes(dataset, training):
     return {copy: sha256(roots[role]/name) for copy, (role, name) in COPIES.items()}
 
 
+# Đối chiếu nguồn 7e/7f và lên kế hoạch chi phí trước khi chạy nhãn.
+# Các mốc 32/64/128 thêm bố trí độc lập, không chỉ thêm fading cùng bố trí.
 def inspect(dataset, training, settings, workers=2):
     dataset, training = Path(dataset).resolve(), Path(training).resolve()
     baseline = check_7f(training, dataset)
@@ -210,6 +214,8 @@ def inspect(dataset, training, settings, workers=2):
         raise ValueError("GNN/MLP parameter counts must match within 1% at each size")
     if any(parameters["small"][k] >= parameters["reference"][k] for k in ("gnn", "mlp")):
         raise ValueError("Small models must have fewer parameters")
+    # Giữ danh sách mã nguồn gắn với kết quả. Comment cũng làm đổi SHA-256;
+    # kiểm tra kết quả cũ cần dùng bản source_snapshot gốc, không sửa mã băm đã lưu.
     files = tuple(dict.fromkeys((*old_fit["code_sha256"], *NUMERIC_FILES)))
     count = len(c["training_sizes"])*2*2*len(c["training"]["seeds"])
     return {"step": "7g", "format": FORMAT, "config": c, "workers": workers,
@@ -230,6 +236,7 @@ def inspect(dataset, training, settings, workers=2):
             "final_test_policy": "reserved layout IDs only; no test graphs, labels, channels or predictions in 7g"}
 
 
+# Tạo corpus tách riêng dữ liệu nguồn và lưu bản chụp cấu hình/mã nguồn.
 def initialize(corpus, dataset, training, settings, workers=2, resume=False):
     corpus = Path(corpus).resolve()
     for source in (Path(dataset).resolve(), Path(training).resolve()):
@@ -279,6 +286,8 @@ def label_task(arguments):
     if (folder/"completion.json").exists():
         verify_manifest(folder, read_json(folder/"completion.json")["sha256"])
         return job["id"]
+    # Mỗi nhóm nhãn phải đi đúng thứ tự search -> selection -> audit,
+    # dùng các bank độc lập; tái sử dụng worker giữ cùng mô hình với 7e.
     for phase, function in (("search", search_job), ("selection", select_job), ("audit", audit_job)):
         function((str(folder), job))
         freeze(folder, phase, local)
@@ -447,6 +456,8 @@ def export_stage(corpus, plan, size):
     return info
 
 
+# Kiểm tra nhãn, split theo layout, normalizer theo từng prefix và toàn bộ
+# bản ghi gốc; không tự tạo thêm dữ liệu hoặc huấn luyện lại trong check.
 def check_corpus(corpus, size=None):
     corpus = Path(corpus).resolve()
     plan = read_json(corpus/"plan.json")

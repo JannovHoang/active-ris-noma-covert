@@ -24,6 +24,8 @@ def subset(tensors, indices):
     return part, part.pop("target")
 
 
+# Đo sai số hồi quy với trọng số hiện tại; validation không gọi backward
+# và không cập nhật tham số mạng.
 def evaluate(model, tensors, config):
     model.eval()
     n = len(tensors["node"])
@@ -81,16 +83,22 @@ def read_fit(output, kind, seed, plan):
     return manifest
 
 
+# Một fit ứng với kiến trúc và seed đã khai báo, dùng toàn bộ các K trong train.
+# Batch là một nhóm scenario; epoch là một lượt duyệt hết tập train.
 def fit(output, kind, seed, plan, bounds, train_rows, validation_rows, stop_after_epoch=None):
     folder = fit_folder(output, kind, seed)
     if (folder/"fit_manifest.json").exists():
         return read_fit(output, kind, seed, plan)
     folder.mkdir(parents=True, exist_ok=True)
     c = plan["config"]
+    # Cố định luồng ngẫu nhiên khởi tạo và runtime CPU cho lần huấn luyện này.
     configure_runtime(seed, 1, "cpu")
     model = build_model(kind, bounds, c)
+    # Adam cập nhật tham số theo gradient của loss; weight_decay là hệ số
+    # regularization đã được khai báo trong cấu hình.
     optimizer = torch.optim.Adam(model.parameters(), lr=c["learning_rate"], weight_decay=c["weight_decay"])
     random = np.random.default_rng(seed)
+    # Train và validation đều dùng cùng normalizer chỉ fit trên train.
     train = packed(train_rows, plan["normalization"])
     validation = packed(validation_rows, plan["normalization"])
     pointer = folder/"resume.json"
@@ -105,6 +113,7 @@ def fit(output, kind, seed, plan, bounds, train_rows, validation_rows, stop_afte
                 or resume["kind"] != kind or resume["seed"] != seed):
             raise ValueError("7g optimizer resume belongs to another plan")
         model.load_state_dict(resume["model"])
+        # Resume khôi phục cả trạng thái Adam và RNG, không chỉ trọng số mạng.
         optimizer.load_state_dict(resume["optimizer"])
         random.bit_generator.state = resume["numpy_rng"]
         torch.set_rng_state(resume["torch_rng"])
@@ -121,6 +130,8 @@ def fit(output, kind, seed, plan, bounds, train_rows, validation_rows, stop_afte
         start_epoch = 0
     started = time.perf_counter()
 
+    # Lưu trạng thái tiếp tục ở ranh giới epoch; ghi xong checkpoint mới cập nhật
+    # con trỏ, tránh coi một file ghi dở là trạng thái hợp lệ.
     def save_progress(epoch):
         path = folder/f"resume_e{epoch:04d}.pt"
         save_torch(path, {"format":"nested_learning_resume_7g_v1", "plan_sha256":plan["plan_sha256"],
@@ -134,27 +145,39 @@ def fit(output, kind, seed, plan, bounds, train_rows, validation_rows, stop_afte
             if old != path:
                 old.unlink()
 
+    # Epoch kế tiếp bắt đầu sau epoch đã lưu; không lặp lại các epoch đã commit.
     for epoch in range(start_epoch+1,c["epochs"]+1):
         model.train()
+        # Xáo trộn thứ tự train ở mỗi epoch; không trộn validation vào batch train.
         indices = random.permutation(len(train_rows))
         for start in range(0,len(indices),c["batch_size"]):
             batch,target = subset(train,indices[start:start+c["batch_size"]])
+            # Xóa gradient batch trước, vì PyTorch mặc định cộng dồn gradient.
             optimizer.zero_grad(set_to_none=True)
             weights = c["loss_weights"]
+            # Forward dự đoán phân bổ, rồi so với nhãn PSO bằng weighted MSE.
+            # Bộ kiểm định vật lý không được dùng để lấy gradient trong lần fit này.
             loss = balanced_allocation_loss(model(**batch),target,batch["node_mask"],weights["mb"],weights["public_total"],weights["s"])
             if not torch.isfinite(loss):
                 raise ArithmeticError("Nonfinite mixed-K supervised loss")
+            # Backpropagation tính đạo hàm loss theo mọi tham số có thể học.
             loss.backward()
+            # Giới hạn chuẩn gradient để giảm bước cập nhật quá lớn; đây khác với
+            # clip vận tốc PSO hoặc clip các hệ số phân bổ.
             torch.nn.utils.clip_grad_norm_(model.parameters(),c["gradient_clip"],error_if_nonfinite=True)
+            # Adam sử dụng gradient vừa tính để cập nhật trọng số một lần cho batch.
             optimizer.step()
         train_error, val_error = evaluate(model,train,c), evaluate(model,validation,c)
         history.append(history_row(epoch,train_error,val_error))
+        # Lưu ứng viên tốt nhất theo validation loss; bước chọn vật lý cuối cùng
+        # được thực hiện riêng trên tập validation đã khai báo.
         if val_error["weighted_loss"] < best_errors["weighted_loss"]:
             best_state,best_epoch,best_errors = deepcopy(model.state_dict()),epoch,val_error
         if epoch in c["snapshot_epochs"]:
             save_torch(folder/"snapshots"/f"epoch_{epoch:04d}.pt",checkpoint(model,model.state_dict(),kind,seed,epoch,plan,bounds,val_error))
         if epoch%c["resume_every"]==0 or epoch in c["snapshot_epochs"] or epoch==c["epochs"] or epoch==stop_after_epoch:
             save_progress(epoch)
+        # Chỉ in tiến độ ở các mốc để giảm log; các epoch ở giữa vẫn được chạy.
         if epoch==1 or epoch%20==0 or epoch==c["epochs"]:
             print(f"7g {kind} seed={seed} epoch={epoch}: train={train_error['weighted_loss']:.6g} val={val_error['weighted_loss']:.6g}",flush=True)
         if epoch==stop_after_epoch:

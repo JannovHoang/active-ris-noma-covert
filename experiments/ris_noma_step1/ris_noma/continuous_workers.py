@@ -20,19 +20,26 @@ def read_group(output,phase,job):
         raise ValueError('Group belongs to a different 7e plan')
     return result
 
+# Tạo kho ứng viên PSO cho một layout/K. Bank search được dùng để tối ưu;
+# chưa truy cập fading selection hoặc audit.
 def search_job(arguments):
     output,job=arguments;output=Path(output);plan=read_json(output/'plan.json');cfg=plan['config']
     path=output/'search'/(job['id']+'.json')
     if read_group(output,'search',job) is not None:return job['id']
+    # Xác định thứ tự SIC từ bank đầu vào và giữ nguyên khi chọn/kiểm định nhãn.
     c,layout,bank,meta=physical_context(plan,output,job,'search');order=public_order(bank)
+    # Ngân sách gồm bầy khởi tạo: 30 hạt * sweeps = số lần chấm đã khai báo.
     settings=PSOSettings(**dict(plan['pso_settings'],swarm_size=30,sweeps=cfg['pso_evaluations']//30))
     cases=[];total=0;eligible=None
     for case in job['cases']:
         physical=dict(c,total_dbm=case['power_dbm'])
+        # Biên tìm kiếm QoS và DEP giúp tránh nghiệm sát biên; mục tiêu kiểm định
+        # cuối vẫn là QoS/DEP gốc của case.
         objective=MarginObjective(physical,layout,bank,order,cfg['search_qos_margin'])
         if eligible is None:eligible=objective.layout_eligible
         pools=[]
         if eligible:
+            # Nhiều seed PSO tạo các lần tìm kiếm khác nhau trên cùng scenario/bank.
             for seed in cfg['pso_seeds']:
                 pool=search_pool(objective,physical,order,case['xi']+cfg['search_dep_margin'],settings,
                     pso_rng(c['root_seed'],job,seed,case['case_index']))
@@ -51,16 +58,22 @@ def search_job(arguments):
         'layout_eligible':bool(eligible),'objective_evaluations':total,'plan_sha256':sha256(output/'plan.json')})
     return job['id']
 
+# Chỉ lấy ứng viên vừa khả thi ở search vừa qua selection độc lập.
+# Trong tập đó ưu tiên rate Bob cao nhất; không bảo đảm tối ưu toàn cục.
 def choose_label(candidates):
     valid=[x for x in candidates if x['search_feasible'] and x['passed']]
     return min(valid,key=lambda x:(-x['physical']['bob_rate'],x['candidate_id'])) if valid else None
 
+# Chấm kho đã cố định trên bank selection mới. Toàn bộ search phải hoàn tất
+# trước khi bank này được phép sinh, tránh tối ưu ngược theo validation.
 def select_job(arguments):
     output,job=arguments;output=Path(output)
     if not (output/'search_frozen.json').exists():raise ValueError('Freeze every search before selection bank generation')
     if read_group(output,'selection',job) is not None:return job['id']
     plan=read_json(output/'plan.json');cfg=plan['config'];search=read_group(output,'search',job)
     c,layout,bank,meta=physical_context(plan,output,job,'selection');order=np.asarray(search['order'],int)
+    # Họ kiểm định bao phủ mọi case, seed và vị trí trong kho ứng viên;
+    # không chỉ tính ứng viên cuối cùng đã chọn.
     family=len(job['cases'])*len(cfg['pso_seeds'])*ARCHIVE_SIZE
     alpha=cfg['alpha']/(2*len(plan['jobs']));rows=[]
     for case in search['cases']:
@@ -81,6 +94,8 @@ def select_job(arguments):
         'search_frozen_sha256':sha256(output/'search_frozen.json'),'plan_sha256':sha256(output/'plan.json')})
     return job['id']
 
+# Dùng bank thứ ba để báo cáo nhãn đã chọn. Audit không đổi nhãn,
+# không chọn lại và không lọc bỏ các nhãn trượt để làm đẹp dữ liệu.
 def audit_job(arguments):
     output,job=arguments;output=Path(output)
     if not (output/'selection_frozen.json').exists():raise ValueError('Freeze every selection before final audit bank generation')

@@ -11,9 +11,13 @@ LABELS = {"full_pso": "Full PSO", "random_short_pso": "PSO ngắn ngẫu nhiên"
           "mlp_short_pso": "MLP + PSO ngắn", "gnn_short_pso": "GNN + PSO ngắn"}
 
 
+# Tổng hợp mọi lượt đã khai báo, kể cả trượt. pass_fraction đo khả thi
+# vật lý, không đo dự đoán trùng nhãn PSO hay accuracy phân loại.
 def metrics(rows):
     if not rows: raise ValueError("Empty benchmark denominator")
     good = [r for r in rows if not r.get("invalid_layout_assumption", False)]
+    # Chỉ dùng tập này cho rate_on_passed. Gated rate bên dưới lấy trung bình
+    # trên toàn rows, trong đó ca trượt đóng góp 0.
     passed = [r for r in rows if r["passed"]]
     return {"allocations": len(rows), "scenarios": len({r["case_id"] for r in rows}),
             "layouts": len({r["layout_id"] for r in rows}), "passed": len(passed),
@@ -37,6 +41,8 @@ def grouped(rows, fields):
     return [dict(zip(fields, key), **metrics(part)) for key, part in sorted(groups.items(), key=lambda x: str(x[0]))]
 
 
+# Bootstrap ở cấp layout để giữ các case công suất/DEP và seed lặp tương quan
+# trong cùng bố trí; số fading không phải số bố trí độc lập.
 def layout_intervals(rows, resamples, seed):
     """Resample entire layouts, retaining correlated scenarios and seed repeats.
 
@@ -53,6 +59,7 @@ def layout_intervals(rows, resamples, seed):
     values = np.asarray([[len(part), sum(r["passed"] for r in part),sum(r["gated_bob_rate"] for r in part),
                           1000*sum(r["online_seconds"] for r in part)] for _,part in sorted(blocks.items())],float)
     rng = np.random.default_rng(seed)
+    # Mỗi hàng là một lần lấy lại n bố trí có hoàn lại; giữ nguyên mọi ca bên trong.
     indices = rng.integers(0,n,size=(resamples,n))
     totals = values[indices].sum(axis=1)
     for j,name in enumerate(("pass_fraction","gated_rate","mean_online_ms"),1):
@@ -60,6 +67,8 @@ def layout_intervals(rows, resamples, seed):
     return result
 
 
+# Ghép đúng case_id và replicate trước khi tính chênh lệch phương pháp.
+# Thiếu hoặc lặp một ca sẽ bị từ chối để tránh so hai mẫu khác nhau.
 def paired(left, right, resamples, seed):
     def identity(row): return row["case_id"], row["replicate"]
     a, b = {identity(r): r for r in left}, {identity(r): r for r in right}
@@ -75,6 +84,8 @@ def paired(left, right, resamples, seed):
     # Primary design has equal scenario/replicate counts per layout. Cluster means avoid pseudo-replication.
     sizes = {len(v) for v in blocks.values()}
     if len(sizes) != 1: raise ValueError("Primary paired blocks must have equal predeclared sizes")
+    # Mỗi layout đóng góp một vector chênh lệch trung bình; các seed lặp không
+    # được coi là bố trí mới độc lập.
     values = np.asarray([np.mean(blocks[k], axis=0) for k in sorted(blocks)])
     rng = np.random.default_rng(seed)
     indices = rng.integers(0, len(values), size=(resamples, len(values)))
@@ -89,6 +100,8 @@ def paired(left, right, resamples, seed):
     return result
 
 
+# Chọn ngân sách nhỏ nhất mà cả GNN và MLP hybrid cùng đạt mục tiêu
+# đã khai báo so với Full PSO trên validation; không xem test để chọn.
 def budget_selection(rows, c):
     full = metrics([r for r in rows if r["method"] == "full_pso"])
     choices = []
@@ -99,6 +112,8 @@ def budget_selection(rows, c):
                     and m["gated_rate"] >= c["budget_min_rate_ratio"]*full["gated_rate"] for m in networks.values())
         choices.append({"budget": budget, "both_networks_meet_reference_target": meets, "networks": networks})
     passing = [r["budget"] for r in choices if r["both_networks_meet_reference_target"]]
+    # Nếu không ngân sách nào đạt, vẫn ghi nhận target chưa đạt; dùng mức lớn
+    # nhất theo quy tắc định trước, không đổi tiêu chí sau khi xem kết quả.
     selected = min(passing) if passing else max(c["short_budgets"])
     random = metrics([r for r in rows if r["method"] == "random_short_pso" and r["budget"] == selected])
     direct = {kind: metrics([r for r in rows if r["method"] == kind+"_direct"]) for kind in ("gnn", "mlp")}
@@ -110,6 +125,8 @@ def budget_selection(rows, c):
             "test_used": False}
 
 
+# Xuất bảng chung, bảng theo K/DEP/công suất/CV và so sánh ghép cặp.
+# K đã thấy và K ngoại suy được tổng hợp riêng để không che lỗi zero-shot.
 def summarize(output, plan, rows):
     output = Path(output)
     enriched = []
@@ -163,6 +180,7 @@ def summarize(output, plan, rows):
     return totals
 
 
+# Vẽ từ các bản ghi đã lưu; bước vẽ không chạy PSO hoặc huấn luyện lại.
 def plot(output, plan=None, rows=None):
     import matplotlib
     matplotlib.use("Agg")

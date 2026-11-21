@@ -17,6 +17,7 @@ from ris_noma.continuous_data import parameter_cases
 from ris_noma.learning_train import configure_runtime
 
 
+# Đọc và xác minh nguồn phát triển, ước lượng công việc; chưa tạo test mới.
 def inspect(corpus, training, diagnostics, config=None):
     configure_runtime(0, 1, "cpu")
     s = bind(corpus, training, diagnostics)
@@ -41,6 +42,8 @@ def inspect(corpus, training, diagnostics, config=None):
         "certificate_alpha_per_group": workload["certificate_alpha_per_group"]}
 
 
+# Lập kế hoạch cố định trước chạy: case, seed, ngân sách, cận thống kê và
+# SHA mã nguồn. Mã băm đầy đủ phân biệt cả thay đổi comment.
 def initial_plan(source, c, workers, stage):
     if type(workers) is not int or not 1 <= workers <= 4: raise ValueError("Use 1..4 CPU workers; 2 recommended")
     workload = counts(c, source)
@@ -63,6 +66,8 @@ def initial_plan(source, c, workers, stage):
         "plan_amendment": "Choose the completed 32-layout prefix for final comparison; original 7g learning-curve seal requiring >=2 sizes is not claimed completed"}
 
 
+# Tách output khỏi nguồn đầu vào; resume chỉ tiếp tục đúng cùng một plan.
+# Không ghi đè thí nghiệm đã hoàn thành để chạy một thiết kế khác.
 def prepare(corpus, training, diagnostics, output, config, workers, resume, stage):
     configure_runtime(0, 1, "cpu")
     s = bind(corpus, training, diagnostics)
@@ -84,6 +89,8 @@ def prepare(corpus, training, diagnostics, output, config, workers, resume, stag
     return output, s, plan
 
 
+# Ghi danh sách/hash các sản phẩm của lượt chạy sau khi hoàn tất. Các hình
+# có thể vẽ lại; dữ liệu nguồn và kết quả vật lý phải giữ nguyên.
 def completion(output, plan):
     output = Path(output)
     paths = [p for p in sorted(output.rglob("*")) if p.is_file() and p.name != "protocol.json"
@@ -93,6 +100,8 @@ def completion(output, plan):
            stage=plan["stage"], final_test_generated=plan["stage"] == "final")
 
 
+# Chạy validation và chẩn đoán CV trước khi seal. Các checkpoint chính
+# được tái dùng từ 7g; không train lại mạng chính trên test.
 def develop(corpus, training, diagnostics, output, config=None, workers=2, resume=False):
     output = Path(output).resolve()
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -160,6 +169,8 @@ def pilot(corpus, training, diagnostics, output, config=None, workers=2, resume=
         return result
 
 
+# Khóa checkpoint, delta, ngân sách, phương pháp, seed, miền test và quy tắc
+# đánh giá từ validation. Đây không phải một lần tìm nghiệm hoặc train mới.
 def seal(output):
     from .checks import check
     output = Path(output).resolve()
@@ -196,6 +207,8 @@ def seal(output):
                 "final_test_generated": False, "methods": list(METHODS)}
 
 
+# Chạy thí nghiệm cuối bằng protocol đã khóa và checkpoint đã lưu.
+# Mọi phương pháp PSO đều chạy tìm kiếm online mới, không lấy nhãn PSO làm đầu ra.
 def final_test(protocol_path, output, workers=2, resume=False):
     configure_runtime(0, 1, "cpu")
     protocol_path = Path(protocol_path).resolve()
@@ -212,6 +225,8 @@ def final_test(protocol_path, output, workers=2, resume=False):
     if receipt["protocol_sha256"] != digest(protocol_path): raise ValueError("Sealed protocol bytes changed")
     if protocol.get("format") != "locked_protocol_7h_v1" or protocol["test_used_for_selection"] is not False:
         raise ValueError("A sealed 7h protocol is required")
+    # Bản strict không tự bỏ qua thay đổi comment. Để tái hiện kết quả đã công bố
+    # sau khi chú thích, chạy CLI trong source_snapshot nguyên gốc theo README.
     if protocol["code_sha256"] != code_hashes(): raise ValueError("Code changed after the development protocol was locked")
     if digest(development / "completion.json") != protocol["development_complete_sha256"]:
         raise ValueError("Development completion changed after sealing")
@@ -226,6 +241,8 @@ def final_test(protocol_path, output, workers=2, resume=False):
         raise ValueError("Final-test layout overlaps development")
     # Construct parameter schedules only after the protocol has been verified. No test labels are generated.
     jobs = []
+    # Chỉ sinh case/tọa độ test sau khi đã xác minh protocol, không dùng test
+    # để chọn ngân sách hoặc checkpoint.
     for lid in protocol["test_layout_ids"]:
         cases = parameter_cases(source["config"], source["root_seed"], lid)[:protocol["cases_per_layout_K"]]
         for k in protocol["test_public_counts"]:
