@@ -1,0 +1,1 @@
+{"scope":"smoke","sizes":[8,16,32],"seeds":[7],"ridge_alphas":[0.01,1.0,100.0],"deltas":[0.0,0.001,0.003,0.005],"physics_samples":1000,"alpha":0.05,"bootstrap_resamples":100,"bootstrap_seed":731,"evaluation_train_layouts":2,"evaluation_validation_layouts":2,"evaluation_public_counts":[2,3],"epochs_override":2,"snapshots_override":[1,2]}

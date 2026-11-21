@@ -1,0 +1,41 @@
+{
+  "scope": "smoke",
+  "training_public_counts": [
+    2
+  ],
+  "unseen_public_counts": [
+    6
+  ],
+  "splits": {
+    "train": [
+      2100
+    ],
+    "validation": [
+      2101
+    ],
+    "test": [
+      2102
+    ]
+  },
+  "power_dbm_range": [
+    30.0,
+    40.0
+  ],
+  "dep_range": [
+    0.75,
+    0.95
+  ],
+  "cases_per_layout": 2,
+  "parameter_seed": 71,
+  "search_dep_margin": 0.03,
+  "search_qos_margin": 0.01,
+  "search_samples": 1000,
+  "selection_samples": 5000,
+  "audit_samples": 5000,
+  "pso_seeds": [
+    101
+  ],
+  "pso_evaluations": 60,
+  "alpha": 0.05,
+  "profile": "geometry"
+}

@@ -1,0 +1,4 @@
+# Chỉ cần cho bước 1. Dùng luôn môi trường Conda đã cài nếu import được.
+numpy>=1.24
+matplotlib>=3.7
+# scipy, pandas, torch sẽ được dùng ở các phần sau; chưa cần cài thêm cho bước này.

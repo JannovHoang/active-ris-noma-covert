@@ -1,0 +1,18 @@
+{
+  "seeds": [7],
+  "epochs": 6,
+  "snapshot_epochs": [2, 4, 6],
+  "batch_size": 8,
+  "evaluation_batch_size": 64,
+  "learning_rate": 0.001,
+  "weight_decay": 0.0001,
+  "gradient_clip": 1.0,
+  "hidden": 64,
+  "layers": 3,
+  "mlp_inner": 224,
+  "loss_weights": {"mb": 32.0, "public_total": 2.0, "s": 1.0},
+  "resume_every": 1,
+  "validation_physics_samples": 100000,
+  "test_physics_samples": 100000,
+  "alpha": 0.05
+}

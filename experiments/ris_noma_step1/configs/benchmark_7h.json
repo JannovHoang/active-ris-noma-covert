@@ -1,0 +1,44 @@
+{
+  "scope": "main",
+  "short_budgets": [
+    150,
+    300,
+    450
+  ],
+  "full_budget": 1800,
+  "search_samples": 10000,
+  "audit_samples": 100000,
+  "search_dep_margin": 0.03,
+  "search_qos_margin": 0.01,
+  "replicates": [
+    {
+      "training_seed": 7,
+      "pso_seed": 101
+    },
+    {
+      "training_seed": 17,
+      "pso_seed": 202
+    },
+    {
+      "training_seed": 27,
+      "pso_seed": 303
+    }
+  ],
+  "cv_seed": 17,
+  "cv_epochs": 200,
+  "low_cv_threshold": 0.9,
+  "alpha": 0.05,
+  "bootstrap_resamples": 2000,
+  "bootstrap_seed": 7317,
+  "budget_max_pass_loss": 0.01,
+  "budget_min_rate_ratio": 0.95,
+  "fallback": "none",
+  "initialization": "one_prediction_plus_29_random",
+  "final_selection": "search_best",
+  "architecture": "small",
+  "training_prefix": 32,
+  "smoke_validation_jobs": null,
+  "smoke_cases_per_job": null,
+  "smoke_cv_folds": null,
+  "smoke_test_layout_ids": null
+}

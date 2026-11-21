@@ -1,0 +1,14 @@
+{
+  "training_public_counts": [2, 3, 4, 5],
+  "unseen_public_counts": [6],
+  "splits": {"train": [1900], "validation": [1901], "test": [1902]},
+  "power_dbm": [35.0],
+  "xi": [0.75, 0.95],
+  "search_margin": 0.03,
+  "search_samples": 10000,
+  "selection_samples": 100000,
+  "heldout_samples": 100000,
+  "pso_seeds": [101, 202],
+  "pso_evaluations": 300,
+  "alpha": 0.05
+}

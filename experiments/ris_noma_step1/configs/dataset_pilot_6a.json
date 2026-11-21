@@ -1,0 +1,17 @@
+{
+  "splits": {
+    "train": [200, 201, 202, 203, 204, 205, 206],
+    "validation": [207, 208],
+    "test": [209]
+  },
+  "total_power_dbm": [30.0, 35.0, 40.0],
+  "position_half_width_m": {"bob": 5.0, "willie": 4.0},
+  "pso_seeds": [1, 2],
+  "search_dep_margin": 0.02,
+  "label_samples": 10000,
+  "validation_samples": 100000,
+  "heldout_samples": 100000,
+  "alpha": 0.05,
+  "validation_seed": 1,
+  "heldout_seed": 1
+}

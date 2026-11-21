@@ -1,0 +1,1388 @@
+{
+  "scope": "main",
+  "stage": "development",
+  "methods": [
+    "full_pso",
+    "random_short_pso",
+    "mlp_direct",
+    "gnn_direct",
+    "mlp_short_pso",
+    "gnn_short_pso"
+  ],
+  "layouts": 16,
+  "unique_scenarios": 512,
+  "allocation_rows": 18432,
+  "objective_evaluations": 6912000,
+  "metrics": [
+    {
+      "regime": "seen_k",
+      "method": "full_pso",
+      "budget": 1800,
+      "allocations": 1536,
+      "scenarios": 512,
+      "layouts": 16,
+      "passed": 1512,
+      "pass_fraction": 0.984375,
+      "gated_rate": 4.594025233441592,
+      "raw_rate": 4.664791159813806,
+      "rate_on_passed": 4.666946268893045,
+      "eligible_allocations": 1512,
+      "eligible_pass_fraction": 1.0,
+      "mean_online_ms": 1994.7506356768988,
+      "median_online_ms": 1897.6169250008752,
+      "p90_online_ms": 2834.8736437510524,
+      "mean_pso_ms": 1975.1333257160913,
+      "objective_evaluations_per_return": 1800,
+      "objective_evaluations_sum": 2764800,
+      "fallback_count": 0,
+      "failure_counts": {
+        "layout_bob_mean_gain_rule": 24
+      }
+    },
+    {
+      "regime": "seen_k",
+      "method": "gnn_direct",
+      "budget": 0,
+      "allocations": 1536,
+      "scenarios": 512,
+      "layouts": 16,
+      "passed": 1500,
+      "pass_fraction": 0.9765625,
+      "gated_rate": 4.525122358863971,
+      "raw_rate": 4.633194979571468,
+      "rate_on_passed": 4.633725295476706,
+      "eligible_allocations": 1512,
+      "eligible_pass_fraction": 0.9920634920634921,
+      "mean_online_ms": 23.00391080733751,
+      "median_online_ms": 22.71154999607461,
+      "p90_online_ms": 29.55539999948087,
+      "mean_pso_ms": 0.0,
+      "objective_evaluations_per_return": 0,
+      "objective_evaluations_sum": 0,
+      "fallback_count": 0,
+      "failure_counts": {
+        "layout_bob_mean_gain_rule": 24,
+        "public_average_qos": 8,
+        "public_mean_rate_lower_ge_qos": 9,
+        "dep_uniform_lower_ge_xi": 3
+      }
+    },
+    {
+      "regime": "seen_k",
+      "method": "gnn_short_pso",
+      "budget": 150,
+      "allocations": 1536,
+      "scenarios": 512,
+      "layouts": 16,
+      "passed": 1512,
+      "pass_fraction": 0.984375,
+      "gated_rate": 4.5723009434931035,
+      "raw_rate": 4.642452167129918,
+      "rate_on_passed": 4.644877148945375,
+      "eligible_allocations": 1512,
+      "eligible_pass_fraction": 1.0,
+      "mean_online_ms": 187.88745852844121,
+      "median_online_ms": 178.07870000297044,
+      "p90_online_ms": 263.8802937431137,
+      "mean_pso_ms": 164.14847194005233,
+      "objective_evaluations_per_return": 150,
+      "objective_evaluations_sum": 230400,
+      "fallback_count": 0,
+      "failure_counts": {
+        "layout_bob_mean_gain_rule": 24
+      }
+    },
+    {
+      "regime": "seen_k",
+      "method": "gnn_short_pso",
+      "budget": 300,
+      "allocations": 1536,
+      "scenarios": 512,
+      "layouts": 16,
+      "passed": 1512,
+      "pass_fraction": 0.984375,
+      "gated_rate": 4.585602675218249,
+      "raw_rate": 4.656146231810292,
+      "rate_on_passed": 4.658390019269333,
+      "eligible_allocations": 1512,
+      "eligible_pass_fraction": 1.0,
+      "mean_online_ms": 352.4691336586822,
+      "median_online_ms": 334.70489999126585,
+      "p90_online_ms": 496.43686875424464,
+      "mean_pso_ms": 328.7301470702933,
+      "objective_evaluations_per_return": 300,
+      "objective_evaluations_sum": 460800,
+      "fallback_count": 0,
+      "failure_counts": {
+        "layout_bob_mean_gain_rule": 24
+      }
+    },
+    {
+      "regime": "seen_k",
+      "method": "gnn_short_pso",
+      "budget": 450,
+      "allocations": 1536,
+      "scenarios": 512,
+      "layouts": 16,
+      "passed": 1512,
+      "pass_fraction": 0.984375,
+      "gated_rate": 4.590371609833204,
+      "raw_rate": 4.661109306892985,
+      "rate_on_passed": 4.663234651259128,
+      "eligible_allocations": 1512,
+      "eligible_pass_fraction": 1.0,
+      "mean_online_ms": 517.4376077472781,
+      "median_online_ms": 492.51836875282606,
+      "p90_online_ms": 733.136706249752,
+      "mean_pso_ms": 493.69862115888924,
+      "objective_evaluations_per_return": 450,
+      "objective_evaluations_sum": 691200,
+      "fallback_count": 0,
+      "failure_counts": {
+        "layout_bob_mean_gain_rule": 24
+      }
+    },
+    {
+      "regime": "seen_k",
+      "method": "mlp_direct",
+      "budget": 0,
+      "allocations": 1536,
+      "scenarios": 512,
+      "layouts": 16,
+      "passed": 1496,
+      "pass_fraction": 0.9739583333333334,
+      "gated_rate": 4.520370629041182,
+      "raw_rate": 4.63552809101521,
+      "rate_on_passed": 4.641236153881855,
+      "eligible_allocations": 1512,
+      "eligible_pass_fraction": 0.9894179894179894,
+      "mean_online_ms": 22.11441022135811,
+      "median_online_ms": 21.87176874394936,
+      "p90_online_ms": 28.46926250413162,
+      "mean_pso_ms": 0.0,
+      "objective_evaluations_per_return": 0,
+      "objective_evaluations_sum": 0,
+      "fallback_count": 0,
+      "failure_counts": {
+        "layout_bob_mean_gain_rule": 24,
+        "public_average_qos": 7,
+        "public_mean_rate_lower_ge_qos": 8,
+        "dep_uniform_lower_ge_xi": 8
+      }
+    },
+    {
+      "regime": "seen_k",
+      "method": "mlp_short_pso",
+      "budget": 150,
+      "allocations": 1536,
+      "scenarios": 512,
+      "layouts": 16,
+      "passed": 1512,
+      "pass_fraction": 0.984375,
+      "gated_rate": 4.572740959958666,
+      "raw_rate": 4.642726592982712,
+      "rate_on_passed": 4.645324149799279,
+      "eligible_allocations": 1512,
+      "eligible_pass_fraction": 1.0,
+      "mean_online_ms": 186.15903997375938,
+      "median_online_ms": 177.18033750043105,
+      "p90_online_ms": 258.957712508618,
+      "mean_pso_ms": 163.3095539713499,
+      "objective_evaluations_per_return": 150,
+      "objective_evaluations_sum": 230400,
+      "fallback_count": 0,
+      "failure_counts": {
+        "layout_bob_mean_gain_rule": 24
+      }
+    },
+    {
+      "regime": "seen_k",
+      "method": "mlp_short_pso",
+      "budget": 300,
+      "allocations": 1536,
+      "scenarios": 512,
+      "layouts": 16,
+      "passed": 1512,
+      "pass_fraction": 0.984375,
+      "gated_rate": 4.586321927895408,
+      "raw_rate": 4.656813995809981,
+      "rate_on_passed": 4.659120688655652,
+      "eligible_allocations": 1512,
+      "eligible_pass_fraction": 1.0,
+      "mean_online_ms": 351.8447385415063,
+      "median_online_ms": 333.78561875770174,
+      "p90_online_ms": 498.1464250004137,
+      "mean_pso_ms": 328.99525253909684,
+      "objective_evaluations_per_return": 300,
+      "objective_evaluations_sum": 460800,
+      "fallback_count": 0,
+      "failure_counts": {
+        "layout_bob_mean_gain_rule": 24
+      }
+    },
+    {
+      "regime": "seen_k",
+      "method": "mlp_short_pso",
+      "budget": 450,
+      "allocations": 1536,
+      "scenarios": 512,
+      "layouts": 16,
+      "passed": 1512,
+      "pass_fraction": 0.984375,
+      "gated_rate": 4.590563910843538,
+      "raw_rate": 4.6612898418498325,
+      "rate_on_passed": 4.663430004666451,
+      "eligible_allocations": 1512,
+      "eligible_pass_fraction": 1.0,
+      "mean_online_ms": 515.298246940001,
+      "median_online_ms": 488.8394624963439,
+      "p90_online_ms": 729.8515812481128,
+      "mean_pso_ms": 492.4487609375916,
+      "objective_evaluations_per_return": 450,
+      "objective_evaluations_sum": 691200,
+      "fallback_count": 0,
+      "failure_counts": {
+        "layout_bob_mean_gain_rule": 24
+      }
+    },
+    {
+      "regime": "seen_k",
+      "method": "random_short_pso",
+      "budget": 150,
+      "allocations": 1536,
+      "scenarios": 512,
+      "layouts": 16,
+      "passed": 1507,
+      "pass_fraction": 0.9811197916666666,
+      "gated_rate": 4.514040631643127,
+      "raw_rate": 4.595430137889331,
+      "rate_on_passed": 4.600906708828031,
+      "eligible_allocations": 1512,
+      "eligible_pass_fraction": 0.9966931216931217,
+      "mean_online_ms": 183.63228137999008,
+      "median_online_ms": 173.94529999728547,
+      "p90_online_ms": 259.1994437534595,
+      "mean_pso_ms": 164.01497141918261,
+      "objective_evaluations_per_return": 150,
+      "objective_evaluations_sum": 230400,
+      "fallback_count": 0,
+      "failure_counts": {
+        "layout_bob_mean_gain_rule": 24,
+        "dep_uniform_lower_ge_xi": 7,
+        "covertness_gamma": 3
+      }
+    },
+    {
+      "regime": "seen_k",
+      "method": "random_short_pso",
+      "budget": 300,
+      "allocations": 1536,
+      "scenarios": 512,
+      "layouts": 16,
+      "passed": 1512,
+      "pass_fraction": 0.984375,
+      "gated_rate": 4.568620633354474,
+      "raw_rate": 4.63824149129284,
+      "rate_on_passed": 4.641138421185497,
+      "eligible_allocations": 1512,
+      "eligible_pass_fraction": 1.0,
+      "mean_online_ms": 346.95987083327395,
+      "median_online_ms": 330.0835937470765,
+      "p90_online_ms": 492.2812812483244,
+      "mean_pso_ms": 327.3425608724665,
+      "objective_evaluations_per_return": 300,
+      "objective_evaluations_sum": 460800,
+      "fallback_count": 0,
+      "failure_counts": {
+        "layout_bob_mean_gain_rule": 24
+      }
+    },
+    {
+      "regime": "seen_k",
+      "method": "random_short_pso",
+      "budget": 450,
+      "allocations": 1536,
+      "scenarios": 512,
+      "layouts": 16,
+      "passed": 1512,
+      "pass_fraction": 0.984375,
+      "gated_rate": 4.583723449046489,
+      "raw_rate": 4.6540293180012755,
+      "rate_on_passed": 4.656480964110719,
+      "eligible_allocations": 1512,
+      "eligible_pass_fraction": 1.0,
+      "mean_online_ms": 512.1910479166729,
+      "median_online_ms": 486.83773749507964,
+      "p90_online_ms": 729.315643744485,
+      "mean_pso_ms": 492.57373795586545,
+      "objective_evaluations_per_return": 450,
+      "objective_evaluations_sum": 691200,
+      "fallback_count": 0,
+      "failure_counts": {
+        "layout_bob_mean_gain_rule": 24
+      }
+    }
+  ],
+  "paired_contrasts": [
+    {
+      "regime": "seen_k",
+      "budget": 150,
+      "left": "gnn_short_pso",
+      "right": "random_short_pso",
+      "layout_clusters": 16,
+      "paired_allocations": 1536,
+      "bootstrap_resamples": 2000,
+      "interval_kind": "pointwise 95% paired layout bootstrap; descriptive, no multiple-testing p-values",
+      "pass_difference": 0.003255208333333333,
+      "pass_difference_ci95": [
+        0.0,
+        0.007161458333333333
+      ],
+      "gated_rate_difference": 0.05826031184997678,
+      "gated_rate_difference_ci95": [
+        0.04494289854536669,
+        0.07172349886852311
+      ],
+      "online_seconds_difference": 0.004255177148451139,
+      "online_seconds_difference_ci95": [
+        0.0032449387691475093,
+        0.005436649427222544
+      ],
+      "right_over_left_time_ratio": 0.977352521654302,
+      "small_cluster_count": false
+    },
+    {
+      "regime": "seen_k",
+      "budget": 150,
+      "left": "gnn_short_pso",
+      "right": "mlp_short_pso",
+      "layout_clusters": 16,
+      "paired_allocations": 1536,
+      "bootstrap_resamples": 2000,
+      "interval_kind": "pointwise 95% paired layout bootstrap; descriptive, no multiple-testing p-values",
+      "pass_difference": 0.0,
+      "pass_difference_ci95": [
+        0.0,
+        0.0
+      ],
+      "gated_rate_difference": -0.0004400164655621907,
+      "gated_rate_difference_ci95": [
+        -0.0035716045809778873,
+        0.0025888717404980665
+      ],
+      "online_seconds_difference": 0.0017284185546818283,
+      "online_seconds_difference_ci95": [
+        0.0008953438540660367,
+        0.0026592936656881475
+      ],
+      "right_over_left_time_ratio": 0.9908007774003704,
+      "small_cluster_count": false
+    },
+    {
+      "regime": "seen_k",
+      "budget": 150,
+      "left": "gnn_short_pso",
+      "right": "full_pso",
+      "layout_clusters": 16,
+      "paired_allocations": 1536,
+      "bootstrap_resamples": 2000,
+      "interval_kind": "pointwise 95% paired layout bootstrap; descriptive, no multiple-testing p-values",
+      "pass_difference": 0.0,
+      "pass_difference_ci95": [
+        0.0,
+        0.0
+      ],
+      "gated_rate_difference": -0.02172428994848792,
+      "gated_rate_difference_ci95": [
+        -0.026254617817947926,
+        -0.017407936775909544
+      ],
+      "online_seconds_difference": -1.8068631771484576,
+      "online_seconds_difference_ci95": [
+        -1.9862283965719858,
+        -1.6410847389275254
+      ],
+      "right_over_left_time_ratio": 10.616731160770618,
+      "small_cluster_count": false
+    },
+    {
+      "regime": "seen_k",
+      "budget": 300,
+      "left": "gnn_short_pso",
+      "right": "random_short_pso",
+      "layout_clusters": 16,
+      "paired_allocations": 1536,
+      "bootstrap_resamples": 2000,
+      "interval_kind": "pointwise 95% paired layout bootstrap; descriptive, no multiple-testing p-values",
+      "pass_difference": 0.0,
+      "pass_difference_ci95": [
+        0.0,
+        0.0
+      ],
+      "gated_rate_difference": 0.016982041863775874,
+      "gated_rate_difference_ci95": [
+        0.011912650305868055,
+        0.021766047321962353
+      ],
+      "online_seconds_difference": 0.005509262825408238,
+      "online_seconds_difference_ci95": [
+        0.00426339134721836,
+        0.007116288798717819
+      ],
+      "right_over_left_time_ratio": 0.9843695169326707,
+      "small_cluster_count": false
+    },
+    {
+      "regime": "seen_k",
+      "budget": 300,
+      "left": "gnn_short_pso",
+      "right": "mlp_short_pso",
+      "layout_clusters": 16,
+      "paired_allocations": 1536,
+      "bootstrap_resamples": 2000,
+      "interval_kind": "pointwise 95% paired layout bootstrap; descriptive, no multiple-testing p-values",
+      "pass_difference": 0.0,
+      "pass_difference_ci95": [
+        0.0,
+        0.0
+      ],
+      "gated_rate_difference": -0.0007192526771586097,
+      "gated_rate_difference_ci95": [
+        -0.001890376000174539,
+        0.0002634777768667434
+      ],
+      "online_seconds_difference": 0.0006243951171758985,
+      "online_seconds_difference_ci95": [
+        -0.0005680893833969709,
+        0.0017894381085791142
+      ],
+      "right_over_left_time_ratio": 0.9982285112154515,
+      "small_cluster_count": false
+    },
+    {
+      "regime": "seen_k",
+      "budget": 300,
+      "left": "gnn_short_pso",
+      "right": "full_pso",
+      "layout_clusters": 16,
+      "paired_allocations": 1536,
+      "bootstrap_resamples": 2000,
+      "interval_kind": "pointwise 95% paired layout bootstrap; descriptive, no multiple-testing p-values",
+      "pass_difference": 0.0,
+      "pass_difference_ci95": [
+        0.0,
+        0.0
+      ],
+      "gated_rate_difference": -0.008422558223342171,
+      "gated_rate_difference_ci95": [
+        -0.011341273925264983,
+        -0.005702368908195199
+      ],
+      "online_seconds_difference": -1.6422815020182164,
+      "online_seconds_difference_ci95": [
+        -1.8047974482879128,
+        -1.4917651688184101
+      ],
+      "right_over_left_time_ratio": 5.659362608495925,
+      "small_cluster_count": false
+    },
+    {
+      "regime": "seen_k",
+      "budget": 450,
+      "left": "gnn_short_pso",
+      "right": "random_short_pso",
+      "layout_clusters": 16,
+      "paired_allocations": 1536,
+      "bootstrap_resamples": 2000,
+      "interval_kind": "pointwise 95% paired layout bootstrap; descriptive, no multiple-testing p-values",
+      "pass_difference": 0.0,
+      "pass_difference_ci95": [
+        0.0,
+        0.0
+      ],
+      "gated_rate_difference": 0.006648160786714732,
+      "gated_rate_difference_ci95": [
+        0.004097290586379244,
+        0.009074163770683713
+      ],
+      "online_seconds_difference": 0.005246559830605217,
+      "online_seconds_difference_ci95": [
+        0.0029994220151669045,
+        0.007661621127914486
+      ],
+      "right_over_left_time_ratio": 0.9898604976676381,
+      "small_cluster_count": false
+    },
+    {
+      "regime": "seen_k",
+      "budget": 450,
+      "left": "gnn_short_pso",
+      "right": "mlp_short_pso",
+      "layout_clusters": 16,
+      "paired_allocations": 1536,
+      "bootstrap_resamples": 2000,
+      "interval_kind": "pointwise 95% paired layout bootstrap; descriptive, no multiple-testing p-values",
+      "pass_difference": 0.0,
+      "pass_difference_ci95": [
+        0.0,
+        0.0
+      ],
+      "gated_rate_difference": -0.0001923010103335645,
+      "gated_rate_difference_ci95": [
+        -0.0013583957964288728,
+        0.0010741024324199152
+      ],
+      "online_seconds_difference": 0.0021393608072770576,
+      "online_seconds_difference_ci95": [
+        0.00030227440568187546,
+        0.004311569174813571
+      ],
+      "right_over_left_time_ratio": 0.9958654709761219,
+      "small_cluster_count": false
+    },
+    {
+      "regime": "seen_k",
+      "budget": 450,
+      "left": "gnn_short_pso",
+      "right": "full_pso",
+      "layout_clusters": 16,
+      "paired_allocations": 1536,
+      "bootstrap_resamples": 2000,
+      "interval_kind": "pointwise 95% paired layout bootstrap; descriptive, no multiple-testing p-values",
+      "pass_difference": 0.0,
+      "pass_difference_ci95": [
+        0.0,
+        0.0
+      ],
+      "gated_rate_difference": -0.0036536236083876327,
+      "gated_rate_difference_ci95": [
+        -0.005061725461321542,
+        -0.0022965541836783227
+      ],
+      "online_seconds_difference": -1.4773130279296205,
+      "online_seconds_difference_ci95": [
+        -1.6229888976758848,
+        -1.3421432889552398
+      ],
+      "right_over_left_time_ratio": 3.8550553840902015,
+      "small_cluster_count": false
+    }
+  ],
+  "layout_confidence_intervals": [
+    {
+      "stratum_kind": "overall",
+      "regime": "seen_k",
+      "stratum": "all",
+      "method": "full_pso",
+      "budget": 1800,
+      "layout_clusters": 16,
+      "allocations": 1536,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.953125,
+        1.0
+      ],
+      "gated_rate_ci95": [
+        4.421136533703701,
+        4.696398768190577
+      ],
+      "mean_online_ms_ci95": [
+        1812.1652820735312,
+        2191.9761449442885
+      ]
+    },
+    {
+      "stratum_kind": "overall",
+      "regime": "seen_k",
+      "stratum": "all",
+      "method": "gnn_direct",
+      "budget": 0,
+      "layout_clusters": 16,
+      "allocations": 1536,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.94140625,
+        0.9974121093749999
+      ],
+      "gated_rate_ci95": [
+        4.338489819377716,
+        4.643634040048613
+      ],
+      "mean_online_ms_ci95": [
+        21.48011398930289,
+        24.71954136873033
+      ]
+    },
+    {
+      "stratum_kind": "overall",
+      "regime": "seen_k",
+      "stratum": "all",
+      "method": "gnn_short_pso",
+      "budget": 150,
+      "layout_clusters": 16,
+      "allocations": 1536,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.953125,
+        1.0
+      ],
+      "gated_rate_ci95": [
+        4.400800573290335,
+        4.672797172632265
+      ],
+      "mean_online_ms_ci95": [
+        171.1460298174489,
+        206.02767818160572
+      ]
+    },
+    {
+      "stratum_kind": "overall",
+      "regime": "seen_k",
+      "stratum": "all",
+      "method": "gnn_short_pso",
+      "budget": 300,
+      "layout_clusters": 16,
+      "allocations": 1536,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.953125,
+        1.0
+      ],
+      "gated_rate_ci95": [
+        4.412929171503625,
+        4.6869649101317545
+      ],
+      "mean_online_ms_ci95": [
+        320.7656768342529,
+        386.8873971321999
+      ]
+    },
+    {
+      "stratum_kind": "overall",
+      "regime": "seen_k",
+      "stratum": "all",
+      "method": "gnn_short_pso",
+      "budget": 450,
+      "layout_clusters": 16,
+      "allocations": 1536,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.953125,
+        1.0
+      ],
+      "gated_rate_ci95": [
+        4.417356004541907,
+        4.692130921860414
+      ],
+      "mean_online_ms_ci95": [
+        470.3330035728263,
+        568.5919180990397
+      ]
+    },
+    {
+      "stratum_kind": "overall",
+      "regime": "seen_k",
+      "stratum": "all",
+      "method": "mlp_direct",
+      "budget": 0,
+      "layout_clusters": 16,
+      "allocations": 1536,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.9381510416666666,
+        0.9967447916666666
+      ],
+      "gated_rate_ci95": [
+        4.337713632911966,
+        4.641097027363345
+      ],
+      "mean_online_ms_ci95": [
+        20.664671888040566,
+        23.767144412206182
+      ]
+    },
+    {
+      "stratum_kind": "overall",
+      "regime": "seen_k",
+      "stratum": "all",
+      "method": "mlp_short_pso",
+      "budget": 150,
+      "layout_clusters": 16,
+      "allocations": 1536,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.953125,
+        1.0
+      ],
+      "gated_rate_ci95": [
+        4.4018453360343965,
+        4.6738642421453065
+      ],
+      "mean_online_ms_ci95": [
+        170.10206794762757,
+        203.83936299956318
+      ]
+    },
+    {
+      "stratum_kind": "overall",
+      "regime": "seen_k",
+      "stratum": "all",
+      "method": "mlp_short_pso",
+      "budget": 300,
+      "layout_clusters": 16,
+      "allocations": 1536,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.953125,
+        1.0
+      ],
+      "gated_rate_ci95": [
+        4.413834286412661,
+        4.688025183768482
+      ],
+      "mean_online_ms_ci95": [
+        319.8729150599075,
+        386.674263077255
+      ]
+    },
+    {
+      "stratum_kind": "overall",
+      "regime": "seen_k",
+      "stratum": "all",
+      "method": "mlp_short_pso",
+      "budget": 450,
+      "layout_clusters": 16,
+      "allocations": 1536,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.953125,
+        1.0
+      ],
+      "gated_rate_ci95": [
+        4.417771934325629,
+        4.692288783506668
+      ],
+      "mean_online_ms_ci95": [
+        468.7105410724988,
+        565.5599792951886
+      ]
+    },
+    {
+      "stratum_kind": "overall",
+      "regime": "seen_k",
+      "stratum": "all",
+      "method": "random_short_pso",
+      "budget": 150,
+      "layout_clusters": 16,
+      "allocations": 1536,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.9479166666666666,
+        0.9986979166666666
+      ],
+      "gated_rate_ci95": [
+        4.348665780395117,
+        4.611141389963874
+      ],
+      "mean_online_ms_ci95": [
+        167.34729108251557,
+        201.09180723443185
+      ]
+    },
+    {
+      "stratum_kind": "overall",
+      "regime": "seen_k",
+      "stratum": "all",
+      "method": "random_short_pso",
+      "budget": 300,
+      "layout_clusters": 16,
+      "allocations": 1536,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.953125,
+        1.0
+      ],
+      "gated_rate_ci95": [
+        4.398872668409929,
+        4.668302686057373
+      ],
+      "mean_online_ms_ci95": [
+        316.00651300119046,
+        380.81242968090316
+      ]
+    },
+    {
+      "stratum_kind": "overall",
+      "regime": "seen_k",
+      "stratum": "all",
+      "method": "random_short_pso",
+      "budget": 450,
+      "layout_clusters": 16,
+      "allocations": 1536,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.953125,
+        1.0
+      ],
+      "gated_rate_ci95": [
+        4.41257075464531,
+        4.684373829815701
+      ],
+      "mean_online_ms_ci95": [
+        465.872297262344,
+        563.0521615251547
+      ]
+    },
+    {
+      "stratum_kind": "cv",
+      "regime": "seen_k",
+      "stratum": "regular",
+      "method": "full_pso",
+      "budget": 1800,
+      "layout_clusters": 16,
+      "allocations": 1536,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.953125,
+        1.0
+      ],
+      "gated_rate_ci95": [
+        4.421136533703701,
+        4.696398768190577
+      ],
+      "mean_online_ms_ci95": [
+        1812.1652820735312,
+        2191.9761449442885
+      ]
+    },
+    {
+      "stratum_kind": "cv",
+      "regime": "seen_k",
+      "stratum": "regular",
+      "method": "gnn_direct",
+      "budget": 0,
+      "layout_clusters": 16,
+      "allocations": 1536,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.94140625,
+        0.9974121093749999
+      ],
+      "gated_rate_ci95": [
+        4.338489819377716,
+        4.643634040048613
+      ],
+      "mean_online_ms_ci95": [
+        21.48011398930289,
+        24.71954136873033
+      ]
+    },
+    {
+      "stratum_kind": "cv",
+      "regime": "seen_k",
+      "stratum": "regular",
+      "method": "gnn_short_pso",
+      "budget": 150,
+      "layout_clusters": 16,
+      "allocations": 1536,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.953125,
+        1.0
+      ],
+      "gated_rate_ci95": [
+        4.400800573290335,
+        4.672797172632265
+      ],
+      "mean_online_ms_ci95": [
+        171.1460298174489,
+        206.02767818160572
+      ]
+    },
+    {
+      "stratum_kind": "cv",
+      "regime": "seen_k",
+      "stratum": "regular",
+      "method": "gnn_short_pso",
+      "budget": 300,
+      "layout_clusters": 16,
+      "allocations": 1536,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.953125,
+        1.0
+      ],
+      "gated_rate_ci95": [
+        4.412929171503625,
+        4.6869649101317545
+      ],
+      "mean_online_ms_ci95": [
+        320.7656768342529,
+        386.8873971321999
+      ]
+    },
+    {
+      "stratum_kind": "cv",
+      "regime": "seen_k",
+      "stratum": "regular",
+      "method": "gnn_short_pso",
+      "budget": 450,
+      "layout_clusters": 16,
+      "allocations": 1536,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.953125,
+        1.0
+      ],
+      "gated_rate_ci95": [
+        4.417356004541907,
+        4.692130921860414
+      ],
+      "mean_online_ms_ci95": [
+        470.3330035728263,
+        568.5919180990397
+      ]
+    },
+    {
+      "stratum_kind": "cv",
+      "regime": "seen_k",
+      "stratum": "regular",
+      "method": "mlp_direct",
+      "budget": 0,
+      "layout_clusters": 16,
+      "allocations": 1536,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.9381510416666666,
+        0.9967447916666666
+      ],
+      "gated_rate_ci95": [
+        4.337713632911966,
+        4.641097027363345
+      ],
+      "mean_online_ms_ci95": [
+        20.664671888040566,
+        23.767144412206182
+      ]
+    },
+    {
+      "stratum_kind": "cv",
+      "regime": "seen_k",
+      "stratum": "regular",
+      "method": "mlp_short_pso",
+      "budget": 150,
+      "layout_clusters": 16,
+      "allocations": 1536,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.953125,
+        1.0
+      ],
+      "gated_rate_ci95": [
+        4.4018453360343965,
+        4.6738642421453065
+      ],
+      "mean_online_ms_ci95": [
+        170.10206794762757,
+        203.83936299956318
+      ]
+    },
+    {
+      "stratum_kind": "cv",
+      "regime": "seen_k",
+      "stratum": "regular",
+      "method": "mlp_short_pso",
+      "budget": 300,
+      "layout_clusters": 16,
+      "allocations": 1536,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.953125,
+        1.0
+      ],
+      "gated_rate_ci95": [
+        4.413834286412661,
+        4.688025183768482
+      ],
+      "mean_online_ms_ci95": [
+        319.8729150599075,
+        386.674263077255
+      ]
+    },
+    {
+      "stratum_kind": "cv",
+      "regime": "seen_k",
+      "stratum": "regular",
+      "method": "mlp_short_pso",
+      "budget": 450,
+      "layout_clusters": 16,
+      "allocations": 1536,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.953125,
+        1.0
+      ],
+      "gated_rate_ci95": [
+        4.417771934325629,
+        4.692288783506668
+      ],
+      "mean_online_ms_ci95": [
+        468.7105410724988,
+        565.5599792951886
+      ]
+    },
+    {
+      "stratum_kind": "cv",
+      "regime": "seen_k",
+      "stratum": "regular",
+      "method": "random_short_pso",
+      "budget": 150,
+      "layout_clusters": 16,
+      "allocations": 1536,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.9479166666666666,
+        0.9986979166666666
+      ],
+      "gated_rate_ci95": [
+        4.348665780395117,
+        4.611141389963874
+      ],
+      "mean_online_ms_ci95": [
+        167.34729108251557,
+        201.09180723443185
+      ]
+    },
+    {
+      "stratum_kind": "cv",
+      "regime": "seen_k",
+      "stratum": "regular",
+      "method": "random_short_pso",
+      "budget": 300,
+      "layout_clusters": 16,
+      "allocations": 1536,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.953125,
+        1.0
+      ],
+      "gated_rate_ci95": [
+        4.398872668409929,
+        4.668302686057373
+      ],
+      "mean_online_ms_ci95": [
+        316.00651300119046,
+        380.81242968090316
+      ]
+    },
+    {
+      "stratum_kind": "cv",
+      "regime": "seen_k",
+      "stratum": "regular",
+      "method": "random_short_pso",
+      "budget": 450,
+      "layout_clusters": 16,
+      "allocations": 1536,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.953125,
+        1.0
+      ],
+      "gated_rate_ci95": [
+        4.41257075464531,
+        4.684373829815701
+      ],
+      "mean_online_ms_ci95": [
+        465.872297262344,
+        563.0521615251547
+      ]
+    }
+  ],
+  "test_opened": false,
+  "test_used_for_selection": false,
+  "scope_note": "K=2..5 and K=6 are reported separately; no pooling as an in-domain headline; intervals cluster by layout",
+  "timing_note": "Measured CPU warm-return time including amortized input-bank generation, graph, forward, delta, objective setup and PSO; independent audit excluded; cold model loading recorded separately",
+  "certificate_note": "Finite frozen proposal family under the adopted simulator, conditional on fixed geometry and iid fading; no global optimum or real-world guarantee",
+  "budget_selection": {
+    "selected_short_budget": 150,
+    "reference_target_met": true,
+    "reference_has_feasible_return": true,
+    "full_reference": {
+      "allocations": 1536,
+      "scenarios": 512,
+      "layouts": 16,
+      "passed": 1512,
+      "pass_fraction": 0.984375,
+      "gated_rate": 4.594025233441592,
+      "raw_rate": 4.664791159813806,
+      "rate_on_passed": 4.666946268893045,
+      "eligible_allocations": 1512,
+      "eligible_pass_fraction": 1.0,
+      "mean_online_ms": 1994.7506356768988,
+      "median_online_ms": 1897.6169250008752,
+      "p90_online_ms": 2834.8736437510524,
+      "mean_pso_ms": 1975.1333257160913,
+      "objective_evaluations_per_return": 1800,
+      "objective_evaluations_sum": 2764800,
+      "fallback_count": 0,
+      "failure_counts": {
+        "layout_bob_mean_gain_rule": 24
+      }
+    },
+    "candidate_budgets": [
+      {
+        "budget": 150,
+        "both_networks_meet_reference_target": true,
+        "networks": {
+          "gnn": {
+            "allocations": 1536,
+            "scenarios": 512,
+            "layouts": 16,
+            "passed": 1512,
+            "pass_fraction": 0.984375,
+            "gated_rate": 4.5723009434931035,
+            "raw_rate": 4.642452167129918,
+            "rate_on_passed": 4.644877148945375,
+            "eligible_allocations": 1512,
+            "eligible_pass_fraction": 1.0,
+            "mean_online_ms": 187.88745852844121,
+            "median_online_ms": 178.07870000297044,
+            "p90_online_ms": 263.8802937431137,
+            "mean_pso_ms": 164.14847194005233,
+            "objective_evaluations_per_return": 150,
+            "objective_evaluations_sum": 230400,
+            "fallback_count": 0,
+            "failure_counts": {
+              "layout_bob_mean_gain_rule": 24
+            }
+          },
+          "mlp": {
+            "allocations": 1536,
+            "scenarios": 512,
+            "layouts": 16,
+            "passed": 1512,
+            "pass_fraction": 0.984375,
+            "gated_rate": 4.572740959958666,
+            "raw_rate": 4.642726592982712,
+            "rate_on_passed": 4.645324149799279,
+            "eligible_allocations": 1512,
+            "eligible_pass_fraction": 1.0,
+            "mean_online_ms": 186.15903997375938,
+            "median_online_ms": 177.18033750043105,
+            "p90_online_ms": 258.957712508618,
+            "mean_pso_ms": 163.3095539713499,
+            "objective_evaluations_per_return": 150,
+            "objective_evaluations_sum": 230400,
+            "fallback_count": 0,
+            "failure_counts": {
+              "layout_bob_mean_gain_rule": 24
+            }
+          }
+        }
+      },
+      {
+        "budget": 300,
+        "both_networks_meet_reference_target": true,
+        "networks": {
+          "gnn": {
+            "allocations": 1536,
+            "scenarios": 512,
+            "layouts": 16,
+            "passed": 1512,
+            "pass_fraction": 0.984375,
+            "gated_rate": 4.585602675218249,
+            "raw_rate": 4.656146231810292,
+            "rate_on_passed": 4.658390019269333,
+            "eligible_allocations": 1512,
+            "eligible_pass_fraction": 1.0,
+            "mean_online_ms": 352.4691336586822,
+            "median_online_ms": 334.70489999126585,
+            "p90_online_ms": 496.43686875424464,
+            "mean_pso_ms": 328.7301470702933,
+            "objective_evaluations_per_return": 300,
+            "objective_evaluations_sum": 460800,
+            "fallback_count": 0,
+            "failure_counts": {
+              "layout_bob_mean_gain_rule": 24
+            }
+          },
+          "mlp": {
+            "allocations": 1536,
+            "scenarios": 512,
+            "layouts": 16,
+            "passed": 1512,
+            "pass_fraction": 0.984375,
+            "gated_rate": 4.586321927895408,
+            "raw_rate": 4.656813995809981,
+            "rate_on_passed": 4.659120688655652,
+            "eligible_allocations": 1512,
+            "eligible_pass_fraction": 1.0,
+            "mean_online_ms": 351.8447385415063,
+            "median_online_ms": 333.78561875770174,
+            "p90_online_ms": 498.1464250004137,
+            "mean_pso_ms": 328.99525253909684,
+            "objective_evaluations_per_return": 300,
+            "objective_evaluations_sum": 460800,
+            "fallback_count": 0,
+            "failure_counts": {
+              "layout_bob_mean_gain_rule": 24
+            }
+          }
+        }
+      },
+      {
+        "budget": 450,
+        "both_networks_meet_reference_target": true,
+        "networks": {
+          "gnn": {
+            "allocations": 1536,
+            "scenarios": 512,
+            "layouts": 16,
+            "passed": 1512,
+            "pass_fraction": 0.984375,
+            "gated_rate": 4.590371609833204,
+            "raw_rate": 4.661109306892985,
+            "rate_on_passed": 4.663234651259128,
+            "eligible_allocations": 1512,
+            "eligible_pass_fraction": 1.0,
+            "mean_online_ms": 517.4376077472781,
+            "median_online_ms": 492.51836875282606,
+            "p90_online_ms": 733.136706249752,
+            "mean_pso_ms": 493.69862115888924,
+            "objective_evaluations_per_return": 450,
+            "objective_evaluations_sum": 691200,
+            "fallback_count": 0,
+            "failure_counts": {
+              "layout_bob_mean_gain_rule": 24
+            }
+          },
+          "mlp": {
+            "allocations": 1536,
+            "scenarios": 512,
+            "layouts": 16,
+            "passed": 1512,
+            "pass_fraction": 0.984375,
+            "gated_rate": 4.590563910843538,
+            "raw_rate": 4.6612898418498325,
+            "rate_on_passed": 4.663430004666451,
+            "eligible_allocations": 1512,
+            "eligible_pass_fraction": 1.0,
+            "mean_online_ms": 515.298246940001,
+            "median_online_ms": 488.8394624963439,
+            "p90_online_ms": 729.8515812481128,
+            "mean_pso_ms": 492.4487609375916,
+            "objective_evaluations_per_return": 450,
+            "objective_evaluations_sum": 691200,
+            "fallback_count": 0,
+            "failure_counts": {
+              "layout_bob_mean_gain_rule": 24
+            }
+          }
+        }
+      }
+    ],
+    "random_at_selected_budget": {
+      "allocations": 1536,
+      "scenarios": 512,
+      "layouts": 16,
+      "passed": 1507,
+      "pass_fraction": 0.9811197916666666,
+      "gated_rate": 4.514040631643127,
+      "raw_rate": 4.595430137889331,
+      "rate_on_passed": 4.600906708828031,
+      "eligible_allocations": 1512,
+      "eligible_pass_fraction": 0.9966931216931217,
+      "mean_online_ms": 183.63228137999008,
+      "median_online_ms": 173.94529999728547,
+      "p90_online_ms": 259.1994437534595,
+      "mean_pso_ms": 164.01497141918261,
+      "objective_evaluations_per_return": 150,
+      "objective_evaluations_sum": 230400,
+      "fallback_count": 0,
+      "failure_counts": {
+        "layout_bob_mean_gain_rule": 24,
+        "dep_uniform_lower_ge_xi": 7,
+        "covertness_gamma": 3
+      }
+    },
+    "direct": {
+      "gnn": {
+        "allocations": 1536,
+        "scenarios": 512,
+        "layouts": 16,
+        "passed": 1500,
+        "pass_fraction": 0.9765625,
+        "gated_rate": 4.525122358863971,
+        "raw_rate": 4.633194979571468,
+        "rate_on_passed": 4.633725295476706,
+        "eligible_allocations": 1512,
+        "eligible_pass_fraction": 0.9920634920634921,
+        "mean_online_ms": 23.00391080733751,
+        "median_online_ms": 22.71154999607461,
+        "p90_online_ms": 29.55539999948087,
+        "mean_pso_ms": 0.0,
+        "objective_evaluations_per_return": 0,
+        "objective_evaluations_sum": 0,
+        "fallback_count": 0,
+        "failure_counts": {
+          "layout_bob_mean_gain_rule": 24,
+          "public_average_qos": 8,
+          "public_mean_rate_lower_ge_qos": 9,
+          "dep_uniform_lower_ge_xi": 3
+        }
+      },
+      "mlp": {
+        "allocations": 1536,
+        "scenarios": 512,
+        "layouts": 16,
+        "passed": 1496,
+        "pass_fraction": 0.9739583333333334,
+        "gated_rate": 4.520370629041182,
+        "raw_rate": 4.63552809101521,
+        "rate_on_passed": 4.641236153881855,
+        "eligible_allocations": 1512,
+        "eligible_pass_fraction": 0.9894179894179894,
+        "mean_online_ms": 22.11441022135811,
+        "median_online_ms": 21.87176874394936,
+        "p90_online_ms": 28.46926250413162,
+        "mean_pso_ms": 0.0,
+        "objective_evaluations_per_return": 0,
+        "objective_evaluations_sum": 0,
+        "fallback_count": 0,
+        "failure_counts": {
+          "layout_bob_mean_gain_rule": 24,
+          "public_average_qos": 7,
+          "public_mean_rate_lower_ge_qos": 8,
+          "dep_uniform_lower_ge_xi": 8
+        }
+      }
+    },
+    "rule": "Smallest budget at which BOTH GNN and MLP hybrids lose at most 1 percentage point feasibility and retain >=95% gated rate relative to Full PSO; if none, use largest and record target not met",
+    "claim": "Validation-only engineering target; neither a statistical noninferiority proof nor proof of learned-initialization superiority",
+    "test_used": false
+  }
+}

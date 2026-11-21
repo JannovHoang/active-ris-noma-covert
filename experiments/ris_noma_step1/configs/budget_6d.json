@@ -1,0 +1,7 @@
+{
+  "layout_ids": [300, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 313, 314, 315, 316, 317, 318, 319],
+  "budgets": [30, 60, 90, 150, 300],
+  "primary_budget": 60,
+  "cross_budget_reference": 90,
+  "bootstrap_repetitions": 5000
+}

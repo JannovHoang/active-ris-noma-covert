@@ -1,0 +1,11 @@
+{
+  "label_samples": 10000,
+  "validation_samples": 100000,
+  "heldout_samples": 100000,
+  "margins": [0.0, 0.002, 0.005, 0.01, 0.02],
+  "seeds": [1],
+  "alpha": 0.05,
+  "validation_seed": 1,
+  "heldout_seed": 1,
+  "notes": "Pilot finite margin pool, not a universal calibrated margin. PSO uses label only; validation uses simultaneous DKW/Hoeffding/exact-binomial bounds; selection is frozen before fresh heldout evaluation. Alpha is a statistical family error budget, not the covert target xi."
+}

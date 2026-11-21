@@ -1,0 +1,82 @@
+{
+  "scope": "smoke",
+  "calibration_layout_ids": [
+    1100
+  ],
+  "benchmark_layout_ids": [
+    1200
+  ],
+  "public_counts": [
+    2,
+    6
+  ],
+  "power_dbm": [
+    35.0
+  ],
+  "xi": [
+    0.85
+  ],
+  "search_margins": [
+    0.0,
+    0.03
+  ],
+  "training_seeds": [
+    7
+  ],
+  "pso_seeds": [
+    101
+  ],
+  "search_samples": 1000,
+  "selection_samples": 5000,
+  "audit_samples": 5000,
+  "full_evaluations": 90,
+  "short_evaluations": 60,
+  "alpha": 0.05,
+  "carrier_hz": 3500000000.0,
+  "spacing_wavelengths": 0.5,
+  "array_axis": [
+    0.0,
+    1.0
+  ],
+  "calibration_profiles": [
+    "legacy",
+    "geometry",
+    "geometry_friis"
+  ],
+  "benchmark_profiles": [
+    "legacy",
+    "geometry"
+  ],
+  "calibration_deployments": [
+    {
+      "id": "reference",
+      "alice": [
+        0.0,
+        0.0
+      ],
+      "ris": [
+        95.0,
+        5.0
+      ]
+    }
+  ],
+  "benchmark_deployments": [
+    {
+      "id": "reference",
+      "alice": [
+        0.0,
+        0.0
+      ],
+      "ris": [
+        95.0,
+        5.0
+      ]
+    }
+  ],
+  "calibration_xi": [
+    0.85
+  ],
+  "calibration_margin": 0.03,
+  "sic_rate_margin": 0.01,
+  "bootstrap_repetitions": 100
+}

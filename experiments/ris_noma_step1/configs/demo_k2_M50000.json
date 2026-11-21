@@ -1,0 +1,98 @@
+{
+  "profile": "demo",
+  "notes": "Illustrative numerical configuration only. Values not fixed in v4 are NOT the original project baseline.",
+  "n_ris": 32,
+  "n_public": 2,
+  "n_fading": 50000,
+  "rician_k": 1.0,
+  "kappa": 0.1,
+  "total_dbm": 40.0,
+  "root_seed": 20261102,
+  "layout_id": 0,
+  "positions": {
+    "alice": [
+      0.0,
+      0.0
+    ],
+    "ris": [
+      50.0,
+      0.0
+    ],
+    "bob": [
+      53.0,
+      0.0
+    ],
+    "willie": [
+      65.0,
+      -10.0
+    ],
+    "public_center": [
+      65.0,
+      10.0
+    ]
+  },
+  "public_half_width_m": 10.0,
+  "min_link_distance_m": 0.1,
+  "pathloss": {
+    "reference_distance_m": 1.0,
+    "beta0_ar": 0.001,
+    "beta0_ru": 0.001,
+    "exponent_ar": 2.2,
+    "exponent_ru": 2.2
+  },
+  "noise_dbm": {
+    "ris": -80.0,
+    "bob": -90.0,
+    "public": [
+      -90.0,
+      -90.0
+    ],
+    "willie": -90.0
+  },
+  "circuit_w": {
+    "switch": 0.005,
+    "dc": 0.005
+  },
+  "los": {
+    "mode": "unit_phasor_demo",
+    "ar_phase_rad": null,
+    "ru_phase_rad": null
+  },
+  "requirements": {
+    "qos_public": [
+      0.1,
+      0.1
+    ],
+    "target_public": [
+      0.1,
+      0.1
+    ],
+    "target_bob": 0.1,
+    "outage_bob_max": 0.1,
+    "xi": [
+      0.75,
+      0.8,
+      0.85,
+      0.9,
+      0.95
+    ]
+  },
+  "bounds": {
+    "mb": [
+      0.05,
+      0.49
+    ],
+    "s": [
+      0.05,
+      0.95
+    ]
+  },
+  "reference_allocation": {
+    "mb": 0.1,
+    "public": [
+      0.6,
+      0.3
+    ],
+    "s": 0.5
+  }
+}

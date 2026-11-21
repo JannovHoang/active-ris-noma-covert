@@ -1,0 +1,19 @@
+{
+  "scope": "development_pilot",
+  "seeds": [7, 17, 27],
+  "epochs": 200,
+  "snapshot_epochs": [20, 50, 100, 150, 200],
+  "batch_size": 32,
+  "evaluation_batch_size": 256,
+  "learning_rate": 0.001,
+  "weight_decay": 0.0001,
+  "gradient_clip": 1.0,
+  "hidden": 64,
+  "layers": 3,
+  "mlp_inner": 224,
+  "loss_weights": {"mb": 32.0, "public_total": 2.0, "s": 1.0},
+  "resume_every": 10,
+  "validation_physics_samples": 100000,
+  "test_physics_samples": 100000,
+  "alpha": 0.05
+}

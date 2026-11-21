@@ -1,0 +1,6 @@
+{
+  "layout_ids": [1, 2, 3, 4, 5],
+  "seeds": [1, 2, 3],
+  "study_alpha": 0.05,
+  "notes": "Exploratory K=2 Uniform-position study. Layout 0 was used during development. Allocate study_alpha equally to every requested layout before running; step 3b splits each layout budget between validation and heldout. Report rejected layouts and audit failures. This is not the final GNN test set."
+}

@@ -1,0 +1,12 @@
+{
+  "swarm_size": 30,
+  "sweeps": 60,
+  "inertia_start": 0.9,
+  "inertia_end": 0.4,
+  "cognitive": 1.5,
+  "social": 1.5,
+  "velocity_max": 0.25,
+  "initial_velocity_scale": 0.1,
+  "parameter_status": "Coefficient values inherited from the supplied Octave code; algorithm remains the v4 Python implementation.",
+  "notes": "Normalized initial V uniform[-0.1,+0.1], vmax=0.25; no constriction. 1800 evaluations. Feasibility-first, K=2 three-dimensional simplex parameterization, RNG ordering and evaluated inertia schedule differ from the original raw penalty-based PSO. Not an exact PSO trajectory reproduction."
+}

@@ -1,0 +1,35 @@
+# Python and local environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+env/
+.vscode/
+.idea/
+.ipynb_checkpoints/
+outputs/
+*.log
+*.tmp
+*.lock
+*.zip
+.env
+.env.*
+*.pem
+*.key
+
+# Internal notes and historical verification reports
+*.md
+!/README.md
+VERIFICATION*
+verification/
+sample_results*/
+
+# Duplicate early test; active tests are inside experiments
+/tests/test_pso.py
+
+# Keep the two complete, self-contained 7h result directories
+/datasets/
+/results/*
+!/results/step7h_development32/
+!/results/step7h_test40/

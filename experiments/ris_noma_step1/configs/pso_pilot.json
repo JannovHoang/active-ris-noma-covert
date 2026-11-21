@@ -1,0 +1,11 @@
+{
+  "swarm_size": 30,
+  "sweeps": 60,
+  "inertia_start": 0.90,
+  "inertia_end": 0.40,
+  "cognitive": 1.5,
+  "social": 1.5,
+  "velocity_max": 0.20,
+  "parameter_status": "pilot; cognitive/social/velocity_max are proposed, not recovered baseline values",
+  "notes": "60 sweeps include initial evaluation: 1800 candidate evaluations. Initial velocities are zero; normalized box [0,1]^3; no constriction, no mandatory power ordering."
+}

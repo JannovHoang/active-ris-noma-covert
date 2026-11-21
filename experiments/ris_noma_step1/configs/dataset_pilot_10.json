@@ -1,0 +1,12 @@
+{
+  "purpose": "pilot",
+  "splits": {
+    "train": [100, 103, 104, 105, 106, 108, 109],
+    "validation": [101, 107],
+    "test": [102]
+  },
+  "pso_seeds": [1, 2, 3],
+  "study_alpha": 0.05,
+  "heldout_seed_new": 2,
+  "notes": "10 new layouts x 5 xi, following derivation v4 section 17.2. All xi and seed variants of one layout stay together. 7/2/1 split is only a pipeline pilot. Previously inspected IDs 0..5 are excluded. IDs >=10000 are reserved for a later independently planned final GNN test. No claim that 50 graphs are enough to demonstrate GNN performance."
+}

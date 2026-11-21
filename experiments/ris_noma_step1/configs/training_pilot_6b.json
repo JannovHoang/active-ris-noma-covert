@@ -1,0 +1,17 @@
+{
+  "models": ["gnn", "mlp"],
+  "seeds": [7, 17, 27],
+  "epochs": 500,
+  "batch_size": 16,
+  "learning_rate": 0.001,
+  "weight_decay": 0.00001,
+  "patience": 75,
+  "min_delta": 0.0000001,
+  "gnn_hidden": 64,
+  "gnn_layers": 3,
+  "mlp_hidden": 128,
+  "mlp_layers": 3,
+  "gradient_clip": 5.0,
+  "threads": 1,
+  "notes": "Step 6b development pilot. Keep validation-selected 6a labels and select checkpoints by validation allocation MSE."
+}

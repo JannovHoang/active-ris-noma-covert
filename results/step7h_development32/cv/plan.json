@@ -1,0 +1,961 @@
+{
+  "format": "six_method_benchmark_7h_v1",
+  "settings": {
+    "scope": "main",
+    "short_budgets": [
+      150,
+      300,
+      450
+    ],
+    "full_budget": 1800,
+    "search_samples": 10000,
+    "audit_samples": 100000,
+    "search_dep_margin": 0.03,
+    "search_qos_margin": 0.01,
+    "replicates": [
+      {
+        "training_seed": 7,
+        "pso_seed": 101
+      },
+      {
+        "training_seed": 17,
+        "pso_seed": 202
+      },
+      {
+        "training_seed": 27,
+        "pso_seed": 303
+      }
+    ],
+    "cv_seed": 17,
+    "cv_epochs": 200,
+    "low_cv_threshold": 0.9,
+    "alpha": 0.05,
+    "bootstrap_resamples": 2000,
+    "bootstrap_seed": 7317,
+    "budget_max_pass_loss": 0.01,
+    "budget_min_rate_ratio": 0.95,
+    "fallback": "none",
+    "initialization": "one_prediction_plus_29_random",
+    "final_selection": "search_best",
+    "architecture": "small",
+    "training_prefix": 32,
+    "smoke_validation_jobs": null,
+    "smoke_cases_per_job": null,
+    "smoke_cv_folds": null,
+    "smoke_test_layout_ids": null
+  },
+  "workers": 2,
+  "pso_settings": {
+    "swarm_size": 30,
+    "sweeps": 30,
+    "inertia_start": 0.9,
+    "inertia_end": 0.4,
+    "cognitive": 1.5,
+    "social": 1.5,
+    "velocity_max": 0.25,
+    "initial_velocity_scale": 0.1
+  },
+  "code_sha256": {
+    "run_step7h.py": "42c2fe059c9e8ee4473e2c46e3c4daa86152553f90d61d06f999253765c040cb",
+    "step7h/__init__.py": "deead7718dbb0f695097de5aa65071413ddab3890576015cfbbd8dd540c2b92a",
+    "step7h/analysis.py": "ebdb5acfb41842bd320045c7aaea91d25694245973d89f7c2e82ae8be963dc81",
+    "step7h/benchmark.py": "c1d40b0ddd4794c0fb1fe14125f7fb80f50f4d97a6521f32878994d70ea3f408",
+    "step7h/checks.py": "34189288a69f3028996b6a7a4892e212b1f742519588f16f8d24f0c8bb4b6f7f",
+    "step7h/common.py": "cc1b167a31b77bb6a70efe133fd9e5797764c0ed8d796d192eabca6c0b257973",
+    "step7h/cvcheck.py": "db953fc82a46ce30a0a84fe9b8921487cdd313c90aebb95cfdf2d960fcd73783",
+    "step7h/driver.py": "84f9fb88be5b7972be61e3b0772e375cdae8c165e9e11c7ab24e20e469ab33b3",
+    "step7h/frozen_runtime/ris_noma/benchmark_plots.py": "40092d9d46f0411232c77fedb6d0552f38991966cf64ca752fa617936675988e",
+    "step7h/frozen_runtime/ris_noma/benchmark_pso.py": "e6735c9ff33fec5932a02df20be083588b3bbc75fb5a4b4e3df21bc320699af5",
+    "step7h/frozen_runtime/ris_noma/budget_analysis.py": "64209383c8fcb578bb438d6861cb4cfecf552719af8b4c49df83be8b43f36e83",
+    "step7h/frozen_runtime/ris_noma/budget_benchmark.py": "d3420e40fd751e8a701f0283ca21da541af6fc91014e964a900b35f4787c3f83",
+    "step7h/frozen_runtime/ris_noma/candidate_archive.py": "be19944bbc77d168fb1a8e0c2fb7927a878f6c230447b21098d32dbb14992bda",
+    "step7h/frozen_runtime/ris_noma/channels.py": "487bf6c56dc253f7e178cb60ef663fba6c6819815d66338731f704fe8e76e0bd",
+    "step7h/frozen_runtime/ris_noma/config.py": "c69a4acd67629a67a0d212696398e2575cce50293f7279809c0885c54be4bb10",
+    "step7h/frozen_runtime/ris_noma/continuous_data.py": "bd4ca3f9a8ad3f24201bba97a140fea0d9f11caccb342613a30c09ca787fdcae",
+    "step7h/frozen_runtime/ris_noma/continuous_dataset.py": "a032a2159b032bbdeb58d192ec8a10dddfef8ad2a845baf4618bda24c8f8e1a1",
+    "step7h/frozen_runtime/ris_noma/continuous_learning.py": "97150eb476118ce8c72487ea88621886a7097c8f392a4320aa25253134a55efb",
+    "step7h/frozen_runtime/ris_noma/continuous_learning_data.py": "a786017dadc479bc3fe51c1bb42f64df5e184ebcaff049516db3b632a3feca22",
+    "step7h/frozen_runtime/ris_noma/continuous_learning_fit.py": "23159ff5c0d86aabfa4e9c5b812fa35c1981f1cf1a5404c6e6f8b3a66ce89737",
+    "step7h/frozen_runtime/ris_noma/continuous_learning_models.py": "64d43ca235ddebb42e1d7dda6baf99355700956370cd7652ab0e8a04497cde26",
+    "step7h/frozen_runtime/ris_noma/continuous_learning_physics.py": "aeb47cd5cbc9e1cb462be6722f69f2b2af95233de86b1303d74e4772ddd28da1",
+    "step7h/frozen_runtime/ris_noma/continuous_workers.py": "6b94f93401bb5fb3250d0160354397a8702ce6c3bcf2e7c1a9a70a2ecdb9121b",
+    "step7h/frozen_runtime/ris_noma/cross_xi.py": "811e165fccd9d6c1f4030822946a7623f2aba8c3769440c09d6a7e159062c63f",
+    "step7h/frozen_runtime/ris_noma/curve_analysis.py": "334305b54dd0b11c3d4496706a115860dc8874e86a9a082a5938a71ab6c6f138",
+    "step7h/frozen_runtime/ris_noma/curve_data.py": "db3d7ba8b20381831b96bd1fef75638c3d3d2d81d1df267c53c837ba6a7f8862",
+    "step7h/frozen_runtime/ris_noma/curve_fit.py": "734f7f105ca60d6416e2b1c9185eebd750df7a1262f977bd98377157004e1a59",
+    "step7h/frozen_runtime/ris_noma/curve_learning.py": "cc4b856144280b24b781ce5337f1499191136f9d1354bbbbe9109fa137e9e3ab",
+    "step7h/frozen_runtime/ris_noma/curve_models.py": "1507324bea676801accba398ce098c397edeec29ea35ebe4a5f96abe8db525cd",
+    "step7h/frozen_runtime/ris_noma/curve_physics.py": "b51590636fe6b92a6cd52679c596fb8ef8d8f43e2737a9dcf0d1beb4b2473629",
+    "step7h/frozen_runtime/ris_noma/dataset.py": "87756bd5e847a7ca34b25bb4ed9abaa0f458f2f5a42ba8808066ca3b0aeaeb07",
+    "step7h/frozen_runtime/ris_noma/dep.py": "b5f7149dfed032c5899308d92f68b6d7a96927560a81b2609144bb17fc92c372",
+    "step7h/frozen_runtime/ris_noma/dep_label_benchmark.py": "8e405c49e9460a1ede4144838778458ba7f833566d852b8194435aaa4eaa38f8",
+    "step7h/frozen_runtime/ris_noma/dep_label_experiment.py": "58deb10eaccb61c4b7f96bc154bc71473336d465c9cd2ba3e40eeddfdd56f6d3",
+    "step7h/frozen_runtime/ris_noma/dep_label_learning.py": "a9a2c097fb8aa52a402654a47f2f333c87c4a13013beb051d25a0c0b1f27c5c6",
+    "step7h/frozen_runtime/ris_noma/evaluator.py": "fe80f271d61d72ce4394f7942f4fc07930a04cdcad5549ab940ac79dfde02b0a",
+    "step7h/frozen_runtime/ris_noma/expanded_benchmark.py": "6259ac40e48d4b462a77c051aaeb50cd99bb7292db4fe511c8902f5f847e1f43",
+    "step7h/frozen_runtime/ris_noma/expanded_data.py": "97b12823313c6861f03f7804d4b024e3e943f456cf86e478af2d470b9641ee85",
+    "step7h/frozen_runtime/ris_noma/expanded_learning.py": "f61b83e61629b9e84533cb9851c4dcedfa7524c8b3bf492660aedfa642793dac",
+    "step7h/frozen_runtime/ris_noma/expanded_learning_physics.py": "ac62573dac1096507fd34b39f00aa8da249007cf10956e498d6bba26158f7d20",
+    "step7h/frozen_runtime/ris_noma/expanded_scenarios.py": "fff0c8f277910d868ae20d89d5f78e0740b0dcc9347ab0c5ba2a5d538b675e77",
+    "step7h/frozen_runtime/ris_noma/geometry.py": "5190754f288e17d139b30c1f633b8d4b88f44477c683919fbd657d915aeaada9",
+    "step7h/frozen_runtime/ris_noma/geometry_los.py": "ffcbc1a8d7844653e6277ccfafa0c74c3ad3b017c6c43a01925265397f50fa10",
+    "step7h/frozen_runtime/ris_noma/graph_data.py": "a9ad5235fbf1c875f1b336081d006a9b5d26f9019c8abe25d70ff65a36bbcf2f",
+    "step7h/frozen_runtime/ris_noma/learning_data.py": "76b90d60e6de0f7809fb5ee1a759e5f349fa9959397f4e105d598feca8107105",
+    "step7h/frozen_runtime/ris_noma/learning_models.py": "d8e14bf384b201f0e37beea8117b3f1e65e194a411b05efe91b91596229ed97a",
+    "step7h/frozen_runtime/ris_noma/learning_physics.py": "ea241c50568b8e64c5ba9b7d2cb0003b7d5b72d24a2dbf92fb2075fec66bdc0d",
+    "step7h/frozen_runtime/ris_noma/learning_train.py": "6e4f37022b30ccfc3418ee17b75f8f66a4b9cf51ae76f460ef714b30f6e562df",
+    "step7h/frozen_runtime/ris_noma/metrics.py": "a3061d727ca217f98800ef921e93bb45ebd60f54ca5fa9ca9fdb8e2043aa0a98",
+    "step7h/frozen_runtime/ris_noma/multik_benchmark.py": "9c3357068be1914b7793ff97722a853230cd32a14f1db537a7db05fd1bee0599",
+    "step7h/frozen_runtime/ris_noma/multik_benchmark_analysis.py": "c6f1128c284529a22d72fb397509b66804f1992d5abdc78adcae91a77364a0cc",
+    "step7h/frozen_runtime/ris_noma/multik_benchmark_cache.py": "ed39b4cfae743b266eeaa708b3e05ad88507f54df0d353232f379cda872f3cfb",
+    "step7h/frozen_runtime/ris_noma/multik_benchmark_core.py": "ecd1f06016683a67f2016c76b8d73a3ea9b83d08c60196fbfe4f02f147c38c35",
+    "step7h/frozen_runtime/ris_noma/multik_core.py": "0ceff660d7864e82db1e76addacf96d064075c96077ff1edceb850b46d5bc355",
+    "step7h/frozen_runtime/ris_noma/multik_data_core.py": "6336610ae521ed881eae3a0edac302c533415c5cf65445dc1b39a6d0cce979c2",
+    "step7h/frozen_runtime/ris_noma/multik_dataset.py": "e2a0bceb0e39fa63c3d83b498e6dfe67e496376f79da5b2eb6b33ece7a12a9d5",
+    "step7h/frozen_runtime/ris_noma/multik_demo.py": "0f972f499aeb1a6031d29038ceba3ee83e5fbcaae3825c70fbbc6736b9506e41",
+    "step7h/frozen_runtime/ris_noma/multik_graph.py": "c508afc9e585c1a295431c65fcdf544cbb39614ddfc38305ac83d265384694d2",
+    "step7h/frozen_runtime/ris_noma/multik_learning.py": "3600b99f861cb33a189ae7d570c823005129a0c2e2010ba7e4247ed5a79a31f6",
+    "step7h/frozen_runtime/ris_noma/multik_learning_fit.py": "9ffc64d41a7d39e0aca2710a81a0ba72d69c3b21a0555744f49ac58f6c5bfcf7",
+    "step7h/frozen_runtime/ris_noma/multik_learning_models.py": "0d464ac1d0119c0d85a3d41389e2b3ad9db635e9fcd9ec64c94990dc98b890be",
+    "step7h/frozen_runtime/ris_noma/multik_learning_physics.py": "34f0c0bd20c89f3f8a9bec4e649fdbe7ebbcd6e43727aadf7705843bc6e74b1c",
+    "step7h/frozen_runtime/ris_noma/multik_models.py": "aa535b98af45aefdd9ede23ccd53032787d042ec4131e27a63c94d810cb84edc",
+    "step7h/frozen_runtime/ris_noma/objective.py": "d94a5fd6462a5192fd24b456c3e3965810fbf1712123e2613c0133747eeb708f",
+    "step7h/frozen_runtime/ris_noma/physics_training.py": "75941b19dc655d39434abb520f43e98939c550140bfcd7901d91fa740f578b53",
+    "step7h/frozen_runtime/ris_noma/physics_training_benchmark.py": "dc79f80ba67c794cb9b639f263d9a88efa16a40350306f313b9f2609ecde6206",
+    "step7h/frozen_runtime/ris_noma/physics_training_fit.py": "12c0cccf058767fddd17b71f9e247c54ee045aa08d022915b96b8b77c2e4973d",
+    "step7h/frozen_runtime/ris_noma/pso.py": "5140ac24d9e09d95e04e664e0f1c8ad497bed5e382c1ca612986d5de37abc3cb",
+    "step7h/frozen_runtime/ris_noma/random_streams.py": "595eed1474be6774e04f90a59d7b3d606c5bc2dab4fce0a0dabacde95cb10a43",
+    "step7h/frozen_runtime/ris_noma/selection_bank.py": "f142cead50237f5935b4c74bbad3fdb6933d1e0bddaa64d021080912ef17658f",
+    "step7h/frozen_runtime/ris_noma/selection_bank_analysis.py": "bd6678b59d0b71d8703ab1c7d374afe8feda0c6e867479c86e41da04dbcda2da",
+    "step7h/frozen_runtime/ris_noma/selection_bank_search.py": "996d2dff3d42c93fd7ef15603f54ed9fd737bb791ca24311f858e67e89eb622c",
+    "step7h/frozen_runtime/ris_noma/stable_assessment.py": "d67ff3bd5ca1e4221cc153141f16f10c7460020b5b4b908e84bc2f6b42ff3699",
+    "step7h/frozen_runtime/ris_noma/validation.py": "57f1fda0a2530b287b081c3cf405558aefd5b2bea019c35d0d8f6930625cef1a",
+    "step7h/frozen_runtime/run_step3b.py": "9caa90a19f21825938c805b1e67871726a305d286c5f7bdacb1f364462d0349e",
+    "step7h/frozen_runtime/run_step4a.py": "5144136420c5edf11262c3f4c2c3c184ebab653d0c1f4a2e0487724f42340953",
+    "step7h/frozen_runtime/run_step4b.py": "f911a8e4ec1e42c34307a1eb70677c8c6ff464192fbd84bb2593aadb98b30eeb",
+    "step7h/frozen_runtime/run_step5c.py": "f98717ca311f52fab57b0e2d4559e70571db6ccebb3db74490abadb74dd22cf4",
+    "step7h/frozen_runtime/run_step6a.py": "916af8d7ddffd440c2fbc1a87d61fedd41c22f1e7d0457c23f809666463c812f",
+    "step7h/frozen_runtime/run_step6b.py": "b2daca82ab93671d1132dc4082d67c7be0506d91e437de659fbaaf31d695d49d",
+    "step7h/frozen_runtime/run_step6c.py": "8347d74decec3dde2214e57986ac57d54fd91eec79722b8862e129532642c32f",
+    "step7h/frozen_runtime/run_step6d.py": "43be3a698f799922d666bed1c1690da0b10d0281742e2c9c6a565cffd7efa41a",
+    "step7h/frozen_runtime/run_step6e.py": "665e1327e84e243dfd70277d687298c8a139a2ce5d9a7f2ae8e7f141585703b1",
+    "step7h/frozen_runtime/run_step6f.py": "a6a7c73260af9eaf8f7e3ab9cfd30991369047e4e3b450c2a4443d147c8bc732",
+    "step7h/frozen_runtime/run_step6g.py": "42dc097165585044646194924515d132445a820e4a36f66c2c036b3a80c31b8a",
+    "step7h/frozen_runtime/run_step7a.py": "237da86fde2d4f5ef53ddd5d0462c11414aa296a239013f8e55545a4a6f3c4c8",
+    "step7h/frozen_runtime/run_step7b.py": "a9f69bdc8e07c4fb9265efc422f0380c09e1ad4c2a07b02cf1d161591e118076",
+    "step7h/frozen_runtime/run_step7c.py": "e84f69436538e03ddf5605b393469498266c787224c49797754c8891d6d10410",
+    "step7h/frozen_runtime/run_step7d.py": "8d8d7810d33cbae40ba63c045a9e2da690f594a6ff6ea067c8d3332e8e0d98e6",
+    "step7h/frozen_runtime/run_step7e.py": "a50b4f56147e3a0ea1a087e614fd6bfdc581af3ba232ee016a4dcbc49a4b1553",
+    "step7h/frozen_runtime/run_step7f.py": "211d5462faa3b13e3c1430f6a307e17dcd2ac8ef73d1fcbaf66d2fa047f7f823",
+    "step7h/frozen_runtime/run_step7g.py": "1d1c90cde075594ee455e96c3effb6e43a7ec445965aeef43947aaa53f850b63",
+    "step7h/physics.py": "2236afe584ccc114b5fc89e806478e35aa9def00065c3cb41fc44aa738a82e69",
+    "step7h/settings.py": "366fab479603893d5504fd54cbd2229876e54bf96bdb7e6df2958a69ce93ca12",
+    "step7h/source.py": "f28c97cdeae2e2d4d4567d862e620821f0374a7bd37332bf5f51e4b349c12b46"
+  },
+  "source_hashes": {
+    "corpus_plan": "b369f9080ddd9f4168cd770fe2ada194d786c2b3494214cf77d8dc0548e5d736",
+    "stage_complete": "7fe243706b8389b040ab8206549fff593a67d603400e9ffe2e1f8553c3aa08eb",
+    "diagnostic_complete": "03c622a91b16e412ddc5668afbbf486795c589f5f2a39a6779ea1ae2553c693d",
+    "diagnostic_selection": "44004064b4d0242fd691ea2aaa79f8ae2d74364e0643deca3d0d81f7ab04129f",
+    "train_inputs": "41819a2789ddea9460caec42f9db7b848b14e5a6391399bd3f2ef221879d4255",
+    "validation_inputs": "beb76b40199e48fb6fca1513bdac6ef28650f2300d299d5de5ad5597990ae21b"
+  },
+  "certificate_pool_size": 288,
+  "certificate_alpha_per_group": 8.928571428571429e-05,
+  "cv_layout_ids": [
+    3009,
+    3023,
+    3028,
+    3031
+  ],
+  "stage": "cv",
+  "jobs": [
+    {
+      "id": "cv_l003009_k2",
+      "layout_id": 3009,
+      "n_public": 2,
+      "split": "diagnostic",
+      "regime": "low_cv_leave_layout_out",
+      "cases": [
+        {
+          "case_index": 0,
+          "power_dbm": 30.35954297294915,
+          "xi": 0.9175542111582473
+        },
+        {
+          "case_index": 1,
+          "power_dbm": 37.31387478467257,
+          "xi": 0.7614566351116399
+        },
+        {
+          "case_index": 2,
+          "power_dbm": 39.892544616402034,
+          "xi": 0.8350326623925323
+        },
+        {
+          "case_index": 3,
+          "power_dbm": 35.1067234929974,
+          "xi": 0.7888771413644902
+        },
+        {
+          "case_index": 4,
+          "power_dbm": 33.752873705365,
+          "xi": 0.8803724459620933
+        },
+        {
+          "case_index": 5,
+          "power_dbm": 38.000443205112624,
+          "xi": 0.8234681157855972
+        },
+        {
+          "case_index": 6,
+          "power_dbm": 33.70145010532238,
+          "xi": 0.8674518346024511
+        },
+        {
+          "case_index": 7,
+          "power_dbm": 31.742767201759385,
+          "xi": 0.9348040098311255
+        }
+      ]
+    },
+    {
+      "id": "cv_l003009_k3",
+      "layout_id": 3009,
+      "n_public": 3,
+      "split": "diagnostic",
+      "regime": "low_cv_leave_layout_out",
+      "cases": [
+        {
+          "case_index": 0,
+          "power_dbm": 30.35954297294915,
+          "xi": 0.9175542111582473
+        },
+        {
+          "case_index": 1,
+          "power_dbm": 37.31387478467257,
+          "xi": 0.7614566351116399
+        },
+        {
+          "case_index": 2,
+          "power_dbm": 39.892544616402034,
+          "xi": 0.8350326623925323
+        },
+        {
+          "case_index": 3,
+          "power_dbm": 35.1067234929974,
+          "xi": 0.7888771413644902
+        },
+        {
+          "case_index": 4,
+          "power_dbm": 33.752873705365,
+          "xi": 0.8803724459620933
+        },
+        {
+          "case_index": 5,
+          "power_dbm": 38.000443205112624,
+          "xi": 0.8234681157855972
+        },
+        {
+          "case_index": 6,
+          "power_dbm": 33.70145010532238,
+          "xi": 0.8674518346024511
+        },
+        {
+          "case_index": 7,
+          "power_dbm": 31.742767201759385,
+          "xi": 0.9348040098311255
+        }
+      ]
+    },
+    {
+      "id": "cv_l003009_k4",
+      "layout_id": 3009,
+      "n_public": 4,
+      "split": "diagnostic",
+      "regime": "low_cv_leave_layout_out",
+      "cases": [
+        {
+          "case_index": 0,
+          "power_dbm": 30.35954297294915,
+          "xi": 0.9175542111582473
+        },
+        {
+          "case_index": 1,
+          "power_dbm": 37.31387478467257,
+          "xi": 0.7614566351116399
+        },
+        {
+          "case_index": 2,
+          "power_dbm": 39.892544616402034,
+          "xi": 0.8350326623925323
+        },
+        {
+          "case_index": 3,
+          "power_dbm": 35.1067234929974,
+          "xi": 0.7888771413644902
+        },
+        {
+          "case_index": 4,
+          "power_dbm": 33.752873705365,
+          "xi": 0.8803724459620933
+        },
+        {
+          "case_index": 5,
+          "power_dbm": 38.000443205112624,
+          "xi": 0.8234681157855972
+        },
+        {
+          "case_index": 6,
+          "power_dbm": 33.70145010532238,
+          "xi": 0.8674518346024511
+        },
+        {
+          "case_index": 7,
+          "power_dbm": 31.742767201759385,
+          "xi": 0.9348040098311255
+        }
+      ]
+    },
+    {
+      "id": "cv_l003009_k5",
+      "layout_id": 3009,
+      "n_public": 5,
+      "split": "diagnostic",
+      "regime": "low_cv_leave_layout_out",
+      "cases": [
+        {
+          "case_index": 0,
+          "power_dbm": 30.35954297294915,
+          "xi": 0.9175542111582473
+        },
+        {
+          "case_index": 1,
+          "power_dbm": 37.31387478467257,
+          "xi": 0.7614566351116399
+        },
+        {
+          "case_index": 2,
+          "power_dbm": 39.892544616402034,
+          "xi": 0.8350326623925323
+        },
+        {
+          "case_index": 3,
+          "power_dbm": 35.1067234929974,
+          "xi": 0.7888771413644902
+        },
+        {
+          "case_index": 4,
+          "power_dbm": 33.752873705365,
+          "xi": 0.8803724459620933
+        },
+        {
+          "case_index": 5,
+          "power_dbm": 38.000443205112624,
+          "xi": 0.8234681157855972
+        },
+        {
+          "case_index": 6,
+          "power_dbm": 33.70145010532238,
+          "xi": 0.8674518346024511
+        },
+        {
+          "case_index": 7,
+          "power_dbm": 31.742767201759385,
+          "xi": 0.9348040098311255
+        }
+      ]
+    },
+    {
+      "id": "cv_l003023_k2",
+      "layout_id": 3023,
+      "n_public": 2,
+      "split": "diagnostic",
+      "regime": "low_cv_leave_layout_out",
+      "cases": [
+        {
+          "case_index": 0,
+          "power_dbm": 31.089554908566626,
+          "xi": 0.8407214529244286
+        },
+        {
+          "case_index": 1,
+          "power_dbm": 35.34678396876348,
+          "xi": 0.8655144044039761
+        },
+        {
+          "case_index": 2,
+          "power_dbm": 38.327693242398816,
+          "xi": 0.9181437911171095
+        },
+        {
+          "case_index": 3,
+          "power_dbm": 38.8090550476402,
+          "xi": 0.8197278834389103
+        },
+        {
+          "case_index": 4,
+          "power_dbm": 37.37307265744176,
+          "xi": 0.7662048069446102
+        },
+        {
+          "case_index": 5,
+          "power_dbm": 31.791958348755056,
+          "xi": 0.7981460186614348
+        },
+        {
+          "case_index": 6,
+          "power_dbm": 34.407571303810734,
+          "xi": 0.8917088979029135
+        },
+        {
+          "case_index": 7,
+          "power_dbm": 33.26030546552232,
+          "xi": 0.9337952616599131
+        }
+      ]
+    },
+    {
+      "id": "cv_l003023_k3",
+      "layout_id": 3023,
+      "n_public": 3,
+      "split": "diagnostic",
+      "regime": "low_cv_leave_layout_out",
+      "cases": [
+        {
+          "case_index": 0,
+          "power_dbm": 31.089554908566626,
+          "xi": 0.8407214529244286
+        },
+        {
+          "case_index": 1,
+          "power_dbm": 35.34678396876348,
+          "xi": 0.8655144044039761
+        },
+        {
+          "case_index": 2,
+          "power_dbm": 38.327693242398816,
+          "xi": 0.9181437911171095
+        },
+        {
+          "case_index": 3,
+          "power_dbm": 38.8090550476402,
+          "xi": 0.8197278834389103
+        },
+        {
+          "case_index": 4,
+          "power_dbm": 37.37307265744176,
+          "xi": 0.7662048069446102
+        },
+        {
+          "case_index": 5,
+          "power_dbm": 31.791958348755056,
+          "xi": 0.7981460186614348
+        },
+        {
+          "case_index": 6,
+          "power_dbm": 34.407571303810734,
+          "xi": 0.8917088979029135
+        },
+        {
+          "case_index": 7,
+          "power_dbm": 33.26030546552232,
+          "xi": 0.9337952616599131
+        }
+      ]
+    },
+    {
+      "id": "cv_l003023_k4",
+      "layout_id": 3023,
+      "n_public": 4,
+      "split": "diagnostic",
+      "regime": "low_cv_leave_layout_out",
+      "cases": [
+        {
+          "case_index": 0,
+          "power_dbm": 31.089554908566626,
+          "xi": 0.8407214529244286
+        },
+        {
+          "case_index": 1,
+          "power_dbm": 35.34678396876348,
+          "xi": 0.8655144044039761
+        },
+        {
+          "case_index": 2,
+          "power_dbm": 38.327693242398816,
+          "xi": 0.9181437911171095
+        },
+        {
+          "case_index": 3,
+          "power_dbm": 38.8090550476402,
+          "xi": 0.8197278834389103
+        },
+        {
+          "case_index": 4,
+          "power_dbm": 37.37307265744176,
+          "xi": 0.7662048069446102
+        },
+        {
+          "case_index": 5,
+          "power_dbm": 31.791958348755056,
+          "xi": 0.7981460186614348
+        },
+        {
+          "case_index": 6,
+          "power_dbm": 34.407571303810734,
+          "xi": 0.8917088979029135
+        },
+        {
+          "case_index": 7,
+          "power_dbm": 33.26030546552232,
+          "xi": 0.9337952616599131
+        }
+      ]
+    },
+    {
+      "id": "cv_l003023_k5",
+      "layout_id": 3023,
+      "n_public": 5,
+      "split": "diagnostic",
+      "regime": "low_cv_leave_layout_out",
+      "cases": [
+        {
+          "case_index": 0,
+          "power_dbm": 31.089554908566626,
+          "xi": 0.8407214529244286
+        },
+        {
+          "case_index": 1,
+          "power_dbm": 35.34678396876348,
+          "xi": 0.8655144044039761
+        },
+        {
+          "case_index": 2,
+          "power_dbm": 38.327693242398816,
+          "xi": 0.9181437911171095
+        },
+        {
+          "case_index": 3,
+          "power_dbm": 38.8090550476402,
+          "xi": 0.8197278834389103
+        },
+        {
+          "case_index": 4,
+          "power_dbm": 37.37307265744176,
+          "xi": 0.7662048069446102
+        },
+        {
+          "case_index": 5,
+          "power_dbm": 31.791958348755056,
+          "xi": 0.7981460186614348
+        },
+        {
+          "case_index": 6,
+          "power_dbm": 34.407571303810734,
+          "xi": 0.8917088979029135
+        },
+        {
+          "case_index": 7,
+          "power_dbm": 33.26030546552232,
+          "xi": 0.9337952616599131
+        }
+      ]
+    },
+    {
+      "id": "cv_l003028_k2",
+      "layout_id": 3028,
+      "n_public": 2,
+      "split": "diagnostic",
+      "regime": "low_cv_leave_layout_out",
+      "cases": [
+        {
+          "case_index": 0,
+          "power_dbm": 35.47537223121577,
+          "xi": 0.8204480568232017
+        },
+        {
+          "case_index": 1,
+          "power_dbm": 30.37217881324222,
+          "xi": 0.7960520251631407
+        },
+        {
+          "case_index": 2,
+          "power_dbm": 37.45451610278819,
+          "xi": 0.7582006112449371
+        },
+        {
+          "case_index": 3,
+          "power_dbm": 32.98671028349816,
+          "xi": 0.9307318242031043
+        },
+        {
+          "case_index": 4,
+          "power_dbm": 39.81454778397674,
+          "xi": 0.88116367103296
+        },
+        {
+          "case_index": 5,
+          "power_dbm": 34.618888879100425,
+          "xi": 0.8519729483242827
+        },
+        {
+          "case_index": 6,
+          "power_dbm": 32.08954147852979,
+          "xi": 0.8484893755068184
+        },
+        {
+          "case_index": 7,
+          "power_dbm": 38.12980185989982,
+          "xi": 0.9227583788540732
+        }
+      ]
+    },
+    {
+      "id": "cv_l003028_k3",
+      "layout_id": 3028,
+      "n_public": 3,
+      "split": "diagnostic",
+      "regime": "low_cv_leave_layout_out",
+      "cases": [
+        {
+          "case_index": 0,
+          "power_dbm": 35.47537223121577,
+          "xi": 0.8204480568232017
+        },
+        {
+          "case_index": 1,
+          "power_dbm": 30.37217881324222,
+          "xi": 0.7960520251631407
+        },
+        {
+          "case_index": 2,
+          "power_dbm": 37.45451610278819,
+          "xi": 0.7582006112449371
+        },
+        {
+          "case_index": 3,
+          "power_dbm": 32.98671028349816,
+          "xi": 0.9307318242031043
+        },
+        {
+          "case_index": 4,
+          "power_dbm": 39.81454778397674,
+          "xi": 0.88116367103296
+        },
+        {
+          "case_index": 5,
+          "power_dbm": 34.618888879100425,
+          "xi": 0.8519729483242827
+        },
+        {
+          "case_index": 6,
+          "power_dbm": 32.08954147852979,
+          "xi": 0.8484893755068184
+        },
+        {
+          "case_index": 7,
+          "power_dbm": 38.12980185989982,
+          "xi": 0.9227583788540732
+        }
+      ]
+    },
+    {
+      "id": "cv_l003028_k4",
+      "layout_id": 3028,
+      "n_public": 4,
+      "split": "diagnostic",
+      "regime": "low_cv_leave_layout_out",
+      "cases": [
+        {
+          "case_index": 0,
+          "power_dbm": 35.47537223121577,
+          "xi": 0.8204480568232017
+        },
+        {
+          "case_index": 1,
+          "power_dbm": 30.37217881324222,
+          "xi": 0.7960520251631407
+        },
+        {
+          "case_index": 2,
+          "power_dbm": 37.45451610278819,
+          "xi": 0.7582006112449371
+        },
+        {
+          "case_index": 3,
+          "power_dbm": 32.98671028349816,
+          "xi": 0.9307318242031043
+        },
+        {
+          "case_index": 4,
+          "power_dbm": 39.81454778397674,
+          "xi": 0.88116367103296
+        },
+        {
+          "case_index": 5,
+          "power_dbm": 34.618888879100425,
+          "xi": 0.8519729483242827
+        },
+        {
+          "case_index": 6,
+          "power_dbm": 32.08954147852979,
+          "xi": 0.8484893755068184
+        },
+        {
+          "case_index": 7,
+          "power_dbm": 38.12980185989982,
+          "xi": 0.9227583788540732
+        }
+      ]
+    },
+    {
+      "id": "cv_l003028_k5",
+      "layout_id": 3028,
+      "n_public": 5,
+      "split": "diagnostic",
+      "regime": "low_cv_leave_layout_out",
+      "cases": [
+        {
+          "case_index": 0,
+          "power_dbm": 35.47537223121577,
+          "xi": 0.8204480568232017
+        },
+        {
+          "case_index": 1,
+          "power_dbm": 30.37217881324222,
+          "xi": 0.7960520251631407
+        },
+        {
+          "case_index": 2,
+          "power_dbm": 37.45451610278819,
+          "xi": 0.7582006112449371
+        },
+        {
+          "case_index": 3,
+          "power_dbm": 32.98671028349816,
+          "xi": 0.9307318242031043
+        },
+        {
+          "case_index": 4,
+          "power_dbm": 39.81454778397674,
+          "xi": 0.88116367103296
+        },
+        {
+          "case_index": 5,
+          "power_dbm": 34.618888879100425,
+          "xi": 0.8519729483242827
+        },
+        {
+          "case_index": 6,
+          "power_dbm": 32.08954147852979,
+          "xi": 0.8484893755068184
+        },
+        {
+          "case_index": 7,
+          "power_dbm": 38.12980185989982,
+          "xi": 0.9227583788540732
+        }
+      ]
+    },
+    {
+      "id": "cv_l003031_k2",
+      "layout_id": 3031,
+      "n_public": 2,
+      "split": "diagnostic",
+      "regime": "low_cv_leave_layout_out",
+      "cases": [
+        {
+          "case_index": 0,
+          "power_dbm": 33.64490140613117,
+          "xi": 0.864545156043801
+        },
+        {
+          "case_index": 1,
+          "power_dbm": 30.642140293164793,
+          "xi": 0.7875319447217388
+        },
+        {
+          "case_index": 2,
+          "power_dbm": 36.33897072621397,
+          "xi": 0.8195586657984755
+        },
+        {
+          "case_index": 3,
+          "power_dbm": 35.3718508383212,
+          "xi": 0.899859771158146
+        },
+        {
+          "case_index": 4,
+          "power_dbm": 34.84865540939865,
+          "xi": 0.7662954713349346
+        },
+        {
+          "case_index": 5,
+          "power_dbm": 39.79765914480866,
+          "xi": 0.8303221050450054
+        },
+        {
+          "case_index": 6,
+          "power_dbm": 31.779680597763686,
+          "xi": 0.9426469762401338
+        },
+        {
+          "case_index": 7,
+          "power_dbm": 38.17987843018931,
+          "xi": 0.9033833851027004
+        }
+      ]
+    },
+    {
+      "id": "cv_l003031_k3",
+      "layout_id": 3031,
+      "n_public": 3,
+      "split": "diagnostic",
+      "regime": "low_cv_leave_layout_out",
+      "cases": [
+        {
+          "case_index": 0,
+          "power_dbm": 33.64490140613117,
+          "xi": 0.864545156043801
+        },
+        {
+          "case_index": 1,
+          "power_dbm": 30.642140293164793,
+          "xi": 0.7875319447217388
+        },
+        {
+          "case_index": 2,
+          "power_dbm": 36.33897072621397,
+          "xi": 0.8195586657984755
+        },
+        {
+          "case_index": 3,
+          "power_dbm": 35.3718508383212,
+          "xi": 0.899859771158146
+        },
+        {
+          "case_index": 4,
+          "power_dbm": 34.84865540939865,
+          "xi": 0.7662954713349346
+        },
+        {
+          "case_index": 5,
+          "power_dbm": 39.79765914480866,
+          "xi": 0.8303221050450054
+        },
+        {
+          "case_index": 6,
+          "power_dbm": 31.779680597763686,
+          "xi": 0.9426469762401338
+        },
+        {
+          "case_index": 7,
+          "power_dbm": 38.17987843018931,
+          "xi": 0.9033833851027004
+        }
+      ]
+    },
+    {
+      "id": "cv_l003031_k4",
+      "layout_id": 3031,
+      "n_public": 4,
+      "split": "diagnostic",
+      "regime": "low_cv_leave_layout_out",
+      "cases": [
+        {
+          "case_index": 0,
+          "power_dbm": 33.64490140613117,
+          "xi": 0.864545156043801
+        },
+        {
+          "case_index": 1,
+          "power_dbm": 30.642140293164793,
+          "xi": 0.7875319447217388
+        },
+        {
+          "case_index": 2,
+          "power_dbm": 36.33897072621397,
+          "xi": 0.8195586657984755
+        },
+        {
+          "case_index": 3,
+          "power_dbm": 35.3718508383212,
+          "xi": 0.899859771158146
+        },
+        {
+          "case_index": 4,
+          "power_dbm": 34.84865540939865,
+          "xi": 0.7662954713349346
+        },
+        {
+          "case_index": 5,
+          "power_dbm": 39.79765914480866,
+          "xi": 0.8303221050450054
+        },
+        {
+          "case_index": 6,
+          "power_dbm": 31.779680597763686,
+          "xi": 0.9426469762401338
+        },
+        {
+          "case_index": 7,
+          "power_dbm": 38.17987843018931,
+          "xi": 0.9033833851027004
+        }
+      ]
+    },
+    {
+      "id": "cv_l003031_k5",
+      "layout_id": 3031,
+      "n_public": 5,
+      "split": "diagnostic",
+      "regime": "low_cv_leave_layout_out",
+      "cases": [
+        {
+          "case_index": 0,
+          "power_dbm": 33.64490140613117,
+          "xi": 0.864545156043801
+        },
+        {
+          "case_index": 1,
+          "power_dbm": 30.642140293164793,
+          "xi": 0.7875319447217388
+        },
+        {
+          "case_index": 2,
+          "power_dbm": 36.33897072621397,
+          "xi": 0.8195586657984755
+        },
+        {
+          "case_index": 3,
+          "power_dbm": 35.3718508383212,
+          "xi": 0.899859771158146
+        },
+        {
+          "case_index": 4,
+          "power_dbm": 34.84865540939865,
+          "xi": 0.7662954713349346
+        },
+        {
+          "case_index": 5,
+          "power_dbm": 39.79765914480866,
+          "xi": 0.8303221050450054
+        },
+        {
+          "case_index": 6,
+          "power_dbm": 31.779680597763686,
+          "xi": 0.9426469762401338
+        },
+        {
+          "case_index": 7,
+          "power_dbm": 38.17987843018931,
+          "xi": 0.9033833851027004
+        }
+      ]
+    }
+  ],
+  "parent_plan_sha256": "c93b4d2a1e5b351d8c11181b4e6d94b784148f7360257dc437b07dc758fd7bdc",
+  "fold_policy": "Hold out one entire low-CV training layout at a time; train on other 31 layouts; one fixed seed17; fixed final epoch200; no held-out selection",
+  "scope_note": "Exploratory after inspecting low-CV layouts; not final test. These retrained diagnostic networks never replace main six checkpoints"
+}

@@ -1,0 +1,48 @@
+{
+  "kind": "mlp",
+  "seed": 17,
+  "epochs_completed": 200,
+  "plan_sha256": "584c759b27d5faa9f5f0e7c2a18399b7956aa3e08e002eec71d54721ada3aa2e",
+  "best_weighted_epoch": 145,
+  "parameters": 24291,
+  "training_seconds": 70.40278560000297,
+  "candidates": {
+    "mlp_s17_e0200": {
+      "kind": "mlp",
+      "seed": 17,
+      "epoch": 200,
+      "path": "fits/mlp_s17/snapshots/epoch_0200.pt",
+      "sha256": "a9c5ad4ae67d4bd54bd3dfe5fccb0bcf0be743c81b9110bf9b4aaebf19c5f0ae",
+      "validation_errors": {
+        "case_mse": 0.012090660217735503,
+        "weighted_loss": 0.0016210333200260287,
+        "mb_mae": 0.0063498287077342706,
+        "public_mae": 0.07381660739580789,
+        "s_mae": 0.15278667258837866
+      },
+      "parameters": 24291
+    },
+    "mlp_s17_best": {
+      "kind": "mlp",
+      "seed": 17,
+      "epoch": 145,
+      "path": "fits/mlp_s17/best_weighted.pt",
+      "sha256": "00f1a7169674ad7b8f18aa7aa9483af8dcb6f381a3b95d0608bfbbb5f145f95f",
+      "validation_errors": {
+        "case_mse": 0.012033727892216236,
+        "weighted_loss": 0.0016116994906157727,
+        "mb_mae": 0.005910122345778204,
+        "public_mae": 0.07380069118170511,
+        "s_mae": 0.1522168129209488
+      },
+      "parameters": 24291
+    }
+  },
+  "sha256": {
+    "snapshots/epoch_0200.pt": "a9c5ad4ae67d4bd54bd3dfe5fccb0bcf0be743c81b9110bf9b4aaebf19c5f0ae",
+    "best_weighted.pt": "00f1a7169674ad7b8f18aa7aa9483af8dcb6f381a3b95d0608bfbbb5f145f95f",
+    "history.csv": "ca30346c24bdfed5bfcdab02e3417f657b59dbb4fe4559a5de4202788c577409"
+  },
+  "test_used_for_training_or_selection": false,
+  "physical_gradient": false
+}

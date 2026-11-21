@@ -1,0 +1,6 @@
+# Self-contained: no dependency on requirements files from earlier steps.
+numpy>=1.24
+scipy>=1.10
+matplotlib>=3.7
+# Use the project's isolated CPU Python environment described in HUONG_DAN_BUOC5C.md.
+torch>=2.6,<3

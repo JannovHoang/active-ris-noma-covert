@@ -1,0 +1,54 @@
+{
+  "scope": "development_pilot",
+  "training_public_counts": [
+    2,
+    3,
+    4,
+    5
+  ],
+  "unseen_public_counts": [
+    6
+  ],
+  "splits": {
+    "train": [
+      2000,
+      2001,
+      2002,
+      2003,
+      2004,
+      2005,
+      2006,
+      2007
+    ],
+    "validation": [
+      2008,
+      2009
+    ],
+    "test": [
+      2010,
+      2011
+    ]
+  },
+  "power_dbm_range": [
+    30.0,
+    40.0
+  ],
+  "dep_range": [
+    0.75,
+    0.95
+  ],
+  "cases_per_layout": 8,
+  "parameter_seed": 71,
+  "search_dep_margin": 0.03,
+  "search_qos_margin": 0.01,
+  "search_samples": 10000,
+  "selection_samples": 100000,
+  "audit_samples": 100000,
+  "pso_seeds": [
+    101,
+    202
+  ],
+  "pso_evaluations": 1800,
+  "alpha": 0.05,
+  "profile": "geometry"
+}

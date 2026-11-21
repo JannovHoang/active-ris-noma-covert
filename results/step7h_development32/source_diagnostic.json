@@ -1,0 +1,208 @@
+{
+  "training_layout_cv_from_K2_input_bank": {
+    "3000": 1.0207973911515513,
+    "3001": 1.0129220308882565,
+    "3002": 1.010969865385543,
+    "3003": 1.0214893722503817,
+    "3004": 1.016488962438201,
+    "3005": 1.0088203122902344,
+    "3006": 1.0149902767064376,
+    "3007": 1.0214123421281938,
+    "3008": 0.9932806660322743,
+    "3009": 0.845188777627596,
+    "3010": 1.0101149185589102,
+    "3011": 1.025299212353219,
+    "3012": 1.0174755780838198,
+    "3013": 1.0217757428422818,
+    "3014": 0.964248767767584,
+    "3015": 1.0358280566362192,
+    "3016": 1.016327675365136,
+    "3017": 1.017846177679211,
+    "3018": 1.0406511971072225,
+    "3019": 1.020180476274573,
+    "3020": 1.0071785480548978,
+    "3021": 1.032335712428842,
+    "3022": 1.0215214328027402,
+    "3023": 0.470515749138117,
+    "3024": 1.016339048324661,
+    "3025": 0.9534688601466306,
+    "3026": 0.9965524427186502,
+    "3027": 0.9993264216202695,
+    "3028": 0.7768936636437732,
+    "3029": 1.0457243535550136,
+    "3030": 0.9510825496270949,
+    "3031": 0.8281908778306631
+  },
+  "low_cv_threshold": 0.9,
+  "low_cv_layout_ids": [
+    3009,
+    3023,
+    3028,
+    3031
+  ],
+  "missing_training_labels": [
+    {
+      "case_id": "train_l003023_k2_c007",
+      "layout_id": 3023,
+      "n_public": 2,
+      "power_dbm": 33.26030546552232,
+      "xi": 0.9337952616599131,
+      "search_dep_target": 0.9637952616599131,
+      "best_by_seed": [
+        {
+          "candidate_id": "s101:e000163",
+          "allocation": [
+            0.05,
+            0.69790051002203,
+            0.25209948997796994,
+            0.95
+          ],
+          "search_rate": 2.584834984057951,
+          "search_dep_gamma": 0.9573241520624461,
+          "search_feasible": false,
+          "seed": 101
+        },
+        {
+          "candidate_id": "s202:e000151",
+          "allocation": [
+            0.05,
+            0.6418012271072797,
+            0.3081987728927202,
+            0.95
+          ],
+          "search_rate": 2.584834984057951,
+          "search_dep_gamma": 0.9573241520624461,
+          "search_feasible": false,
+          "seed": 202
+        }
+      ],
+      "warning": "No returned label is not a proof of original-problem infeasibility; tightened search targets differ"
+    },
+    {
+      "case_id": "train_l003023_k3_c007",
+      "layout_id": 3023,
+      "n_public": 3,
+      "power_dbm": 33.26030546552232,
+      "xi": 0.9337952616599131,
+      "search_dep_target": 0.9637952616599131,
+      "best_by_seed": [
+        {
+          "candidate_id": "s101:e000122",
+          "allocation": [
+            0.05,
+            0.22918270764274143,
+            0.5474531880400342,
+            0.17336410431722438,
+            0.95
+          ],
+          "search_rate": 2.5848352244936055,
+          "search_dep_gamma": 0.9570471971488865,
+          "search_feasible": false,
+          "seed": 101
+        },
+        {
+          "candidate_id": "s202:e000096",
+          "allocation": [
+            0.05,
+            0.3164347870650827,
+            0.21084696774102307,
+            0.4227182451938942,
+            0.95
+          ],
+          "search_rate": 2.5848352244936055,
+          "search_dep_gamma": 0.9570471971488865,
+          "search_feasible": false,
+          "seed": 202
+        }
+      ],
+      "warning": "No returned label is not a proof of original-problem infeasibility; tightened search targets differ"
+    },
+    {
+      "case_id": "train_l003023_k4_c007",
+      "layout_id": 3023,
+      "n_public": 4,
+      "power_dbm": 33.26030546552232,
+      "xi": 0.9337952616599131,
+      "search_dep_target": 0.9637952616599131,
+      "best_by_seed": [
+        {
+          "candidate_id": "s101:e000168",
+          "allocation": [
+            0.05,
+            0.3181943846477784,
+            0.16041653127240582,
+            0.035180046653163946,
+            0.4362090374266518,
+            0.95
+          ],
+          "search_rate": 2.584836746357967,
+          "search_dep_gamma": 0.9584239443091074,
+          "search_feasible": false,
+          "seed": 101
+        },
+        {
+          "candidate_id": "s202:e000132",
+          "allocation": [
+            0.05,
+            0.21203016473557532,
+            0.18946055962010086,
+            0.16582212321403506,
+            0.3826871524302887,
+            0.95
+          ],
+          "search_rate": 2.584836746357967,
+          "search_dep_gamma": 0.9584239443091074,
+          "search_feasible": false,
+          "seed": 202
+        }
+      ],
+      "warning": "No returned label is not a proof of original-problem infeasibility; tightened search targets differ"
+    },
+    {
+      "case_id": "train_l003023_k5_c007",
+      "layout_id": 3023,
+      "n_public": 5,
+      "power_dbm": 33.26030546552232,
+      "xi": 0.9337952616599131,
+      "search_dep_target": 0.9637952616599131,
+      "best_by_seed": [
+        {
+          "candidate_id": "s101:e000309",
+          "allocation": [
+            0.05,
+            0.13742685132239912,
+            0.17315686820456458,
+            0.10444782901925737,
+            0.2847762262518381,
+            0.25019222520194073,
+            0.95
+          ],
+          "search_rate": 2.5848339042917847,
+          "search_dep_gamma": 0.9576470451507051,
+          "search_feasible": false,
+          "seed": 101
+        },
+        {
+          "candidate_id": "s202:e000236",
+          "allocation": [
+            0.05,
+            0.27630387869859235,
+            0.40975441406000424,
+            0.051724177127927255,
+            0.13834870181520667,
+            0.07386882829826946,
+            0.95
+          ],
+          "search_rate": 2.5848339042917847,
+          "search_dep_gamma": 0.9576470451507051,
+          "search_feasible": false,
+          "seed": 202
+        }
+      ],
+      "warning": "No returned label is not a proof of original-problem infeasibility; tightened search targets differ"
+    }
+  ],
+  "new_pso_evaluations": 0,
+  "reserved_test_generated": false,
+  "scope": "Post-hoc development diagnostic, not final test or a proof excluding overfitting"
+}

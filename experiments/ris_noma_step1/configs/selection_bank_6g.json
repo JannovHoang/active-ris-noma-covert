@@ -1,0 +1,13 @@
+{
+  "test_layout_ids": [600, 601, 602, 603, 604, 605, 606, 607, 608, 609, 610, 611, 612, 613, 614, 615, 616, 617, 618, 619],
+  "budgets": [30, 60, 120],
+  "primary_budget": 60,
+  "full_evaluations": 1800,
+  "search_margins": [0.02, 0.03],
+  "archive_slacks": [0.0075, 0.015],
+  "candidate_limit": 5,
+  "search_samples": 10000,
+  "selection_samples": 100000,
+  "audit_samples": 100000,
+  "bootstrap_repetitions": 5000
+}

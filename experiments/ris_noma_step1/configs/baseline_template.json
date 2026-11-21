@@ -1,0 +1,83 @@
+{
+  "profile": "baseline",
+  "notes": "Fill null fields from the original baseline or a documented pilot. LoS phases must correspond to this layout, in original physical user order. s and mb bounds are inherited experimental choices; reference_allocation is only a probe, never a PSO label.",
+  "n_ris": 32,
+  "n_public": 2,
+  "n_fading": 2000,
+  "rician_k": 1.0,
+  "kappa": 0.1,
+  "total_dbm": 40.0,
+  "root_seed": 20261102,
+  "layout_id": 0,
+  "positions": {
+    "alice": null,
+    "ris": null,
+    "bob": null,
+    "willie": null,
+    "public_center": null
+  },
+  "public_half_width_m": null,
+  "min_link_distance_m": null,
+  "pathloss": {
+    "reference_distance_m": null,
+    "beta0_ar": null,
+    "beta0_ru": null,
+    "exponent_ar": null,
+    "exponent_ru": null
+  },
+  "noise_dbm": {
+    "ris": null,
+    "bob": null,
+    "public": [
+      null,
+      null
+    ],
+    "willie": null
+  },
+  "circuit_w": {
+    "switch": null,
+    "dc": null
+  },
+  "los": {
+    "mode": "explicit_phases",
+    "ar_phase_rad": null,
+    "ru_phase_rad": null
+  },
+  "requirements": {
+    "qos_public": [
+      null,
+      null
+    ],
+    "target_public": [
+      null,
+      null
+    ],
+    "target_bob": null,
+    "outage_bob_max": null,
+    "xi": [
+      0.75,
+      0.8,
+      0.85,
+      0.9,
+      0.95
+    ]
+  },
+  "bounds": {
+    "mb": [
+      0.05,
+      0.49
+    ],
+    "s": [
+      0.05,
+      0.95
+    ]
+  },
+  "reference_allocation": {
+    "mb": 0.1,
+    "public": [
+      0.6,
+      0.3
+    ],
+    "s": 0.5
+  }
+}

@@ -1,0 +1,2 @@
+-r requirements_step2.txt
+# Bước 3 không yêu cầu thư viện mới.

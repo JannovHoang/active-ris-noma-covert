@@ -1,0 +1,19 @@
+{
+  "scope": "smoke",
+  "seeds": [7],
+  "epochs": 2,
+  "snapshot_epochs": [2],
+  "batch_size": 32,
+  "evaluation_batch_size": 256,
+  "learning_rate": 0.001,
+  "weight_decay": 0.0001,
+  "gradient_clip": 1.0,
+  "hidden": 64,
+  "layers": 3,
+  "mlp_inner": 224,
+  "loss_weights": {"mb": 32.0, "public_total": 2.0, "s": 1.0},
+  "resume_every": 1,
+  "validation_physics_samples": 5000,
+  "test_physics_samples": 5000,
+  "alpha": 0.05
+}

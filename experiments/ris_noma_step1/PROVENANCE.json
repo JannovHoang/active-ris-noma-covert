@@ -1,0 +1,15 @@
+{
+  "source_documents": [
+    {
+      "name": "20261_HoangTruongGiang_20225303(1).pdf",
+      "sha256": "a275058edd23fffafecc898ed90a2a07b305556614f341b0502e717ae7fc03b5"
+    },
+    {
+      "name": "Derivation_Multiuser_ActiveRIS_NOMA_Covert_v4(2).pdf",
+      "sha256": "cc44465ae0f1549452afefce06898e810cc4a0344c2f7fc8ba887409171ed4c0"
+    }
+  ],
+  "model": "Derivation v4, 2026-11-02",
+  "scope": "Step 1 fixed-allocation physical evaluator",
+  "demo_parameters_are_illustrative": true
+}

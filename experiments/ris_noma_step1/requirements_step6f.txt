@@ -1,0 +1,6 @@
+# Self-contained; no requirements file from an earlier step is required.
+numpy>=1.24,<3
+scipy>=1.10,<2
+matplotlib>=3.7,<4
+torch>=2.6,<3
+filelock>=3.13,<4

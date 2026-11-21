@@ -1,0 +1,110 @@
+{
+  "scope": "development_pilot",
+  "calibration_layout_ids": [
+    1100,
+    1101,
+    1102
+  ],
+  "benchmark_layout_ids": [
+    1200,
+    1201,
+    1202
+  ],
+  "public_counts": [
+    2,
+    5,
+    6
+  ],
+  "power_dbm": [
+    30.0,
+    35.0,
+    40.0
+  ],
+  "xi": [
+    0.75,
+    0.8,
+    0.85,
+    0.9,
+    0.95
+  ],
+  "search_margins": [
+    0.0,
+    0.03
+  ],
+  "training_seeds": [
+    7,
+    17,
+    27
+  ],
+  "pso_seeds": [
+    101,
+    202,
+    303
+  ],
+  "search_samples": 10000,
+  "selection_samples": 100000,
+  "audit_samples": 100000,
+  "full_evaluations": 1800,
+  "short_evaluations": 60,
+  "alpha": 0.05,
+  "carrier_hz": 3500000000.0,
+  "spacing_wavelengths": 0.5,
+  "array_axis": [
+    0.0,
+    1.0
+  ],
+  "calibration_profiles": [
+    "legacy",
+    "geometry",
+    "geometry_friis"
+  ],
+  "benchmark_profiles": [
+    "legacy",
+    "geometry"
+  ],
+  "calibration_deployments": [
+    {
+      "id": "reference",
+      "alice": [
+        0.0,
+        0.0
+      ],
+      "ris": [
+        95.0,
+        5.0
+      ]
+    },
+    {
+      "id": "ris_shift",
+      "alice": [
+        0.0,
+        0.0
+      ],
+      "ris": [
+        90.0,
+        8.0
+      ]
+    }
+  ],
+  "benchmark_deployments": [
+    {
+      "id": "reference",
+      "alice": [
+        0.0,
+        0.0
+      ],
+      "ris": [
+        95.0,
+        5.0
+      ]
+    }
+  ],
+  "calibration_xi": [
+    0.75,
+    0.85,
+    0.95
+  ],
+  "calibration_margin": 0.03,
+  "sic_rate_margin": 0.01,
+  "bootstrap_repetitions": 2000
+}

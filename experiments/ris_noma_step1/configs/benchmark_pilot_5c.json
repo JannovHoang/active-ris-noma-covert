@@ -1,0 +1,23 @@
+{
+  "purpose": "development_pilot",
+  "splits": ["validation", "test"],
+  "methods": ["pso_full", "pso_short", "gnn_pso_short", "mlp_pso_short"],
+  "pso_seeds": [101, 202, 303],
+  "swarm_size": 30,
+  "full_sweeps": 60,
+  "short_sweeps": 10,
+  "inertia_start": 0.9,
+  "inertia_end": 0.4,
+  "cognitive": 1.5,
+  "social": 1.5,
+  "velocity_max": 0.25,
+  "initial_velocity_scale": 0.1,
+  "warm_particles": 6,
+  "warm_sigma": 0.05,
+  "search_dep_margin": 0.02,
+  "audit_samples": 100000,
+  "audit_seed": 1,
+  "audit_alpha": 0.05,
+  "threads": 1,
+  "notes": "Four methods, paired optimizer RNG, validation-only choice of one checkpoint per architecture. All searches freeze before any fresh audit; no audit-based reselection or fallback. Timings include rebuilding search and audit banks per decision, feature extraction, inference, PSO, and audit. Pilot layouts have been examined previously; this is not the final independent GNN test."
+}

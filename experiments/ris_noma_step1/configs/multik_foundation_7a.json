@@ -1,0 +1,17 @@
+{
+  "training_public_counts": [2, 3, 4],
+  "unseen_public_counts": [5],
+  "splits": {"train": [800, 801, 802], "validation": [803], "test": [804]},
+  "power_dbm": [35.0],
+  "xi": [0.75, 0.85, 0.95],
+  "search_margin": 0.03,
+  "search_samples": 10000,
+  "selection_samples": 100000,
+  "audit_samples": 100000,
+  "pso_seeds": [101, 202],
+  "pso_evaluations": 900,
+  "alpha": 0.05,
+  "training": {"seed": 7, "epochs": 60, "batch_size": 9, "learning_rate": 0.001,
+               "weight_decay": 0.0001, "gradient_clip": 1.0, "hidden": 64, "layers": 3,
+               "mb_weight": 32.0, "public_weight": 2.0, "s_weight": 1.0}
+}

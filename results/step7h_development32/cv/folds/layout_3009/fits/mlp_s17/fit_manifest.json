@@ -1,0 +1,48 @@
+{
+  "kind": "mlp",
+  "seed": 17,
+  "epochs_completed": 200,
+  "plan_sha256": "aa38993aa8f33a15bce7d0a84f2eb5c128a00922c807a40b947ecf7983f06bcc",
+  "best_weighted_epoch": 139,
+  "parameters": 24291,
+  "training_seconds": 69.41127759999654,
+  "candidates": {
+    "mlp_s17_e0200": {
+      "kind": "mlp",
+      "seed": 17,
+      "epoch": 200,
+      "path": "fits/mlp_s17/snapshots/epoch_0200.pt",
+      "sha256": "f10bf6353137b7715b9b1c53869ea51e8bd83c86d3fb7d80827929ba17c11898",
+      "validation_errors": {
+        "case_mse": 0.012146973479834813,
+        "weighted_loss": 0.0016319934326770996,
+        "mb_mae": 0.006089792291205081,
+        "public_mae": 0.0739306313177896,
+        "s_mae": 0.15326158489499775
+      },
+      "parameters": 24291
+    },
+    "mlp_s17_best": {
+      "kind": "mlp",
+      "seed": 17,
+      "epoch": 139,
+      "path": "fits/mlp_s17/best_weighted.pt",
+      "sha256": "afa9e943f1e05e5a3de7309b73187eabd09077bb37b02670eace3b38848950fe",
+      "validation_errors": {
+        "case_mse": 0.012020811054205136,
+        "weighted_loss": 0.0016102642393744891,
+        "mb_mae": 0.00594377474829791,
+        "public_mae": 0.0735983531626444,
+        "s_mae": 0.1524628448107886
+      },
+      "parameters": 24291
+    }
+  },
+  "sha256": {
+    "snapshots/epoch_0200.pt": "f10bf6353137b7715b9b1c53869ea51e8bd83c86d3fb7d80827929ba17c11898",
+    "best_weighted.pt": "afa9e943f1e05e5a3de7309b73187eabd09077bb37b02670eace3b38848950fe",
+    "history.csv": "86b454c532e7f0ec3f55f951a65cb7d34cd1d5106df8af88973e9030341d459e"
+  },
+  "test_used_for_training_or_selection": false,
+  "physical_gradient": false
+}

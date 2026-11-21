@@ -1,0 +1,6 @@
+# Self-contained dependencies for step 5b; no older requirements files needed.
+numpy>=1.24
+scipy>=1.10
+matplotlib>=3.7
+# Install the CPU torch wheel first, as described in HUONG_DAN_BUOC5B.md.
+torch>=2.6,<3

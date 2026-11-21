@@ -1,0 +1,258 @@
+{
+  "selected_short_budget": 150,
+  "reference_target_met": true,
+  "reference_has_feasible_return": true,
+  "full_reference": {
+    "allocations": 1536,
+    "scenarios": 512,
+    "layouts": 16,
+    "passed": 1512,
+    "pass_fraction": 0.984375,
+    "gated_rate": 4.594025233441592,
+    "raw_rate": 4.664791159813806,
+    "rate_on_passed": 4.666946268893045,
+    "eligible_allocations": 1512,
+    "eligible_pass_fraction": 1.0,
+    "mean_online_ms": 1994.7506356768988,
+    "median_online_ms": 1897.6169250008752,
+    "p90_online_ms": 2834.8736437510524,
+    "mean_pso_ms": 1975.1333257160913,
+    "objective_evaluations_per_return": 1800,
+    "objective_evaluations_sum": 2764800,
+    "fallback_count": 0,
+    "failure_counts": {
+      "layout_bob_mean_gain_rule": 24
+    }
+  },
+  "candidate_budgets": [
+    {
+      "budget": 150,
+      "both_networks_meet_reference_target": true,
+      "networks": {
+        "gnn": {
+          "allocations": 1536,
+          "scenarios": 512,
+          "layouts": 16,
+          "passed": 1512,
+          "pass_fraction": 0.984375,
+          "gated_rate": 4.5723009434931035,
+          "raw_rate": 4.642452167129918,
+          "rate_on_passed": 4.644877148945375,
+          "eligible_allocations": 1512,
+          "eligible_pass_fraction": 1.0,
+          "mean_online_ms": 187.88745852844121,
+          "median_online_ms": 178.07870000297044,
+          "p90_online_ms": 263.8802937431137,
+          "mean_pso_ms": 164.14847194005233,
+          "objective_evaluations_per_return": 150,
+          "objective_evaluations_sum": 230400,
+          "fallback_count": 0,
+          "failure_counts": {
+            "layout_bob_mean_gain_rule": 24
+          }
+        },
+        "mlp": {
+          "allocations": 1536,
+          "scenarios": 512,
+          "layouts": 16,
+          "passed": 1512,
+          "pass_fraction": 0.984375,
+          "gated_rate": 4.572740959958666,
+          "raw_rate": 4.642726592982712,
+          "rate_on_passed": 4.645324149799279,
+          "eligible_allocations": 1512,
+          "eligible_pass_fraction": 1.0,
+          "mean_online_ms": 186.15903997375938,
+          "median_online_ms": 177.18033750043105,
+          "p90_online_ms": 258.957712508618,
+          "mean_pso_ms": 163.3095539713499,
+          "objective_evaluations_per_return": 150,
+          "objective_evaluations_sum": 230400,
+          "fallback_count": 0,
+          "failure_counts": {
+            "layout_bob_mean_gain_rule": 24
+          }
+        }
+      }
+    },
+    {
+      "budget": 300,
+      "both_networks_meet_reference_target": true,
+      "networks": {
+        "gnn": {
+          "allocations": 1536,
+          "scenarios": 512,
+          "layouts": 16,
+          "passed": 1512,
+          "pass_fraction": 0.984375,
+          "gated_rate": 4.585602675218249,
+          "raw_rate": 4.656146231810292,
+          "rate_on_passed": 4.658390019269333,
+          "eligible_allocations": 1512,
+          "eligible_pass_fraction": 1.0,
+          "mean_online_ms": 352.4691336586822,
+          "median_online_ms": 334.70489999126585,
+          "p90_online_ms": 496.43686875424464,
+          "mean_pso_ms": 328.7301470702933,
+          "objective_evaluations_per_return": 300,
+          "objective_evaluations_sum": 460800,
+          "fallback_count": 0,
+          "failure_counts": {
+            "layout_bob_mean_gain_rule": 24
+          }
+        },
+        "mlp": {
+          "allocations": 1536,
+          "scenarios": 512,
+          "layouts": 16,
+          "passed": 1512,
+          "pass_fraction": 0.984375,
+          "gated_rate": 4.586321927895408,
+          "raw_rate": 4.656813995809981,
+          "rate_on_passed": 4.659120688655652,
+          "eligible_allocations": 1512,
+          "eligible_pass_fraction": 1.0,
+          "mean_online_ms": 351.8447385415063,
+          "median_online_ms": 333.78561875770174,
+          "p90_online_ms": 498.1464250004137,
+          "mean_pso_ms": 328.99525253909684,
+          "objective_evaluations_per_return": 300,
+          "objective_evaluations_sum": 460800,
+          "fallback_count": 0,
+          "failure_counts": {
+            "layout_bob_mean_gain_rule": 24
+          }
+        }
+      }
+    },
+    {
+      "budget": 450,
+      "both_networks_meet_reference_target": true,
+      "networks": {
+        "gnn": {
+          "allocations": 1536,
+          "scenarios": 512,
+          "layouts": 16,
+          "passed": 1512,
+          "pass_fraction": 0.984375,
+          "gated_rate": 4.590371609833204,
+          "raw_rate": 4.661109306892985,
+          "rate_on_passed": 4.663234651259128,
+          "eligible_allocations": 1512,
+          "eligible_pass_fraction": 1.0,
+          "mean_online_ms": 517.4376077472781,
+          "median_online_ms": 492.51836875282606,
+          "p90_online_ms": 733.136706249752,
+          "mean_pso_ms": 493.69862115888924,
+          "objective_evaluations_per_return": 450,
+          "objective_evaluations_sum": 691200,
+          "fallback_count": 0,
+          "failure_counts": {
+            "layout_bob_mean_gain_rule": 24
+          }
+        },
+        "mlp": {
+          "allocations": 1536,
+          "scenarios": 512,
+          "layouts": 16,
+          "passed": 1512,
+          "pass_fraction": 0.984375,
+          "gated_rate": 4.590563910843538,
+          "raw_rate": 4.6612898418498325,
+          "rate_on_passed": 4.663430004666451,
+          "eligible_allocations": 1512,
+          "eligible_pass_fraction": 1.0,
+          "mean_online_ms": 515.298246940001,
+          "median_online_ms": 488.8394624963439,
+          "p90_online_ms": 729.8515812481128,
+          "mean_pso_ms": 492.4487609375916,
+          "objective_evaluations_per_return": 450,
+          "objective_evaluations_sum": 691200,
+          "fallback_count": 0,
+          "failure_counts": {
+            "layout_bob_mean_gain_rule": 24
+          }
+        }
+      }
+    }
+  ],
+  "random_at_selected_budget": {
+    "allocations": 1536,
+    "scenarios": 512,
+    "layouts": 16,
+    "passed": 1507,
+    "pass_fraction": 0.9811197916666666,
+    "gated_rate": 4.514040631643127,
+    "raw_rate": 4.595430137889331,
+    "rate_on_passed": 4.600906708828031,
+    "eligible_allocations": 1512,
+    "eligible_pass_fraction": 0.9966931216931217,
+    "mean_online_ms": 183.63228137999008,
+    "median_online_ms": 173.94529999728547,
+    "p90_online_ms": 259.1994437534595,
+    "mean_pso_ms": 164.01497141918261,
+    "objective_evaluations_per_return": 150,
+    "objective_evaluations_sum": 230400,
+    "fallback_count": 0,
+    "failure_counts": {
+      "layout_bob_mean_gain_rule": 24,
+      "dep_uniform_lower_ge_xi": 7,
+      "covertness_gamma": 3
+    }
+  },
+  "direct": {
+    "gnn": {
+      "allocations": 1536,
+      "scenarios": 512,
+      "layouts": 16,
+      "passed": 1500,
+      "pass_fraction": 0.9765625,
+      "gated_rate": 4.525122358863971,
+      "raw_rate": 4.633194979571468,
+      "rate_on_passed": 4.633725295476706,
+      "eligible_allocations": 1512,
+      "eligible_pass_fraction": 0.9920634920634921,
+      "mean_online_ms": 23.00391080733751,
+      "median_online_ms": 22.71154999607461,
+      "p90_online_ms": 29.55539999948087,
+      "mean_pso_ms": 0.0,
+      "objective_evaluations_per_return": 0,
+      "objective_evaluations_sum": 0,
+      "fallback_count": 0,
+      "failure_counts": {
+        "layout_bob_mean_gain_rule": 24,
+        "public_average_qos": 8,
+        "public_mean_rate_lower_ge_qos": 9,
+        "dep_uniform_lower_ge_xi": 3
+      }
+    },
+    "mlp": {
+      "allocations": 1536,
+      "scenarios": 512,
+      "layouts": 16,
+      "passed": 1496,
+      "pass_fraction": 0.9739583333333334,
+      "gated_rate": 4.520370629041182,
+      "raw_rate": 4.63552809101521,
+      "rate_on_passed": 4.641236153881855,
+      "eligible_allocations": 1512,
+      "eligible_pass_fraction": 0.9894179894179894,
+      "mean_online_ms": 22.11441022135811,
+      "median_online_ms": 21.87176874394936,
+      "p90_online_ms": 28.46926250413162,
+      "mean_pso_ms": 0.0,
+      "objective_evaluations_per_return": 0,
+      "objective_evaluations_sum": 0,
+      "fallback_count": 0,
+      "failure_counts": {
+        "layout_bob_mean_gain_rule": 24,
+        "public_average_qos": 7,
+        "public_mean_rate_lower_ge_qos": 8,
+        "dep_uniform_lower_ge_xi": 8
+      }
+    }
+  },
+  "rule": "Smallest budget at which BOTH GNN and MLP hybrids lose at most 1 percentage point feasibility and retain >=95% gated rate relative to Full PSO; if none, use largest and record target not met",
+  "claim": "Validation-only engineering target; neither a statistical noninferiority proof nor proof of learned-initialization superiority",
+  "test_used": false
+}

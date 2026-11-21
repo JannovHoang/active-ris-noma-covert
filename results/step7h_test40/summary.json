@@ -1,0 +1,1323 @@
+{
+  "scope": "main",
+  "stage": "final",
+  "methods": [
+    "full_pso",
+    "random_short_pso",
+    "mlp_direct",
+    "gnn_direct",
+    "mlp_short_pso",
+    "gnn_short_pso"
+  ],
+  "layouts": 40,
+  "unique_scenarios": 1600,
+  "allocation_rows": 28800,
+  "objective_evaluations": 10800000,
+  "metrics": [
+    {
+      "regime": "seen_k",
+      "method": "full_pso",
+      "budget": 1800,
+      "allocations": 3840,
+      "scenarios": 1280,
+      "layouts": 40,
+      "passed": 3840,
+      "pass_fraction": 1.0,
+      "gated_rate": 4.595218853100935,
+      "raw_rate": 4.595218853100935,
+      "rate_on_passed": 4.595218853100935,
+      "eligible_allocations": 3840,
+      "eligible_pass_fraction": 1.0,
+      "mean_online_ms": 1991.4121831509306,
+      "median_online_ms": 1874.8179625004013,
+      "p90_online_ms": 2875.7858700058932,
+      "mean_pso_ms": 1972.3836333854308,
+      "objective_evaluations_per_return": 1800,
+      "objective_evaluations_sum": 6912000,
+      "fallback_count": 0,
+      "failure_counts": {}
+    },
+    {
+      "regime": "seen_k",
+      "method": "gnn_direct",
+      "budget": 0,
+      "allocations": 3840,
+      "scenarios": 1280,
+      "layouts": 40,
+      "passed": 3769,
+      "pass_fraction": 0.9815104166666667,
+      "gated_rate": 4.491085117615826,
+      "raw_rate": 4.5649363503885265,
+      "rate_on_passed": 4.575687676212463,
+      "eligible_allocations": 3840,
+      "eligible_pass_fraction": 0.9815104166666667,
+      "mean_online_ms": 22.349003645859966,
+      "median_online_ms": 22.22991875032676,
+      "p90_online_ms": 28.518602493568324,
+      "mean_pso_ms": 0.0,
+      "objective_evaluations_per_return": 0,
+      "objective_evaluations_sum": 0,
+      "fallback_count": 0,
+      "failure_counts": {
+        "dep_uniform_lower_ge_xi": 68,
+        "public_mean_rate_lower_ge_qos": 3
+      }
+    },
+    {
+      "regime": "seen_k",
+      "method": "gnn_short_pso",
+      "budget": 150,
+      "allocations": 3840,
+      "scenarios": 1280,
+      "layouts": 40,
+      "passed": 3840,
+      "pass_fraction": 1.0,
+      "gated_rate": 4.574005445949176,
+      "raw_rate": 4.574005445949176,
+      "rate_on_passed": 4.574005445949176,
+      "eligible_allocations": 3840,
+      "eligible_pass_fraction": 1.0,
+      "mean_online_ms": 186.91755575509697,
+      "median_online_ms": 175.11471874786366,
+      "p90_online_ms": 266.39407501043024,
+      "mean_pso_ms": 163.876304296853,
+      "objective_evaluations_per_return": 150,
+      "objective_evaluations_sum": 576000,
+      "fallback_count": 0,
+      "failure_counts": {}
+    },
+    {
+      "regime": "seen_k",
+      "method": "mlp_direct",
+      "budget": 0,
+      "allocations": 3840,
+      "scenarios": 1280,
+      "layouts": 40,
+      "passed": 3768,
+      "pass_fraction": 0.98125,
+      "gated_rate": 4.4934708588110155,
+      "raw_rate": 4.566428191317879,
+      "rate_on_passed": 4.57933335929785,
+      "eligible_allocations": 3840,
+      "eligible_pass_fraction": 0.98125,
+      "mean_online_ms": 21.483263646003554,
+      "median_online_ms": 21.296524997069355,
+      "p90_online_ms": 27.348067493767303,
+      "mean_pso_ms": 0.0,
+      "objective_evaluations_per_return": 0,
+      "objective_evaluations_sum": 0,
+      "fallback_count": 0,
+      "failure_counts": {
+        "dep_uniform_lower_ge_xi": 68,
+        "public_mean_rate_lower_ge_qos": 4
+      }
+    },
+    {
+      "regime": "seen_k",
+      "method": "mlp_short_pso",
+      "budget": 150,
+      "allocations": 3840,
+      "scenarios": 1280,
+      "layouts": 40,
+      "passed": 3840,
+      "pass_fraction": 1.0,
+      "gated_rate": 4.574129307181691,
+      "raw_rate": 4.574129307181691,
+      "rate_on_passed": 4.574129307181691,
+      "eligible_allocations": 3840,
+      "eligible_pass_fraction": 1.0,
+      "mean_online_ms": 185.83729002615237,
+      "median_online_ms": 173.81370625571435,
+      "p90_online_ms": 265.3384425105287,
+      "mean_pso_ms": 163.6617785677648,
+      "objective_evaluations_per_return": 150,
+      "objective_evaluations_sum": 576000,
+      "fallback_count": 0,
+      "failure_counts": {}
+    },
+    {
+      "regime": "seen_k",
+      "method": "random_short_pso",
+      "budget": 150,
+      "allocations": 3840,
+      "scenarios": 1280,
+      "layouts": 40,
+      "passed": 3831,
+      "pass_fraction": 0.99765625,
+      "gated_rate": 4.514087779298091,
+      "raw_rate": 4.523407233610937,
+      "rate_on_passed": 4.524692527409206,
+      "eligible_allocations": 3840,
+      "eligible_pass_fraction": 0.99765625,
+      "mean_online_ms": 182.77061132799304,
+      "median_online_ms": 171.45571875471433,
+      "p90_online_ms": 261.5179187456306,
+      "mean_pso_ms": 163.7420615624933,
+      "objective_evaluations_per_return": 150,
+      "objective_evaluations_sum": 576000,
+      "fallback_count": 0,
+      "failure_counts": {
+        "dep_uniform_lower_ge_xi": 9,
+        "covertness_gamma": 4
+      }
+    },
+    {
+      "regime": "unseen_k",
+      "method": "full_pso",
+      "budget": 1800,
+      "allocations": 960,
+      "scenarios": 320,
+      "layouts": 40,
+      "passed": 960,
+      "pass_fraction": 1.0,
+      "gated_rate": 4.559465726779567,
+      "raw_rate": 4.559465726779567,
+      "rate_on_passed": 4.559465726779567,
+      "eligible_allocations": 960,
+      "eligible_pass_fraction": 1.0,
+      "mean_online_ms": 2630.409795729118,
+      "median_online_ms": 2124.4800312483676,
+      "p90_online_ms": 3479.063082497032,
+      "mean_pso_ms": 2605.480311041818,
+      "objective_evaluations_per_return": 1800,
+      "objective_evaluations_sum": 1728000,
+      "fallback_count": 0,
+      "failure_counts": {}
+    },
+    {
+      "regime": "unseen_k",
+      "method": "gnn_direct",
+      "budget": 0,
+      "allocations": 960,
+      "scenarios": 320,
+      "layouts": 40,
+      "passed": 683,
+      "pass_fraction": 0.7114583333333333,
+      "gated_rate": 3.034704224679208,
+      "raw_rate": 4.55380857843319,
+      "rate_on_passed": 4.2654700668990335,
+      "eligible_allocations": 960,
+      "eligible_pass_fraction": 0.7114583333333333,
+      "mean_online_ms": 28.81270281249423,
+      "median_online_ms": 26.370662502813502,
+      "p90_online_ms": 34.41603750170543,
+      "mean_pso_ms": 0.0,
+      "objective_evaluations_per_return": 0,
+      "objective_evaluations_sum": 0,
+      "fallback_count": 0,
+      "failure_counts": {
+        "dep_uniform_lower_ge_xi": 17,
+        "public_average_qos": 244,
+        "public_mean_rate_lower_ge_qos": 261
+      }
+    },
+    {
+      "regime": "unseen_k",
+      "method": "gnn_short_pso",
+      "budget": 150,
+      "allocations": 960,
+      "scenarios": 320,
+      "layouts": 40,
+      "passed": 915,
+      "pass_fraction": 0.953125,
+      "gated_rate": 4.0322511953826465,
+      "raw_rate": 4.2719252606582305,
+      "rate_on_passed": 4.230558631221138,
+      "eligible_allocations": 960,
+      "eligible_pass_fraction": 0.953125,
+      "mean_online_ms": 243.77001802075333,
+      "median_online_ms": 203.2008937549108,
+      "p90_online_ms": 323.23517875020116,
+      "mean_pso_ms": 214.12854333336023,
+      "objective_evaluations_per_return": 150,
+      "objective_evaluations_sum": 144000,
+      "fallback_count": 0,
+      "failure_counts": {
+        "dep_uniform_lower_ge_xi": 2,
+        "public_average_qos": 36,
+        "public_mean_rate_lower_ge_qos": 44
+      }
+    },
+    {
+      "regime": "unseen_k",
+      "method": "mlp_direct",
+      "budget": 0,
+      "allocations": 960,
+      "scenarios": 320,
+      "layouts": 40,
+      "passed": 681,
+      "pass_fraction": 0.709375,
+      "gated_rate": 3.032303095903921,
+      "raw_rate": 4.558777219038573,
+      "rate_on_passed": 4.274612293785263,
+      "eligible_allocations": 960,
+      "eligible_pass_fraction": 0.709375,
+      "mean_online_ms": 27.778999999729116,
+      "median_online_ms": 25.352893750095973,
+      "p90_online_ms": 33.217862494166184,
+      "mean_pso_ms": 0.0,
+      "objective_evaluations_per_return": 0,
+      "objective_evaluations_sum": 0,
+      "fallback_count": 0,
+      "failure_counts": {
+        "dep_uniform_lower_ge_xi": 19,
+        "public_mean_rate_lower_ge_qos": 261,
+        "public_average_qos": 238
+      }
+    },
+    {
+      "regime": "unseen_k",
+      "method": "mlp_short_pso",
+      "budget": 150,
+      "allocations": 960,
+      "scenarios": 320,
+      "layouts": 40,
+      "passed": 909,
+      "pass_fraction": 0.946875,
+      "gated_rate": 4.00296466774739,
+      "raw_rate": 4.272445492373716,
+      "rate_on_passed": 4.227553444485692,
+      "eligible_allocations": 960,
+      "eligible_pass_fraction": 0.946875,
+      "mean_online_ms": 242.72189927051687,
+      "median_online_ms": 201.0695875046622,
+      "p90_online_ms": 322.89677501239566,
+      "mean_pso_ms": 214.11412739588891,
+      "objective_evaluations_per_return": 150,
+      "objective_evaluations_sum": 144000,
+      "fallback_count": 0,
+      "failure_counts": {
+        "dep_uniform_lower_ge_xi": 1,
+        "public_average_qos": 42,
+        "public_mean_rate_lower_ge_qos": 50
+      }
+    },
+    {
+      "regime": "unseen_k",
+      "method": "random_short_pso",
+      "budget": 150,
+      "allocations": 960,
+      "scenarios": 320,
+      "layouts": 40,
+      "passed": 896,
+      "pass_fraction": 0.9333333333333333,
+      "gated_rate": 3.7174576350163813,
+      "raw_rate": 3.994159357485043,
+      "rate_on_passed": 3.9829903232318373,
+      "eligible_allocations": 960,
+      "eligible_pass_fraction": 0.9333333333333333,
+      "mean_online_ms": 239.82754562483328,
+      "median_online_ms": 199.11456249701587,
+      "p90_online_ms": 320.21516000049814,
+      "mean_pso_ms": 214.89806093753336,
+      "objective_evaluations_per_return": 150,
+      "objective_evaluations_sum": 144000,
+      "fallback_count": 0,
+      "failure_counts": {
+        "dep_uniform_lower_ge_xi": 46,
+        "covertness_gamma": 23,
+        "public_mean_rate_lower_ge_qos": 26,
+        "public_average_qos": 21
+      }
+    }
+  ],
+  "paired_contrasts": [
+    {
+      "regime": "seen_k",
+      "budget": 150,
+      "left": "gnn_short_pso",
+      "right": "random_short_pso",
+      "layout_clusters": 40,
+      "paired_allocations": 3840,
+      "bootstrap_resamples": 2000,
+      "interval_kind": "pointwise 95% paired layout bootstrap; descriptive, no multiple-testing p-values",
+      "pass_difference": 0.00234375,
+      "pass_difference_ci95": [
+        0.0005208333333333333,
+        0.004427083333333333
+      ],
+      "gated_rate_difference": 0.059917666651085374,
+      "gated_rate_difference_ci95": [
+        0.052449763806183575,
+        0.06714407048882531
+      ],
+      "online_seconds_difference": 0.004146944427103942,
+      "online_seconds_difference_ci95": [
+        0.003526499648356396,
+        0.004911974584239354
+      ],
+      "right_over_left_time_ratio": 0.9778140452866966,
+      "small_cluster_count": false
+    },
+    {
+      "regime": "seen_k",
+      "budget": 150,
+      "left": "gnn_short_pso",
+      "right": "mlp_short_pso",
+      "layout_clusters": 40,
+      "paired_allocations": 3840,
+      "bootstrap_resamples": 2000,
+      "interval_kind": "pointwise 95% paired layout bootstrap; descriptive, no multiple-testing p-values",
+      "pass_difference": 0.0,
+      "pass_difference_ci95": [
+        0.0,
+        0.0
+      ],
+      "gated_rate_difference": -0.00012386123251442683,
+      "gated_rate_difference_ci95": [
+        -0.001790777899660217,
+        0.0014258818176673765
+      ],
+      "online_seconds_difference": 0.001080265728944596,
+      "online_seconds_difference_ci95": [
+        0.0006373260466302118,
+        0.0016115513069134128
+      ],
+      "right_over_left_time_ratio": 0.9942206299211401,
+      "small_cluster_count": false
+    },
+    {
+      "regime": "seen_k",
+      "budget": 150,
+      "left": "gnn_short_pso",
+      "right": "full_pso",
+      "layout_clusters": 40,
+      "paired_allocations": 3840,
+      "bootstrap_resamples": 2000,
+      "interval_kind": "pointwise 95% paired layout bootstrap; descriptive, no multiple-testing p-values",
+      "pass_difference": 0.0,
+      "pass_difference_ci95": [
+        0.0,
+        0.0
+      ],
+      "gated_rate_difference": -0.021213407151758405,
+      "gated_rate_difference_ci95": [
+        -0.024333370426023633,
+        -0.01838711079413438
+      ],
+      "online_seconds_difference": -1.8044946273958338,
+      "online_seconds_difference_ci95": [
+        -1.9259782704751172,
+        -1.6864400314185428
+      ],
+      "right_over_left_time_ratio": 10.653960111484217,
+      "small_cluster_count": false
+    },
+    {
+      "regime": "unseen_k",
+      "budget": 150,
+      "left": "gnn_short_pso",
+      "right": "random_short_pso",
+      "layout_clusters": 40,
+      "paired_allocations": 960,
+      "bootstrap_resamples": 2000,
+      "interval_kind": "pointwise 95% paired layout bootstrap; descriptive, no multiple-testing p-values",
+      "pass_difference": 0.01979166666666667,
+      "pass_difference_ci95": [
+        -0.0031249999999999993,
+        0.042708333333333334
+      ],
+      "gated_rate_difference": 0.31479356036626555,
+      "gated_rate_difference_ci95": [
+        0.2262050474658337,
+        0.40315739355406593
+      ],
+      "online_seconds_difference": 0.003942472395920049,
+      "online_seconds_difference_ci95": [
+        0.0024842234560784014,
+        0.005459444390725518
+      ],
+      "right_over_left_time_ratio": 0.9838270824774504,
+      "small_cluster_count": false
+    },
+    {
+      "regime": "unseen_k",
+      "budget": 150,
+      "left": "gnn_short_pso",
+      "right": "mlp_short_pso",
+      "layout_clusters": 40,
+      "paired_allocations": 960,
+      "bootstrap_resamples": 2000,
+      "interval_kind": "pointwise 95% paired layout bootstrap; descriptive, no multiple-testing p-values",
+      "pass_difference": 0.00625,
+      "pass_difference_ci95": [
+        0.0010416666666666667,
+        0.0125
+      ],
+      "gated_rate_difference": 0.029286527635256788,
+      "gated_rate_difference_ci95": [
+        0.003458507324942454,
+        0.06005538204684326
+      ],
+      "online_seconds_difference": 0.0010481187502364266,
+      "online_seconds_difference_ci95": [
+        9.79956253221796e-05,
+        0.001940309924688677
+      ],
+      "right_over_left_time_ratio": 0.9957003787473682,
+      "small_cluster_count": false
+    },
+    {
+      "regime": "unseen_k",
+      "budget": 150,
+      "left": "gnn_short_pso",
+      "right": "full_pso",
+      "layout_clusters": 40,
+      "paired_allocations": 960,
+      "bootstrap_resamples": 2000,
+      "interval_kind": "pointwise 95% paired layout bootstrap; descriptive, no multiple-testing p-values",
+      "pass_difference": -0.04687499999999999,
+      "pass_difference_ci95": [
+        -0.0625,
+        -0.03333333333333334
+      ],
+      "gated_rate_difference": -0.5272145313969194,
+      "gated_rate_difference_ci95": [
+        -0.6122276244338518,
+        -0.44986629411031265
+      ],
+      "online_seconds_difference": -2.386639777708365,
+      "online_seconds_difference_ci95": [
+        -2.5688564249219197,
+        -2.223010776557571
+      ],
+      "right_over_left_time_ratio": 10.790538627704326,
+      "small_cluster_count": false
+    }
+  ],
+  "layout_confidence_intervals": [
+    {
+      "stratum_kind": "overall",
+      "regime": "seen_k",
+      "stratum": "all",
+      "method": "full_pso",
+      "budget": 1800,
+      "layout_clusters": 40,
+      "allocations": 3840,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        1.0,
+        1.0
+      ],
+      "gated_rate_ci95": [
+        4.513699426297012,
+        4.658472820986314
+      ],
+      "mean_online_ms_ci95": [
+        1861.796907310582,
+        2124.653855914566
+      ]
+    },
+    {
+      "stratum_kind": "overall",
+      "regime": "seen_k",
+      "stratum": "all",
+      "method": "gnn_direct",
+      "budget": 0,
+      "layout_clusters": 40,
+      "allocations": 3840,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.9619791666666667,
+        0.996875
+      ],
+      "gated_rate_ci95": [
+        4.340257236103861,
+        4.601274288447686
+      ],
+      "mean_online_ms_ci95": [
+        21.404818069165305,
+        23.303726951344196
+      ]
+    },
+    {
+      "stratum_kind": "overall",
+      "regime": "seen_k",
+      "stratum": "all",
+      "method": "gnn_short_pso",
+      "budget": 150,
+      "layout_clusters": 40,
+      "allocations": 3840,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        1.0,
+        1.0
+      ],
+      "gated_rate_ci95": [
+        4.492506851276437,
+        4.637360096329531
+      ],
+      "mean_online_ms_ci95": [
+        175.2500211012986,
+        199.01536999864803
+      ]
+    },
+    {
+      "stratum_kind": "overall",
+      "regime": "seen_k",
+      "stratum": "all",
+      "method": "mlp_direct",
+      "budget": 0,
+      "layout_clusters": 40,
+      "allocations": 3840,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.9635416666666666,
+        0.9947916666666666
+      ],
+      "gated_rate_ci95": [
+        4.350121269867287,
+        4.596833371888006
+      ],
+      "mean_online_ms_ci95": [
+        20.584073557147917,
+        22.38798425007924
+      ]
+    },
+    {
+      "stratum_kind": "overall",
+      "regime": "seen_k",
+      "stratum": "all",
+      "method": "mlp_short_pso",
+      "budget": 150,
+      "layout_clusters": 40,
+      "allocations": 3840,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        1.0,
+        1.0
+      ],
+      "gated_rate_ci95": [
+        4.492653131268987,
+        4.63760291434471
+      ],
+      "mean_online_ms_ci95": [
+        174.27769353591881,
+        198.01732755543216
+      ]
+    },
+    {
+      "stratum_kind": "overall",
+      "regime": "seen_k",
+      "stratum": "all",
+      "method": "random_short_pso",
+      "budget": 150,
+      "layout_clusters": 40,
+      "allocations": 3840,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.9955729166666667,
+        0.9994791666666667
+      ],
+      "gated_rate_ci95": [
+        4.4349181117754295,
+        4.5760576232965064
+      ],
+      "mean_online_ms_ci95": [
+        171.4355166217092,
+        194.66331747249714
+      ]
+    },
+    {
+      "stratum_kind": "overall",
+      "regime": "unseen_k",
+      "stratum": "all",
+      "method": "full_pso",
+      "budget": 1800,
+      "layout_clusters": 40,
+      "allocations": 960,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        1.0,
+        1.0
+      ],
+      "gated_rate_ci95": [
+        4.48393005516503,
+        4.618251512445143
+      ],
+      "mean_online_ms_ci95": [
+        2451.4516458693656,
+        2830.4865921170526
+      ]
+    },
+    {
+      "stratum_kind": "overall",
+      "regime": "unseen_k",
+      "stratum": "all",
+      "method": "gnn_direct",
+      "budget": 0,
+      "layout_clusters": 40,
+      "allocations": 960,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.6822916666666666,
+        0.74375
+      ],
+      "gated_rate_ci95": [
+        2.905243615442182,
+        3.178015313068302
+      ],
+      "mean_online_ms_ci95": [
+        27.668813398163177,
+        30.096137601501596
+      ]
+    },
+    {
+      "stratum_kind": "overall",
+      "regime": "unseen_k",
+      "stratum": "all",
+      "method": "gnn_short_pso",
+      "budget": 150,
+      "layout_clusters": 40,
+      "allocations": 960,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.9375,
+        0.9666666666666667
+      ],
+      "gated_rate_ci95": [
+        3.950544164655395,
+        4.102270300281067
+      ],
+      "mean_online_ms_ci95": [
+        228.14568125001492,
+        261.3120136431949
+      ]
+    },
+    {
+      "stratum_kind": "overall",
+      "regime": "unseen_k",
+      "stratum": "all",
+      "method": "mlp_direct",
+      "budget": 0,
+      "layout_clusters": 40,
+      "allocations": 960,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.6802083333333333,
+        0.7427083333333333
+      ],
+      "gated_rate_ci95": [
+        2.8962594011782548,
+        3.1794605897479786
+      ],
+      "mean_online_ms_ci95": [
+        26.683138639993064,
+        29.032681612031865
+      ]
+    },
+    {
+      "stratum_kind": "overall",
+      "regime": "unseen_k",
+      "stratum": "all",
+      "method": "mlp_short_pso",
+      "budget": 150,
+      "layout_clusters": 40,
+      "allocations": 960,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.9291666666666667,
+        0.9625
+      ],
+      "gated_rate_ci95": [
+        3.9181724675637257,
+        4.0767625628076445
+      ],
+      "mean_online_ms_ci95": [
+        226.7875162286066,
+        260.2152033975866
+      ]
+    },
+    {
+      "stratum_kind": "overall",
+      "regime": "unseen_k",
+      "stratum": "all",
+      "method": "random_short_pso",
+      "budget": 150,
+      "layout_clusters": 40,
+      "allocations": 960,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.915625,
+        0.9489583333333333
+      ],
+      "gated_rate_ci95": [
+        3.619703807388135,
+        3.796154470433282
+      ],
+      "mean_online_ms_ci95": [
+        223.92314318963088,
+        257.28676203633734
+      ]
+    },
+    {
+      "stratum_kind": "cv",
+      "regime": "seen_k",
+      "stratum": "low",
+      "method": "full_pso",
+      "budget": 1800,
+      "layout_clusters": 6,
+      "allocations": 576,
+      "small_cluster_count": true,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        1.0,
+        1.0
+      ],
+      "gated_rate_ci95": [
+        3.8800083346018406,
+        4.310731460081753
+      ],
+      "mean_online_ms_ci95": [
+        1779.3141312497987,
+        2427.7976555553473
+      ]
+    },
+    {
+      "stratum_kind": "cv",
+      "regime": "seen_k",
+      "stratum": "low",
+      "method": "gnn_direct",
+      "budget": 0,
+      "layout_clusters": 6,
+      "allocations": 576,
+      "small_cluster_count": true,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.7985677083333333,
+        0.9756944444444444
+      ],
+      "gated_rate_ci95": [
+        3.129143482397061,
+        4.15099296970172
+      ],
+      "mean_online_ms_ci95": [
+        20.989285937768425,
+        26.246447396020912
+      ]
+    },
+    {
+      "stratum_kind": "cv",
+      "regime": "seen_k",
+      "stratum": "low",
+      "method": "gnn_short_pso",
+      "budget": 150,
+      "layout_clusters": 6,
+      "allocations": 576,
+      "small_cluster_count": true,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        1.0,
+        1.0
+      ],
+      "gated_rate_ci95": [
+        3.859356607301262,
+        4.290022697739356
+      ],
+      "mean_online_ms_ci95": [
+        168.80992586833247,
+        226.30574253491886
+      ]
+    },
+    {
+      "stratum_kind": "cv",
+      "regime": "seen_k",
+      "stratum": "low",
+      "method": "mlp_direct",
+      "budget": 0,
+      "layout_clusters": 6,
+      "allocations": 576,
+      "small_cluster_count": true,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.8194010416666666,
+        0.9774305555555556
+      ],
+      "gated_rate_ci95": [
+        3.2282532995719446,
+        4.1617557402132315
+      ],
+      "mean_online_ms_ci95": [
+        20.198350694929307,
+        25.261350174079983
+      ]
+    },
+    {
+      "stratum_kind": "cv",
+      "regime": "seen_k",
+      "stratum": "low",
+      "method": "mlp_short_pso",
+      "budget": 150,
+      "layout_clusters": 6,
+      "allocations": 576,
+      "small_cluster_count": true,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        1.0,
+        1.0
+      ],
+      "gated_rate_ci95": [
+        3.856728745412184,
+        4.288051388522948
+      ],
+      "mean_online_ms_ci95": [
+        166.93201250041056,
+        226.05524479248137
+      ]
+    },
+    {
+      "stratum_kind": "cv",
+      "regime": "seen_k",
+      "stratum": "low",
+      "method": "random_short_pso",
+      "budget": 150,
+      "layout_clusters": 6,
+      "allocations": 576,
+      "small_cluster_count": true,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.984375,
+        1.0
+      ],
+      "gated_rate_ci95": [
+        3.779887907438171,
+        4.263143965374875
+      ],
+      "mean_online_ms_ci95": [
+        165.17234722219757,
+        221.5332715279601
+      ]
+    },
+    {
+      "stratum_kind": "cv",
+      "regime": "seen_k",
+      "stratum": "regular",
+      "method": "full_pso",
+      "budget": 1800,
+      "layout_clusters": 34,
+      "allocations": 3264,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        1.0,
+        1.0
+      ],
+      "gated_rate_ci95": [
+        4.666720492492405,
+        4.697090096166601
+      ],
+      "mean_online_ms_ci95": [
+        1825.4335846989318,
+        2121.7362995685826
+      ]
+    },
+    {
+      "stratum_kind": "cv",
+      "regime": "seen_k",
+      "stratum": "regular",
+      "method": "gnn_direct",
+      "budget": 0,
+      "layout_clusters": 34,
+      "allocations": 3264,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.9938725490196079,
+        0.9990808823529411
+      ],
+      "gated_rate_ci95": [
+        4.621729535197222,
+        4.6509729165906
+      ],
+      "mean_online_ms_ci95": [
+        21.141565685355193,
+        23.180140346846933
+      ]
+    },
+    {
+      "stratum_kind": "cv",
+      "regime": "seen_k",
+      "stratum": "regular",
+      "method": "gnn_short_pso",
+      "budget": 150,
+      "layout_clusters": 34,
+      "allocations": 3264,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        1.0,
+        1.0
+      ],
+      "gated_rate_ci95": [
+        4.644574662800294,
+        4.676950047889891
+      ],
+      "mean_online_ms_ci95": [
+        171.8249210619882,
+        198.60624314087158
+      ]
+    },
+    {
+      "stratum_kind": "cv",
+      "regime": "seen_k",
+      "stratum": "regular",
+      "method": "mlp_direct",
+      "budget": 0,
+      "layout_clusters": 34,
+      "allocations": 3264,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.9905024509803921,
+        0.9981617647058824
+      ],
+      "gated_rate_ci95": [
+        4.609155777536308,
+        4.649321462174848
+      ],
+      "mean_online_ms_ci95": [
+        20.32796542914232,
+        22.262079488304735
+      ]
+    },
+    {
+      "stratum_kind": "cv",
+      "regime": "seen_k",
+      "stratum": "regular",
+      "method": "mlp_short_pso",
+      "budget": 150,
+      "layout_clusters": 34,
+      "allocations": 3264,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        1.0,
+        1.0
+      ],
+      "gated_rate_ci95": [
+        4.645217942683767,
+        4.677073402180937
+      ],
+      "mean_online_ms_ci95": [
+        170.95862234606489,
+        197.38393074829042
+      ]
+    },
+    {
+      "stratum_kind": "cv",
+      "regime": "seen_k",
+      "stratum": "regular",
+      "method": "random_short_pso",
+      "budget": 150,
+      "layout_clusters": 34,
+      "allocations": 3264,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.9966299019607843,
+        0.9993872549019608
+      ],
+      "gated_rate_ci95": [
+        4.57904449826832,
+        4.6147534680781135
+      ],
+      "mean_online_ms_ci95": [
+        168.14726096188275,
+        194.1606798810276
+      ]
+    },
+    {
+      "stratum_kind": "cv",
+      "regime": "unseen_k",
+      "stratum": "low",
+      "method": "full_pso",
+      "budget": 1800,
+      "layout_clusters": 6,
+      "allocations": 144,
+      "small_cluster_count": true,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        1.0,
+        1.0
+      ],
+      "gated_rate_ci95": [
+        3.878254202223775,
+        4.327950422867279
+      ],
+      "mean_online_ms_ci95": [
+        2204.2871311116146,
+        3096.479718889593
+      ]
+    },
+    {
+      "stratum_kind": "cv",
+      "regime": "unseen_k",
+      "stratum": "low",
+      "method": "gnn_direct",
+      "budget": 0,
+      "layout_clusters": 6,
+      "allocations": 144,
+      "small_cluster_count": true,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.7986111111111112,
+        0.9375
+      ],
+      "gated_rate_ci95": [
+        3.1424696449627154,
+        3.9390764387120942
+      ],
+      "mean_online_ms_ci95": [
+        26.137396529267992,
+        32.46194513839227
+      ]
+    },
+    {
+      "stratum_kind": "cv",
+      "regime": "unseen_k",
+      "stratum": "low",
+      "method": "gnn_short_pso",
+      "budget": 150,
+      "layout_clusters": 6,
+      "allocations": 144,
+      "small_cluster_count": true,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.9513888888888888,
+        1.0
+      ],
+      "gated_rate_ci95": [
+        3.6843801661750906,
+        4.0811004371308846
+      ],
+      "mean_online_ms_ci95": [
+        205.89762328183699,
+        289.44469375114244
+      ]
+    },
+    {
+      "stratum_kind": "cv",
+      "regime": "unseen_k",
+      "stratum": "low",
+      "method": "mlp_direct",
+      "budget": 0,
+      "layout_clusters": 6,
+      "allocations": 144,
+      "small_cluster_count": true,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.7777777777777778,
+        0.9444444444444444
+      ],
+      "gated_rate_ci95": [
+        3.0538817924381902,
+        3.959250696819263
+      ],
+      "mean_online_ms_ci95": [
+        25.19013598928647,
+        31.394127082926893
+      ]
+    },
+    {
+      "stratum_kind": "cv",
+      "regime": "unseen_k",
+      "stratum": "low",
+      "method": "mlp_short_pso",
+      "budget": 150,
+      "layout_clusters": 6,
+      "allocations": 144,
+      "small_cluster_count": true,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.9722222222222222,
+        1.0
+      ],
+      "gated_rate_ci95": [
+        3.719990355409137,
+        4.093122687498565
+      ],
+      "mean_online_ms_ci95": [
+        205.37230069455998,
+        286.26738421920663
+      ]
+    },
+    {
+      "stratum_kind": "cv",
+      "regime": "unseen_k",
+      "stratum": "low",
+      "method": "random_short_pso",
+      "budget": 150,
+      "layout_clusters": 6,
+      "allocations": 144,
+      "small_cluster_count": true,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.8125,
+        0.9652777777777778
+      ],
+      "gated_rate_ci95": [
+        2.946088445770843,
+        3.6942394873929825
+      ],
+      "mean_online_ms_ci95": [
+        199.87998614573524,
+        278.53867692765925
+      ]
+    },
+    {
+      "stratum_kind": "cv",
+      "regime": "unseen_k",
+      "stratum": "regular",
+      "method": "full_pso",
+      "budget": 1800,
+      "layout_clusters": 34,
+      "allocations": 816,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        1.0,
+        1.0
+      ],
+      "gated_rate_ci95": [
+        4.622078729006554,
+        4.654024783799805
+      ],
+      "mean_online_ms_ci95": [
+        2426.3768382657117,
+        2850.435946142533
+      ]
+    },
+    {
+      "stratum_kind": "cv",
+      "regime": "unseen_k",
+      "stratum": "regular",
+      "method": "gnn_direct",
+      "budget": 0,
+      "layout_clusters": 34,
+      "allocations": 816,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.6605392156862745,
+        0.7046568627450981
+      ],
+      "gated_rate_ci95": [
+        2.8340036181227592,
+        3.053036012615997
+      ],
+      "mean_online_ms_ci95": [
+        27.47278358124143,
+        30.146411038641176
+      ]
+    },
+    {
+      "stratum_kind": "cv",
+      "regime": "unseen_k",
+      "stratum": "regular",
+      "method": "gnn_short_pso",
+      "budget": 150,
+      "layout_clusters": 34,
+      "allocations": 816,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.9313725490196079,
+        0.9644607843137255
+      ],
+      "gated_rate_ci95": [
+        3.9788814999498383,
+        4.132488590868085
+      ],
+      "mean_online_ms_ci95": [
+        225.31552421530037,
+        262.32734113653675
+      ]
+    },
+    {
+      "stratum_kind": "cv",
+      "regime": "unseen_k",
+      "stratum": "regular",
+      "method": "mlp_direct",
+      "budget": 0,
+      "layout_clusters": 34,
+      "allocations": 816,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.6593137254901961,
+        0.7034313725490197
+      ],
+      "gated_rate_ci95": [
+        2.83306543859858,
+        3.0558895821779815
+      ],
+      "mean_online_ms_ci95": [
+        26.48723287594454,
+        29.060461494885196
+      ]
+    },
+    {
+      "stratum_kind": "cv",
+      "regime": "unseen_k",
+      "stratum": "regular",
+      "method": "mlp_short_pso",
+      "budget": 150,
+      "layout_clusters": 34,
+      "allocations": 816,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.9215686274509803,
+        0.9571078431372549
+      ],
+      "gated_rate_ci95": [
+        3.930301893483151,
+        4.102512117846486
+      ],
+      "mean_online_ms_ci95": [
+        224.2682502139108,
+        261.83845733149593
+      ]
+    },
+    {
+      "stratum_kind": "cv",
+      "regime": "unseen_k",
+      "stratum": "regular",
+      "method": "random_short_pso",
+      "budget": 150,
+      "layout_clusters": 34,
+      "allocations": 816,
+      "small_cluster_count": false,
+      "interval_kind": "pointwise95 layout-cluster percentile bootstrap; not simultaneous significance tests",
+      "pass_fraction_ci95": [
+        0.9276960784313726,
+        0.9522058823529411
+      ],
+      "gated_rate_ci95": [
+        3.7231216718018736,
+        3.836129143562679
+      ],
+      "mean_online_ms_ci95": [
+        222.4502652385191,
+        259.44316593712415
+      ]
+    }
+  ],
+  "test_opened": true,
+  "test_used_for_selection": false,
+  "scope_note": "K=2..5 and K=6 are reported separately; no pooling as an in-domain headline; intervals cluster by layout",
+  "timing_note": "Measured CPU warm-return time including amortized input-bank generation, graph, forward, delta, objective setup and PSO; independent audit excluded; cold model loading recorded separately",
+  "certificate_note": "Finite frozen proposal family under the adopted simulator, conditional on fixed geometry and iid fading; no global optimum or real-world guarantee"
+}

@@ -1,0 +1,37 @@
+{
+  "scope": "smoke",
+  "short_budgets": [
+    30,
+    60
+  ],
+  "full_budget": 90,
+  "search_samples": 1000,
+  "audit_samples": 1000,
+  "search_dep_margin": 0.03,
+  "search_qos_margin": 0.01,
+  "replicates": [
+    {
+      "training_seed": 7,
+      "pso_seed": 101
+    }
+  ],
+  "cv_seed": 17,
+  "cv_epochs": 2,
+  "low_cv_threshold": 0.9,
+  "alpha": 0.05,
+  "bootstrap_resamples": 200,
+  "bootstrap_seed": 7317,
+  "budget_max_pass_loss": 0.01,
+  "budget_min_rate_ratio": 0.95,
+  "fallback": "none",
+  "initialization": "one_prediction_plus_29_random",
+  "final_selection": "search_best",
+  "architecture": "small",
+  "training_prefix": 32,
+  "smoke_validation_jobs": 1,
+  "smoke_cases_per_job": 1,
+  "smoke_cv_folds": 1,
+  "smoke_test_layout_ids": [
+    990001
+  ]
+}
