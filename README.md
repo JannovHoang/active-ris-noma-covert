@@ -15,13 +15,14 @@ The main experiment is the six-method benchmark in `experiments/ris_noma_step1/s
 
 Passed percentages are physical feasibility-assessment rates, not accuracy against PSO labels. Failed allocations contribute zero to the gated-rate average and remain in its denominator. Full PSO is a large-budget numerical reference, not a global-optimality proof.
 
-## Reading the commented source
+## Source and reproducibility
 
-The main PSO, physical evaluation, label-generation, graph, model and training modules in `ris_noma/` contain inline explanations in Vietnamese. The 7h runner, search, assessment and analysis code is also annotated. The original bundled runtime and every `results/.../source_snapshot/` remain unchanged.
+The 7h benchmark uses the bundled runtime in
+`experiments/ris_noma_step1/step7h/frozen_runtime/`.
 
-The readable modules correspond to the preserved runtime used for the published results. For example, read [ris_noma/pso.py](experiments/ris_noma_step1/ris_noma/pso.py) for the annotated PSO, and [step7h/benchmark.py](experiments/ris_noma_step1/step7h/benchmark.py) for the six-method comparison. `step7h/frozen_runtime/ris_noma/pso.py` remains the exact original implementation imported by 7h.
-
-Saved experiments record hashes of the entire source files, including comments. Use the verification commands below after a comment-only update. They first compare the current code's Python AST and significant tokens with the authenticated original snapshot, then run the unchanged strict checker from that snapshot. A changed expression, constant, operator or docstring is rejected. The original plans, hashes, labels and model weights are preserved.
+The saved results include the source snapshots, input data,
+model checkpoints and verification records. Follow the commands
+below to verify the saved experiment or rerun the final benchmark.
 
 ## Contents
 
@@ -78,7 +79,7 @@ The recorded Windows environment uses Python 3.12.7, NumPy 2.5.4, SciPy 1.18.1, 
 
 ## Verify the complete saved experiment
 
-These commands check both the commented source and the committed experiment without performing PSO searches or training again. From the repository root in PowerShell:
+These commands verify the source and saved experiment without rerunning PSO or training the models.
 
 ```powershell
 Push-Location experiments/ris_noma_step1
